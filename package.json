@@ -1,7 +1,7 @@
 {
   "name": "cantiniere-website",
   "main": "main.tns.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
@@ -11,7 +11,7 @@
     "test": "ng test",
     "lint": "eslint src --ext .ts",
     "e2e": "ng e2e",
-    "remote" :"nsc debug android --no-hmr",
+    "remote": "nsc debug android --no-hmr",
     "android": "tns run android --no-hmr",
     "ios": "tns run ios --no-hmr",
     "mobile": "tns run",
