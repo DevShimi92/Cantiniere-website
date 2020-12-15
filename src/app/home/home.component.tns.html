@@ -1,5 +1,17 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<ActionBar [title]="title"></ActionBar>
-<StackLayout  class="p-20">
-    <Label [text]="'Welcome to ' + title + '!'" class="h1 text-center" textWrap="true"></Label>
-</StackLayout>
+<RadSideDrawer tkExampleTitle tkToggleNavButton>
+    <GridLayout tkDrawerContent rows="56, *" class="sideStackLayout">
+        <StackLayout class="sideTitleStackLayout">
+            <Label text="Menu"></Label>
+        </StackLayout>
+        <ScrollView row="1">
+            <StackLayout class="sideStackLayout">
+                <Label text="Accueil" class="sideLabel"></Label>
+                <Label text="Compte" class="sideLabel"></Label>
+                <Label text="Fermer" color="lightgray" padding="10" style="horizontal-align: center" (tap)="onCloseDrawerTap()"></Label>
+            </StackLayout>
+        </ScrollView>
+    </GridLayout>
+    <StackLayout tkMainContent>
+        <Button text="OPEN DRAWER" (tap)="openDrawer()" class="drawerContentButton"></Button>
+    </StackLayout>
+</RadSideDrawer>
