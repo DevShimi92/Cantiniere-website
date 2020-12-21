@@ -2,12 +2,14 @@
 @import '~@nativescript/theme/css/core.css';
 @import '~@nativescript/theme/css/default.css';
 
-.ns-dark .fas {
+.fas {
     font-family: Font Awesome 5 Free, fa-solid-900, sans-serif;
     font-weight: 900;
 }
 
-.ns-light .fas {
+.sideDrawer {
     font-family: Font Awesome 5 Free, fa-solid-900, sans-serif;
     font-weight: 900;
+    height: 75 ;
+    font-size: 20px;
 }

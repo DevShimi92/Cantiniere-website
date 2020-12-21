@@ -1,3 +1,18 @@
-<GridLayout>
-  <page-router-outlet actionBarVisibility="never" ></page-router-outlet>
-</GridLayout>
+<RadSideDrawer>
+    <GridLayout tkDrawerContent  rows="200, *" >
+      <ScrollView row="1">
+        <StackLayout >
+          <Label text="    &#xf015;  Accueil" class="sideDrawer fa-align-justify" ></Label>
+          <Label text="    &#xf2e7;   Voir la carte" class="sideDrawer fa-align-justify"></Label>
+          <Label text="    &#xf52b;  Se connecter" class="sideDrawer fa-align-justify" *ngIf="userOnline == false" ></Label>
+          <Label text="    &#xf007;    Profile" class="sideDrawer fa-align-justify" *ngIf="userOnline == true" ></Label>
+          <Label text="    &#xf013;   Paramètre" class="sideDrawer fa-align-justify"></Label>
+          <Label text="    &#xf071;   Siganler un bug" class="sideDrawer fa-align-justify"></Label>
+        </StackLayout>
+      </ScrollView>
+    </GridLayout>
+  <StackLayout tkMainContent>
+   <Button text="&#xf039;" class="fas fa-align-justify" (tap)="openDrawer()"></Button>
+   <page-router-outlet tkMainContent actionBarVisibility="never" ></page-router-outlet>
+  </StackLayout>
+</RadSideDrawer> 
