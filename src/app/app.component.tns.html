@@ -2,12 +2,12 @@
     <GridLayout tkDrawerContent  rows="200, *" >
       <ScrollView row="1">
         <StackLayout >
-          <Label text="    &#xf015;  Accueil" class="sideDrawer fa-align-justify" ></Label>
-          <Label text="    &#xf2e7;   Voir la carte" class="sideDrawer fa-align-justify"></Label>
-          <Label text="    &#xf52b;  Se connecter" class="sideDrawer fa-align-justify" *ngIf="userOnline == false" ></Label>
-          <Label text="    &#xf007;    Profile" class="sideDrawer fa-align-justify" *ngIf="userOnline == true" ></Label>
-          <Label text="    &#xf013;   Paramètre" class="sideDrawer fa-align-justify"></Label>
-          <Label text="    &#xf071;   Siganler un bug" class="sideDrawer fa-align-justify"></Label>
+          <Label (tap)="navigateToHome()"  text="    &#xf015;  Accueil" class="sideDrawer fa-align-justify" ></Label>
+          <Label (tap)="navigateToMenu()"  text="    &#xf2e7;   Voir la carte" class="sideDrawer fa-align-justify"></Label>
+          <Label (tap)="navigateToLogin()"  text="    &#xf52b;  Se connecter" class="sideDrawer fa-align-justify" *ngIf="userOnline == false" ></Label>
+          <Label (tap)="navigateToProfile()"  text="    &#xf007;    Profile" class="sideDrawer fa-align-justify" *ngIf="userOnline == true" ></Label>
+          <Label (tap)="navigateToSetting()"  text="    &#xf013;   Paramètre" class="sideDrawer fa-align-justify"></Label>
+          <Label (tap)="navigateToReport()" text="    &#xf071;   Siganler un bug" class="sideDrawer fa-align-justify"></Label>
         </StackLayout>
       </ScrollView>
     </GridLayout>
