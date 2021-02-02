@@ -1,12 +1,13 @@
 .imageDeFond {
     position: fixed;
-    left: 100;
-    right: 100;
+    left: 1%;
+    right: 1%;
+    top: 2%;
     z-index: 1;
     display: block;
     background-image: url('http://senecuisine.com/wp-content/uploads/2018/06/Cest-bon-plat-diola.jpg');
-    width: 99%;
-    height: 99%;
+    width: 98%;
+    height: 98%;
     background-size: 100%;
 
     /* Safari */
@@ -25,4 +26,10 @@
     left: 0;
     right: 0;
     z-index: 9999;
+ }
+ .navBarCss {
+    position: fixed;
+    left: 75%;
+    top: 5%;
+    width: 22%;
  }
