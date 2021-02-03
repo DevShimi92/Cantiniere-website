@@ -27,17 +27,44 @@
     right: 0;
     z-index: 9999;
  }
- .navBarCss {
-    position: fixed;
-    left: 75%;
-    top: 5%;
-    width: 22%;
- }
- .body{
-    position: fixed;
-    left: 10%;
-    grid-area: content;
-    background-color: #cccfae;
-    padding: 18% 40%;
+
+ @media screen and (max-width: 2560px)  {
+   .logo{
+      width:12%
+   }
+   .navBarCss {
+      position: fixed;
+      left: 75%;
+      top: 5%;
+      width: 22%;
+   }
+   .body{
+      position: fixed;
+      left: 10%;
+      grid-area: content;
+      background-color: #cccfae;
+      padding: 18% 40%;
+  
+   }
 
  }
+ @media screen and (max-width: 1920px) {
+   .logo{
+      width:10%
+   }
+   .navBarCss {
+      position: fixed;
+      left: 68%;
+      top: 5%;
+      width: 29%;
+   }
+   .body{
+      position: fixed;
+      left: 10%;
+      grid-area: content;
+      background-color: #cccfae;
+      padding: 17% 40%;
+  
+   }
+ }
+ 
