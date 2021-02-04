@@ -13,7 +13,7 @@
           <a class="nav-link" routerLink="/menu" >Voir la carte</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/login" >Se connecter</a>
+          <a class="nav-link" routerLink=""(click)="toggle()" >Se connecter</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/report" >Signalez un bug</a>
@@ -21,6 +21,13 @@
       </ul>
     </nav>
   </div>
+  <form class="formLogin"[@openClose]="isOpen ? 'open' : 'closed'">
+    <div>
+      <input type="email" placeholder="votre.email@correct.com">
+      <input class="formLoginPassword" type="password" placeholder="Mot de passe"> 
+      <input class="formLoginButton" type="button" value="Pas de compte ? ">
+    </div> 
+  </form>
   <main class="body">
     <router-outlet></router-outlet>
   </main>

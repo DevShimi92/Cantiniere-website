@@ -46,6 +46,23 @@
       padding: 18% 40%;
   
    }
+   .formLogin {
+      position: fixed;
+      left: 69.5%;
+      top: 12%;
+      width: 27.5%;
+      background-color: #fefffe;
+      padding: 0.8% 0.5%;
+      border-radius: 10px;
+    }
+   
+    .formLoginPassword {
+        margin-left:2.5%;
+    }
+   
+    .formLoginButton {
+      margin-left:2.5%;
+   }
 
  }
  @media screen and (max-width: 1920px) {
@@ -66,5 +83,27 @@
       padding: 17% 40%;
   
    }
+   .formLogin {
+      position: fixed;
+      left: 61.5%;
+      top: 13%;
+      width: 35.5%;
+      background-color: #fefffe;
+      padding: 0.6% 0.25%;
+      border-radius: 10px;
+      
+    }
+   
+    .formLoginPassword {
+        margin-left:2.5%;
+    }
+   
+    .formLoginButton {
+      margin-left:2.5%;
+   }
  }
+ 
+
+
+ 
  
