@@ -33,12 +33,12 @@ import { trigger, transition, state, animate, style } from '@angular/animations'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  AccountLogIn = false;
   isOpen = false;
   
   toggle():void {
     this.isOpen = !this.isOpen;
   }
-
-
 
 }
