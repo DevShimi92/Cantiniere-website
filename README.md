@@ -6,7 +6,7 @@
 <p align="center">
 <a href="https://github.com/DevShimi92/Cantiniere-website/blob/main/LICENSE"><img alt="GitHub LICENCE" src="https://img.shields.io/github/license/DevShimi92/Cantiniere-website?style=flat-square"></a>
 <img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/DevShimi92/Cantiniere-website?style=flat-square">
-<a href="https://github.com/DevShimi92/Cantiniere-website/actions"><img alt="GitHub Workflow Status" src="
-https://img.shields.io/github/workflow/status/DevShimi92/Cantiniere-website/Eslint?style=flat-square"></a>
+<a href="https://github.com/DevShimi92/Cantiniere-website/actions"><img alt="GitHub Workflow Status" 
+src="https://img.shields.io/github/workflow/status/DevShimi92/Cantiniere-website/Eslint?style=flat-square"></a>
 
 </p><br>
