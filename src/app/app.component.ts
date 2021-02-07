@@ -34,11 +34,26 @@ import { trigger, transition, state, animate, style } from '@angular/animations'
 })
 export class AppComponent {
 
-  AccountLogIn = false;
+  accountLogIn = false;
   isOpen = false;
-  
+  valueInEmail = false;
+  routerLinkOnButton = '/registration';
+
   toggle():void {
     this.isOpen = !this.isOpen;
   }
 
+  somethingInEmailField(event):void{
+      console.log( event.target.value);
+      if (event.target.value == '')
+        { 
+          this.valueInEmail = false;
+          this.routerLinkOnButton = '/registration';
+        }
+      else
+        {
+          this.valueInEmail = true;
+          this.routerLinkOnButton = '';  
+        }
+  }
 }
