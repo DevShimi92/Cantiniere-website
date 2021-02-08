@@ -24,7 +24,7 @@
       </ul>
     </nav>
   </div>
-  <form class="formLogin" [formGroup]="loginForm" [@openClose]="isOpen ? 'open' : 'closed'" (ngSubmit)="onSubmit(form)" #form="ngForm">
+  <form class="formLogin" [formGroup]="loginForm" [@openClose]="isOpen ? 'open' : 'closed'" (ngSubmit)="onSubmit()" #form="ngForm">
     <div>
       <input formControlName="email" type="email" placeholder="votre.email@correct.com" (input)="somethingInEmailField($event)">
       <input formControlName="password" class="formLoginPassword" type="password" placeholder="Mot de passe" > 
