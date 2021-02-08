@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { trigger, transition, state, animate, style } from '@angular/animations';
 
 @Component({
@@ -37,14 +38,22 @@ export class AppComponent {
   accountLogIn = false;
   isOpen = false;
   valueInEmail = false;
+  loginForm: FormGroup;
   routerLinkOnButton = '/registration';
+
+  constructor(private formBuilder: FormBuilder) { 
+    this.loginForm = this.formBuilder.group({
+      email: '',
+      password: ''
+    });
+  }
+
 
   toggle():void {
     this.isOpen = !this.isOpen;
   }
 
   somethingInEmailField(event):void{
-      console.log( event.target.value);
       if (event.target.value == '')
         { 
           this.valueInEmail = false;
@@ -55,5 +64,10 @@ export class AppComponent {
           this.valueInEmail = true;
           this.routerLinkOnButton = '';  
         }
+  }
+
+  onSubmit():void
+  {
+    console.log('test ' +this.loginForm.value.email);
   }
 }
