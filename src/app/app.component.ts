@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { trigger, transition, state, animate, style } from '@angular/animations';
 
+import { DefaultService } from './default.service';
+
 @Component({
   selector: 'app-root',
   animations: [
@@ -33,6 +35,7 @@ import { trigger, transition, state, animate, style } from '@angular/animations'
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
 
   accountLogIn = false;
@@ -41,7 +44,7 @@ export class AppComponent {
   loginForm: FormGroup;
   routerLinkOnButton = '/registration';
 
-  constructor(private formBuilder: FormBuilder) { 
+  constructor(private formBuilder: FormBuilder,private defaultService: DefaultService) { 
     this.loginForm = this.formBuilder.group({
       email: '',
       password: ''
@@ -68,6 +71,12 @@ export class AppComponent {
 
   onSubmit():void
   {
-    console.log('test ' +this.loginForm.value.email);
+    this.defaultService.getToken(this.loginForm.value.email,this.loginForm.value.password).subscribe(data => 
+      {
+        if(data != null)
+          this.accountLogIn= true;
+      });
   }
+
+
 }
