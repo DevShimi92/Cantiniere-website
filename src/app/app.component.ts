@@ -70,13 +70,20 @@ export class AppComponent {
   }
 
   onSubmit():void
-  {
-    this.defaultService.getToken(this.loginForm.value.email,this.loginForm.value.password).subscribe(data => 
-      {
-        if(data != null)
-          this.accountLogIn= true;
-      });
-  }
+    {
+      this.defaultService.getToken(this.loginForm.value.email,this.loginForm.value.password).subscribe(data => 
+        {
+          if(data != null)
+            this.accountLogIn= true;
+            this.isOpen = false
+        });
+    }
 
+  logout():void
+    {
+      sessionStorage.clear();
+      this.accountLogIn=false;
+      location.reload();
+    }
 
 }
