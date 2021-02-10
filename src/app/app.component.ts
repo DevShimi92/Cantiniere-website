@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { trigger, transition, state, animate, style } from '@angular/animations';
 
@@ -51,6 +51,15 @@ export class AppComponent {
     });
   }
 
+  ngOnInit():void {
+
+    if (sessionStorage.getItem('token'))
+    {
+      this.accountLogIn = true;
+    }
+
+  }
+
 
   toggle():void {
     this.isOpen = !this.isOpen;
@@ -71,12 +80,17 @@ export class AppComponent {
 
   onSubmit():void
     {
-      this.defaultService.getToken(this.loginForm.value.email,this.loginForm.value.password).subscribe(data => 
-        {
-          if(data != null)
-            this.accountLogIn= true;
-            this.isOpen = false
-        });
+      if(this.loginForm.value.email != '' && this.loginForm.value.password != '')
+      {
+        this.defaultService.getToken(this.loginForm.value.email,this.loginForm.value.password).subscribe(data => 
+          {
+            if(data != null){
+              sessionStorage.setItem('token', data.token);
+              this.accountLogIn= true;
+              this.isOpen = false
+              }
+          });
+      }
     }
 
   logout():void
