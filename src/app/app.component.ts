@@ -15,7 +15,6 @@ import { DefaultService } from './default.service';
       state('open', style({
         height: '6%',
         opacity: 1,
-        backgroundColor: '#fefffe'
       })),
       transition('open => closed', [
           animate("1s", style({
@@ -27,7 +26,6 @@ import { DefaultService } from './default.service';
           animate("1s", style({
             height: '6%',
             opacity: 1,
-            backgroundColor: '#fefffe'
           }))
       ]),
     ]),
@@ -41,6 +39,7 @@ export class AppComponent {
   accountLogIn = false;
   isOpen = false;
   valueInEmail = false;
+  errorInLogin = false;
   loginForm: FormGroup;
   routerLinkOnButton = '/registration';
 
@@ -82,14 +81,18 @@ export class AppComponent {
     {
       if(this.loginForm.value.email != '' && this.loginForm.value.password != '')
       {
-        this.defaultService.getToken(this.loginForm.value.email,this.loginForm.value.password).subscribe(data => 
-          {
-            if(data != null){
-              sessionStorage.setItem('token', data.token);
-              this.accountLogIn= true;
-              this.isOpen = false
-              }
-          });
+        this.defaultService.getToken(this.loginForm.value.email,this.loginForm.value.password).subscribe((response) => 
+            {
+                sessionStorage.setItem('token', response.token);
+                this.accountLogIn= true;
+                this.isOpen = false
+          
+            },
+          (error) => 
+            {
+                console.log(error);
+            }
+        );
       }
     }
 
