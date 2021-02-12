@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { trigger, transition, state, animate, style,keyframes } from '@angular/animations';
+import { trigger, transition, state, animate, style, useAnimation } from '@angular/animations';
 
+import { errorFormAnimation } from '././animation/animation';
 import { DefaultService } from './default.service';
 
 @Component({
@@ -31,29 +32,17 @@ import { DefaultService } from './default.service';
     ]),
     trigger('showErrorOnForm', [
       transition('* => active', [
-        animate('1s', keyframes([
-          style({ backgroundColor: 'white' }),
-          style({ backgroundColor: 'red' }),
-          style({ backgroundColor: 'white' })
-        ])),
+        useAnimation(errorFormAnimation),
     ]),
     ]),
     trigger('showErrorOnEmail', [
       transition('* => active', [
-        animate('0.5s', keyframes([
-          style({ backgroundColor: 'white' }),
-          style({ backgroundColor: 'red' }),
-          style({ backgroundColor: 'white' })
-        ])),
+        useAnimation(errorFormAnimation),
     ]),
     ]),
     trigger('passwordEmptyAnima', [
       transition('* => active', [
-        animate('0.5s', keyframes([
-          style({ backgroundColor: 'white' }),
-          style({ backgroundColor: 'red' }),
-          style({ backgroundColor: 'white' })
-        ])),
+        useAnimation(errorFormAnimation)
     ]),
     ])
   ],
