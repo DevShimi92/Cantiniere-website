@@ -66,9 +66,14 @@
       padding: 0.8% 0.5%;
       border-radius: 10px;
     }
+
+   .formLoginEmail {
+      background-color: #fefffe;
+   }
    
     .formLoginPassword {
         margin-left:2.5%;
+        background-color: #fefffe;
     }
    
     .formLoginButton {
@@ -116,9 +121,14 @@
       
     }
    
-    .formLoginPassword {
-        margin-left:2.5%;
-    }
+   .formLoginEmail {
+      background-color: #fefffe;
+   }
+   
+   .formLoginPassword {
+      margin-left:2.5%;
+      background-color: #fefffe;
+   }
    
     .formLoginButton {
       margin-left:2.5%;

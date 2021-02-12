@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { trigger, transition, state, animate, style } from '@angular/animations';
+import { trigger, transition, state, animate, style,keyframes } from '@angular/animations';
 
 import { DefaultService } from './default.service';
 
@@ -29,28 +29,57 @@ import { DefaultService } from './default.service';
           }))
       ]),
     ]),
+    trigger('showErrorOnForm', [
+      transition('* => active', [
+        animate('1s', keyframes([
+          style({ backgroundColor: 'white' }),
+          style({ backgroundColor: 'red' }),
+          style({ backgroundColor: 'white' })
+        ])),
+    ]),
+    ]),
+    trigger('showErrorOnEmail', [
+      transition('* => active', [
+        animate('0.5s', keyframes([
+          style({ backgroundColor: 'white' }),
+          style({ backgroundColor: 'red' }),
+          style({ backgroundColor: 'white' })
+        ])),
+    ]),
+    ]),
+    trigger('passwordEmptyAnima', [
+      transition('* => active', [
+        animate('0.5s', keyframes([
+          style({ backgroundColor: 'white' }),
+          style({ backgroundColor: 'red' }),
+          style({ backgroundColor: 'white' })
+        ])),
+    ]),
+    ])
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit{
 
   accountLogIn = false;
   isOpen = false;
   valueInEmail = false;
   errorInLogin = false;
+  errorInEmail = false;
+  passwordEmpty = false;
   loginForm: FormGroup;
   routerLinkOnButton = '/registration';
 
-  constructor(private formBuilder: FormBuilder,private defaultService: DefaultService) { 
+  constructor(private formBuilder: FormBuilder,private defaultService: DefaultService) {  }
+
+  ngOnInit():void {
+
     this.loginForm = this.formBuilder.group({
       email: '',
       password: ''
     });
-  }
-
-  ngOnInit():void {
 
     if (sessionStorage.getItem('token'))
     {
@@ -64,7 +93,7 @@ export class AppComponent {
     this.isOpen = !this.isOpen;
   }
 
-  somethingInEmailField(event):void{
+  somethingInEmailField(event):void {
       if (event.target.value == '')
         { 
           this.valueInEmail = false;
@@ -73,27 +102,45 @@ export class AppComponent {
       else
         {
           this.valueInEmail = true;
+          this.errorInEmail = false;
           this.routerLinkOnButton = '';  
         }
   }
 
-  onSubmit():void
-    {
-      if(this.loginForm.value.email != '' && this.loginForm.value.password != '')
-      {
-        this.defaultService.getToken(this.loginForm.value.email,this.loginForm.value.password).subscribe((response) => 
-            {
-                sessionStorage.setItem('token', response.token);
-                this.accountLogIn= true;
-                this.isOpen = false
-          
-            },
-          (error) => 
-            {
-                console.log(error);
-            }
-        );
-      }
+  onSubmit():void {
+      
+      this.errorInLogin = false;
+
+      if(!this.validateEmail(this.loginForm.value.email))
+        {
+          this.errorInEmail = !this.errorInEmail;
+        }
+      else if( this.loginForm.value.password == '')
+        {
+          this.passwordEmpty = !this.passwordEmpty;
+        }
+      else if(this.loginForm.value.email != '' && this.loginForm.value.password != '')
+        {
+          this.defaultService.getToken(this.loginForm.value.email,this.loginForm.value.password).subscribe((response) => 
+              {
+                  sessionStorage.setItem('token', response.token);
+                  this.accountLogIn= true;
+                  this.isOpen = false
+            
+              },
+            (error) => 
+              {
+                if(error.status == 401)
+                {
+                  this.errorInLogin = true;
+                }
+                else
+                {
+                  console.log(error);
+                }
+              }
+          );
+        }
     }
 
   logout():void
@@ -101,6 +148,11 @@ export class AppComponent {
       sessionStorage.clear();
       this.accountLogIn=false;
       location.reload();
+    }
+
+  validateEmail(email:string):boolean {
+      const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
     }
 
 }
