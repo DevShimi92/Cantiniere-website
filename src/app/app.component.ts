@@ -100,11 +100,11 @@ export class AppComponent implements OnInit{
       
       this.errorInLogin = false;
 
-      if(!this.validateEmail(this.loginForm.value.email))
+      if(!this.validateEmail(this.loginForm.value.email) && this.loginForm.value.email != '')
         {
           this.errorInEmail = !this.errorInEmail;
         }
-      else if( this.loginForm.value.password == '')
+      else if( this.loginForm.value.email != '' && this.loginForm.value.password == '')
         {
           this.passwordEmpty = !this.passwordEmpty;
         }
