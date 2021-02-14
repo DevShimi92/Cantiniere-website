@@ -11,8 +11,11 @@
         </StackLayout>
       </ScrollView>
     </GridLayout>
-  <StackLayout tkMainContent>
-   <Button text="&#xf039;" class="fas fa-align-justify" (tap)="openDrawer()"></Button>
-   <page-router-outlet tkMainContent actionBarVisibility="never" ></page-router-outlet>
+  <StackLayout tkMainContent >
+    <GridLayout columns="3, auto,*" width="425" height="50" >
+      <Button text="&#xf039;" class="fas fa-align-justify" (tap)="openDrawer()" col="1" ></Button>
+    </GridLayout>
+    <page-router-outlet actionBarVisibility="never"  ></page-router-outlet>
   </StackLayout>
+  
 </RadSideDrawer> 
