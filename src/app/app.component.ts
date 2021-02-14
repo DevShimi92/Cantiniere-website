@@ -54,7 +54,7 @@ export class AppComponent implements OnInit{
 
   accountLogIn = false;
   isOpen = false;
-  valueInEmail = false;
+  valueOfButton = 'Pas de compte ?'
   errorInLogin = false;
   errorInEmail = false;
   passwordEmpty = false;
@@ -85,16 +85,25 @@ export class AppComponent implements OnInit{
   somethingInEmailField(event):void {
       if (event.target.value == '')
         { 
-          this.valueInEmail = false;
+          this.valueOfButton = 'Pas de compte ?';
           this.routerLinkOnButton = '/registration';
         }
       else
         {
-          this.valueInEmail = true;
+          this.valueOfButton = '     Connexion    ';
           this.errorInEmail = false;
           this.routerLinkOnButton = '';  
         }
   }
+
+  somethingInPasswordField(event):void {
+    if (event.target.value != '')
+          {
+            this.valueOfButton = '     Connexion    ';
+            this.errorInEmail = false;
+            this.routerLinkOnButton = '';  
+          }
+}
 
   onSubmit():void {
       
@@ -102,11 +111,19 @@ export class AppComponent implements OnInit{
 
       if(!this.validateEmail(this.loginForm.value.email) && this.loginForm.value.email != '')
         {
+          if(this.routerLinkOnButton == '/login')
+            {
+              this.isOpen = false;
+            }
           this.errorInEmail = !this.errorInEmail;
+          this.valueOfButton = 'Identifiant oublié?';
+          this.routerLinkOnButton = '/login';
         }
       else if( this.loginForm.value.email != '' && this.loginForm.value.password == '')
         {
           this.passwordEmpty = !this.passwordEmpty;
+          this.valueOfButton = 'Identifiant oublié?';
+          this.routerLinkOnButton = '/login';
         }
       else if(this.loginForm.value.email != '' && this.loginForm.value.password != '')
         {
@@ -115,13 +132,14 @@ export class AppComponent implements OnInit{
                   sessionStorage.setItem('token', response.token);
                   this.accountLogIn= true;
                   this.isOpen = false
-            
               },
             (error) => 
               {
                 if(error.status == 401)
                 {
                   this.errorInLogin = true;
+                  this.valueOfButton = 'Identifiant oublié?';
+                  this.routerLinkOnButton = '/login';
                 }
                 else
                 {
