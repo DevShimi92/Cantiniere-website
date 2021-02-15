@@ -27,6 +27,7 @@
     left: 0;
     right: 0;
     z-index: 9999;
+   
  }
 
  @media screen and (max-width: 2560px)  {
@@ -53,8 +54,9 @@
       left: 10%;
       grid-area: content;
       background-color: #cccfae;
-      padding: 18% 40%;
-  
+      width: 85%;
+      height: 70%;
+      padding: 2% 2%;
    }
 
    .formLogin {
@@ -106,7 +108,9 @@
       left: 10%;
       grid-area: content;
       background-color: #cccfae;
-      padding: 17% 40%;
+      width: 85%;
+      height: 70%;
+      padding: 2% 2%;
   
    }
 
