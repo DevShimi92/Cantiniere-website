@@ -1,1 +1,11 @@
-<strong>Registration</strong>
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" #form="ngForm">
+    <div>
+        <input formControlName="lastName" type="text " placeholder="Votre nom"> 
+        <input formControlName="firstNName" type="text " placeholder="Votre prénom"> 
+        <input formControlName="email" type="email" placeholder="votre.email@correct.com"> 
+        <input formControlName="password" type="password" placeholder="Votre Mot de passe"> 
+        <input formControlName="checkPassword" type="password" placeholder="Confirmer votre Mot de passe"> 
+        <input  type="submit" value="Créer son compte" >
+        <input  type="button" routerLink="/login" value="Mot de passe oubliée ?" >
+    </div> 
+</form>
