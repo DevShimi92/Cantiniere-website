@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef} from '@
 import { RadSideDrawerComponent } from "nativescript-ui-sidedrawer/angular";
 import { RadSideDrawer } from 'nativescript-ui-sidedrawer';
 import { RouterExtensions } from "@nativescript/angular";
-
+import { getString } from "@nativescript/core/application-settings";
 
 @Component({
   moduleId: module.id,
@@ -11,7 +11,7 @@ import { RouterExtensions } from "@nativescript/angular";
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements AfterViewInit,OnInit {
-  public userOnline = false;
+  private userOnline : boolean;
   title = 'Cantiniere-website';
 
   constructor(private _changeDetectionRef: ChangeDetectorRef,private routerExtensions: RouterExtensions) {
@@ -27,10 +27,19 @@ export class AppComponent implements AfterViewInit,OnInit {
   }
 
   ngOnInit(): void {
-    // do nothing
+      // do nothing
   }
 
   public openDrawer(): void {
+
+      if(getString("token"))
+        {
+          this.userOnline = true;
+        }
+      else
+        {
+          this.userOnline = false;
+        }
       this.drawer.showDrawer();
   }
 

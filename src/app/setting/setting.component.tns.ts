@@ -1,4 +1,6 @@
 import { Component, OnInit} from '@angular/core';
+import { clear } from "@nativescript/core/application-settings";
+import { RouterExtensions } from "@nativescript/angular";
 
 @Component({
   selector: 'app-setting',
@@ -8,13 +10,18 @@ import { Component, OnInit} from '@angular/core';
 export class SettingComponent implements OnInit {
   title = 'Cantiniere-website';
 
-  constructor() {
+  constructor(private routerExtensions: RouterExtensions) {
    // do nothing.
   }
 
 
   ngOnInit(): void {
     // do nothing
+  }
+
+  logout(): void {
+    clear();
+    this.routerExtensions.navigate(["/home"], { clearHistory: true });
   }
 
 }

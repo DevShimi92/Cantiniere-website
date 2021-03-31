@@ -1,1 +1,12 @@
-<Label text="Login" ></Label>
+<StackLayout class="form">
+    <StackLayout class="input-field">
+      <TextField class="input" hint='Email' autocapitalizationType="none" keyboardType="email" autocorrect="false" [(ngModel)]='user.email' ></TextField>
+    </StackLayout>
+  
+    <StackLayout class="input-field">
+      <TextField class="input" hint="Password" secure="true" [(ngModel)]='user.password' ></TextField>
+    </StackLayout>
+  
+    <Button text="Connexion" class="btn btn-primary"  (tap)="submit()"></Button>
+
+  </StackLayout>
