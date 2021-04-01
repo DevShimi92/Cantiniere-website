@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from './shared/models/user.model';
+import { environment } from './../environments/environment';
+
 
 export class SessionUser {
   constructor(
@@ -18,7 +20,7 @@ export class SessionUser {
   })
 export class DefaultService {
 
-  private API_URL = 'https://cantiniere-api.herokuapp.com/';
+  private API_URL = environment.api_url;
   private user : User;
 
   constructor(private http: HttpClient) { 
