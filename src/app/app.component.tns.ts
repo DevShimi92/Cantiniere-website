@@ -11,7 +11,7 @@ import { getString } from "@nativescript/core/application-settings";
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements AfterViewInit,OnInit {
-  private userOnline : boolean;
+  public userOnline : boolean;
   title = 'Cantiniere-website';
 
   constructor(private _changeDetectionRef: ChangeDetectorRef,private routerExtensions: RouterExtensions) {

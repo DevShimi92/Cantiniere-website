@@ -13,7 +13,7 @@ import { DefaultService } from '../default.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  private user : User;
+  public user : User;
 
   constructor(private routerExtensions: RouterExtensions, private defaultService: DefaultService) {
     this.user = new User();
