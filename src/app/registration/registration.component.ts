@@ -64,7 +64,7 @@ export class RegistrationComponent implements OnInit {
               {
                   sessionStorage.setItem('token', response.token);
                   this.router.navigate([""]).then(() => {
-                    window.location.reload();
+                    location.reload();
                   });
               },
             (error) => 
