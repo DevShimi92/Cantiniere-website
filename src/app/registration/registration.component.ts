@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DefaultService } from '../default.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-registration',
@@ -11,7 +14,7 @@ export class RegistrationComponent implements OnInit {
   
   registrationForm: FormGroup;
 
-  constructor( private formBuilder: FormBuilder ) { }
+  constructor( private formBuilder: FormBuilder, private router: Router, private defaultService: DefaultService ) { }
 
   ngOnInit(): void {
     
@@ -54,6 +57,21 @@ export class RegistrationComponent implements OnInit {
     else if(this.registrationForm.value.password != this.registrationForm.value.checkPassword)
       {
         console.log("Mot de passe différent")
+      }
+    else
+      {
+        this.defaultService.register(this.registrationForm.value.lastName, this.registrationForm.value.firstNName, this.registrationForm.value.email, this.registrationForm.value.password).subscribe((response) => 
+              {
+                  sessionStorage.setItem('token', response.token);
+                  this.router.navigate([""]).then(() => {
+                    window.location.reload();
+                  });
+              },
+            (error) => 
+              {
+                  console.log(error); 
+              }
+          );
       }
     
   }

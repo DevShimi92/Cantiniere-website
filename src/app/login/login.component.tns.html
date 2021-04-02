@@ -1,12 +1,34 @@
 <StackLayout class="form">
-    <StackLayout class="input-field">
+
+  <StackLayout  *ngIf="!isLoggingIn" class="input-field">
+    <TextField class="input" hint='Nom' [(ngModel)]='user.last_name' ></TextField>
+  </StackLayout>
+
+  <StackLayout  *ngIf="!isLoggingIn" class="input-field">
+    <TextField class="input" hint='Prénom' [(ngModel)]='user.first_name' ></TextField>
+  </StackLayout>
+    
+  <StackLayout class="input-field">
       <TextField class="input" hint='Email' autocapitalizationType="none" keyboardType="email" autocorrect="false" [(ngModel)]='user.email' ></TextField>
     </StackLayout>
   
     <StackLayout class="input-field">
       <TextField class="input" hint="Password" secure="true" [(ngModel)]='user.password' ></TextField>
     </StackLayout>
+
+    <StackLayout *ngIf="!isLoggingIn" class="input-field">
+      <TextField class="input" hint="Confirmer votre Mot de passe" secure="true" [(ngModel)]='confirmedPassword' ></TextField>
+    </StackLayout>
   
-    <Button text="Connexion" class="btn btn-primary"  (tap)="submit()"></Button>
+    <Button [text]="isLoggingIn ? 'Connexion' : 'Inscription'"  class="btn btn-primary"  (tap)="submit()"></Button>
+
+    <Label (tap)="toggleForm()">
+      <FormattedString>
+        <Span [text]="isLoggingIn ? 'Pas de compte ? ' : 'Retour à la page de connexion'"></Span>
+        <Span [text]="isLoggingIn ? 'Inscris toi !' : ''"></Span>
+      </FormattedString>
+    </Label>
 
   </StackLayout>
+
+  

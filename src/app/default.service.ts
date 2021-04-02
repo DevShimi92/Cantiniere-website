@@ -36,5 +36,14 @@ export class DefaultService {
     return this.http.post<SessionUser>(this.API_URL+'login',this.user,{ headers });
   }
 
+  register(last_name:string, first_name:string, email:string, password:string):Observable<SessionUser>{
+    const headers = { 'Content-Type': 'application/json' };
+    this.user.last_name = last_name;
+    this.user.first_name = first_name;
+    this.user.email = email;
+    this.user.password = password;
+
+    return this.http.post<SessionUser>(this.API_URL+'user',this.user,{ headers });
+  }
 
 }
