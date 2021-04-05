@@ -18,6 +18,13 @@ export class LoginComponent implements OnInit {
   public confirmedPassword = '';
   public user : User;
   
+  private acountExistOptions = {
+    title: 'Compte exsitant',
+    message: 'Cet email existe déja dans notre base de donnée, avez vous oublié votre mot de passe ?',
+    okButtonText: 'Oui',
+    cancelButtonText: 'Non',
+    cancelable: true
+  }
 
   constructor(private routerExtensions: RouterExtensions, private defaultService: DefaultService) {
     this.user = new User();
@@ -58,7 +65,8 @@ export class LoginComponent implements OnInit {
                 Dialogs.alert({
                   title: "Erreur",
                   message: "Il vous faut un mot de passe pour vous connectez ! ",
-                  okButtonText: "OK"
+                  okButtonText: "OK",
+                  cancelable: true
                 }).then(()=> {
                     console.log("Mot de passe manqnaut pour l'inscription ");
                 });
@@ -72,7 +80,24 @@ export class LoginComponent implements OnInit {
                       },
                     (error) => 
                       {
-                          console.log(error); 
+                        if(error.status == 409)
+                        {
+                          console.log("L'email utilisé pour l'enregistrement est déja exsitant dans la base de donnée. Demmande de réinitialisation de mot de passe...")
+                          Dialogs.confirm(this.acountExistOptions).then(result => {
+                            if( result == true )
+                              {
+                                  console.log('Vers la page de restoration de mdp...');
+                              }
+                            else
+                              {
+                                console.log("L'utilisateur n'a pas voulu tenté de réinitialiser son mot de passe")
+                              }
+                          });
+                        }
+                        else
+                        {
+                          console.log(error);
+                        }
                       }
                   );
               }
@@ -81,7 +106,8 @@ export class LoginComponent implements OnInit {
                 Dialogs.alert({
                   title: "Erreur",
                   message: "Le mot de passe et la confirmation de mot de passe entrées sont différents ",
-                  okButtonText: "OK"
+                  okButtonText: "OK",
+                  cancelable: true
                 }).then(()=> {
                     console.log("Le Mot de passe normal et de confirmation sont différente pour l'inscription ");
                 });
@@ -92,7 +118,8 @@ export class LoginComponent implements OnInit {
             Dialogs.alert({
               title: "Erreur",
               message: "Email manquant ou invalide",
-              okButtonText: "OK"
+              okButtonText: "OK",
+              cancelable: true
             }).then(()=> {
                 console.log("Email manquant ou invalide pour l'inscription");
             });
@@ -104,7 +131,8 @@ export class LoginComponent implements OnInit {
         Dialogs.alert({
           title: "Erreur",
           message: "Nom et prénom nécessaire pour l'inscription",
-          okButtonText: "OK"
+          okButtonText: "OK",
+          cancelable: true
         }).then(()=> {
             console.log("Nom et prénom manquant pour l'inscription");
         });
@@ -129,7 +157,8 @@ export class LoginComponent implements OnInit {
                   Dialogs.alert({
                     title: "Erreur",
                     message: "Identifiant incorrect",
-                    okButtonText: "OK"
+                    okButtonText: "OK",
+                    cancelable: true
                 }).then(()=> {
                     console.log("Erreur 401 dans login");
                 });
@@ -147,7 +176,8 @@ export class LoginComponent implements OnInit {
       Dialogs.alert({
         title: "Erreur",
         message: "Email ou Mot de passe manquant",
-        okButtonText: "OK"
+        okButtonText: "OK",
+        cancelable: true
       }).then(()=> {
           console.log("Email ou Mot de passe manquant dans login");
       });
