@@ -1,10 +1,33 @@
 <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" #form="ngForm">
     <div>
-        <input formControlName="lastName" type="text " placeholder="Votre nom"> 
-        <input formControlName="firstNName" type="text " placeholder="Votre prénom"> 
-        <input formControlName="email" type="email" placeholder="votre.email@correct.com"> 
-        <input formControlName="password" type="password" placeholder="Votre Mot de passe"> 
-        <input formControlName="checkPassword" type="password" placeholder="Confirmer votre Mot de passe"> 
+        <h1>Création de compte</h1>
+        <div class="form-group">
+            <label for="name">Nom </label>
+            <input formControlName="lastName" type="text " name="registrationForm.value.lastName"  placeholder="Votre nom" required> 
+            <div [hidden]="!emptyLastName" class="alert alert-danger">Nom requis</div>
+        </div>
+        <div class="form-group">
+            <label for="name">Prénom </label>
+            <input formControlName="firstNName" type="text " placeholder="Votre prénom"> 
+            <div [hidden]="!emptyName" class="alert alert-danger">Prénom requis</div>
+        </div>
+        <div class="form-group">
+            <label for="name">Email </label>
+            <input formControlName="email" type="email" placeholder="votre.email@correct.com">
+            <div [hidden]="!errorEmail" class="alert alert-danger">{{errorEmailMsg}}</div>
+        </div>
+        <div class="form-group">
+            <label for="name">Votre mot de passe </label>
+            <input formControlName="password" type="password" placeholder="Votre Mot de passe">
+            <div [hidden]="!errorPassword" class="alert alert-danger">{{errorPasswordMsg}}</div>
+        </div>
+        <div class="form-group">
+            <label for="name">Confirmation de votre mot de passe </label>
+            <input formControlName="checkPassword" type="password" placeholder="Confirmer votre Mot de passe"> 
+            <div [hidden]="!errorCheckPassword" class="alert alert-danger">{{errorPasswordMsg}}</div>
+        </div>
+
+                
         <input  type="submit" value="Créer son compte" >
         <input  type="button" routerLink="/login" value="Mot de passe oubliée ?" >
     </div> 

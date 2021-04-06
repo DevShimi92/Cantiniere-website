@@ -14,6 +14,14 @@ export class RegistrationComponent implements OnInit {
   
   registrationForm: FormGroup;
 
+  emptyLastName = false;
+  emptyName = false;
+  errorEmail = false;
+  errorEmailMsg ='';
+  errorPassword = false;
+  errorCheckPassword = false;
+  errorPasswordMsg ='';
+
   constructor( private formBuilder: FormBuilder, private router: Router, private defaultService: DefaultService ) { }
 
   ngOnInit(): void {
@@ -32,33 +40,64 @@ export class RegistrationComponent implements OnInit {
 
     if(!this.registrationForm.value.lastName)
       {
-        console.log("nom vide")
+        this.emptyLastName = true;
       }
+    else
+      { 
+        this.emptyLastName = false;
+      }
+
     if(!this.registrationForm.value.firstNName)
       {
-        console.log("prénom vide")
+        this.emptyName = true;
       }
+    else
+      { 
+        this.emptyName = false;
+      }
+      
     if(!this.registrationForm.value.email)
       {
-        console.log("email vide")
+        this.errorEmail = true;
+        this.errorEmailMsg = 'Email requis'
       }
     else if (!this.validateEmail(this.registrationForm.value.email))
       {
-        console.log("email invalide")
-      }
-    if(!this.registrationForm.value.password )
-      {
-        console.log("Mot de passe 1 vide")
-      }
-    else if (!this.registrationForm.value.checkPassword)
-      {
-        console.log("Mot de passe 2 vide")
-      }
-    else if(this.registrationForm.value.password != this.registrationForm.value.checkPassword)
-      {
-        console.log("Mot de passe différent")
+        this.errorEmail = true;
+        this.errorEmailMsg = 'Email invalide'
       }
     else
+      { 
+        this.errorEmail = false;
+      }
+     
+    if(!this.registrationForm.value.password )
+      {
+        this.errorPassword = true;
+        this.errorPasswordMsg = 'Mot de passe requis';
+      }
+    else
+      { 
+        this.errorPassword = false;
+      }
+
+   if (!this.registrationForm.value.checkPassword && this.errorPassword == false)
+      {
+        this.errorCheckPassword = true;
+        this.errorPasswordMsg = 'Mot de passe de confirmation requis';
+      }
+    else if(this.registrationForm.value.password != this.registrationForm.value.checkPassword && this.registrationForm.value.checkPassword != '')
+      {
+        this.errorCheckPassword = true;
+        this.errorPasswordMsg = ' Les Mot de passe entrée sont différents';
+      }
+    else
+      { 
+        this.errorCheckPassword = false;
+      }
+  
+    
+    if(!this.emptyLastName && !this.emptyName && !this.errorEmail && ! this.errorPassword  && ! this.errorCheckPassword)
       {
         this.defaultService.register(this.registrationForm.value.lastName, this.registrationForm.value.firstNName, this.registrationForm.value.email, this.registrationForm.value.password).subscribe((response) => 
               {
@@ -69,7 +108,15 @@ export class RegistrationComponent implements OnInit {
               },
             (error) => 
               {
-                  console.log(error); 
+                if(error.status == 409)
+                  {
+                    this.errorEmail = true;
+                    this.errorEmailMsg = 'Cet email est déja présente dans notre base de donnée.'
+                  }
+                else
+                  {
+                    console.log(error); 
+                  }
               }
           );
       }
