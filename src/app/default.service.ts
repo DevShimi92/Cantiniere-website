@@ -7,10 +7,21 @@ import { environment } from './../environments/environment';
 
 export class SessionUser {
   constructor(
-      public token: string, 
+      public token: string 
   )
   {
       this.token = token ;
+  }
+}
+
+export class test {
+  constructor(
+    public code_type: string,
+    public name: string
+  )
+  {
+    this.code_type = code_type;
+    this.name = name;
   }
 }
 
@@ -37,6 +48,7 @@ export class DefaultService {
   }
 
   register(last_name:string, first_name:string, email:string, password:string):Observable<SessionUser>{
+    
     const headers = { 'Content-Type': 'application/json' };
     this.user.last_name = last_name;
     this.user.first_name = first_name;
@@ -46,4 +58,17 @@ export class DefaultService {
     return this.http.post<SessionUser>(this.API_URL+'user',this.user,{ headers });
   }
 
+  getAllTypeOfArticle(): Observable<any>{
+
+    const headers = { 'Content-Type': 'application/json' };
+
+    return this.http.get(this.API_URL+'type_article', { headers }) ;
+  }
+
+  getAllArticle(): Observable<any>{
+
+    const headers = { 'Content-Type': 'application/json' };
+
+    return this.http.get(this.API_URL+'article', { headers }) ;
+  }
 }

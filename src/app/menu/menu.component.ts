@@ -1,5 +1,6 @@
   
 import { Component, OnInit } from '@angular/core';
+import { DefaultService } from '../default.service';
 
 @Component({
   selector: 'app-menu',
@@ -9,12 +10,21 @@ import { Component, OnInit } from '@angular/core';
 export class MenuComponent implements OnInit {
   title = 'Cantiniere-website';
 
-  constructor() {
+  menuHaveSomething: boolean = false;
+
+  constructor(private defaultService: DefaultService) {
    // do nothing.
  }
 
   ngOnInit(): void {
-    // do nothing.
+    this.defaultService.getAllTypeOfArticle().subscribe((response) => 
+    {
+      if (response)
+      {
+        this.menuHaveSomething = true; 
+      }
+    }
+    );
   }
 
 }
