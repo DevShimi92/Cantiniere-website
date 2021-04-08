@@ -10,7 +10,7 @@ import { DefaultService } from '../default.service';
 export class MenuComponent implements OnInit {
   title = 'Cantiniere-website';
 
-  menuHaveSomething: boolean = false;
+  menuHaveSomething = false;
 
   constructor(private defaultService: DefaultService) {
    // do nothing.
