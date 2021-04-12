@@ -44,7 +44,6 @@ export class LoginComponent implements OnInit {
   }
 
   submit():void {
-    //check ici
 
     if (this.isLoggingIn) {
         this.login();

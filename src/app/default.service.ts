@@ -58,6 +58,18 @@ export class DefaultService {
     return this.http.post<SessionUser>(this.API_URL+'user',this.user,{ headers });
   }
 
+  updateUser(id:number,last_name:string=null, first_name:string=null, email:string=null, password:string=null):Observable<any>{
+    
+    const headers = { 'Content-Type': 'application/json' };
+    this.user.id = id;
+    this.user.last_name = last_name;
+    this.user.first_name = first_name;
+    this.user.email = email;
+    this.user.password = password;
+
+    return this.http.put<SessionUser>(this.API_URL+'user',this.user,{ headers });
+  }
+
   getAllTypeOfArticle(): Observable<any>{
 
     const headers = { 'Content-Type': 'application/json' };

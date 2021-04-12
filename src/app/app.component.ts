@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { trigger, transition, state, animate, style, useAnimation } from '@angular/animations';
+import { Router } from '@angular/router';
 
 import { errorFormAnimation } from '././animation/animation';
 import { DefaultService } from './default.service';
@@ -61,7 +62,7 @@ export class AppComponent implements OnInit{
   loginForm: FormGroup;
   routerLinkOnButton = '/registration';
 
-  constructor(private formBuilder: FormBuilder,private defaultService: DefaultService) {  }
+  constructor(private formBuilder: FormBuilder, private router: Router, private defaultService: DefaultService) {  }
 
   ngOnInit():void {
 
@@ -154,7 +155,9 @@ export class AppComponent implements OnInit{
     {
       sessionStorage.clear();
       this.accountLogIn=false;
-      location.reload();
+      this.router.navigate([""]).then(() => {
+        location.reload();
+      });
     }
 
   validateEmail(email:string):boolean {

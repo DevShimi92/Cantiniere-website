@@ -1,1 +1,19 @@
-<Label text="Profile" ></Label>
+<Label text="Votre Solde est de {{dataUser.money}}" textAlignment="center" ></Label>
+
+<StackLayout class="form">
+    <Label text="Nom" ></Label>
+        <TextField class="input" hint='Votre Nom' [(ngModel)]='user.last_name' ></TextField>
+    <Label text="Prénom" ></Label>
+        <TextField class="input" hint='Votre Prénom' [(ngModel)]='user.first_name' ></TextField>
+    <Label text="Email" ></Label>
+        <TextField class="input" hint='Votre Email' [(ngModel)]='user.email' ></TextField>
+    <Label text="Nouveau mot de passe" ></Label>
+        <TextField class="input" hint='Mot de passe' [(ngModel)]='user.password' ></TextField>
+    <Label text="Confirmez votre nouveau mot de passe" ></Label>
+        <TextField class="input" hint='Mot de passe'  [(ngModel)]='checkPassaword' ></TextField>
+
+    <Button text="Modifier"  class="btn btn-primary"  (tap)="submit()" ></Button>
+
+</StackLayout>
+
+  
