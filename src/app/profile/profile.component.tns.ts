@@ -36,30 +36,16 @@ export class ProfileComponent implements OnInit {
     
     if ((this.dataUser.last_name != this.user.last_name) || (this.dataUser.first_name != this.user.first_name) || (this.dataUser.email != this.user.email) )
       {
-        this.defaultService.updateUser(this.dataUser.id, this.user.last_name, this.user.first_name, this.user.email).subscribe((response) => 
+        this.defaultService.updateUser(this.dataUser.id, this.user.last_name, this.user.first_name, this.user.email).subscribe(() => 
                         {
-                          Dialogs.alert({
-                            title: "Information",
-                            message: "Profile mise à jour !",
-                            okButtonText: "OK",
-                            cancelable: true
-                          }).then(()=> {
-                            console.log('Update profile résussi');
-                          });
+                          this.dialogsOK();
                           
                         },
                       (error) => 
                         {
                           if(error.status == 409)
                             {
-                                Dialogs.alert({
-                                  title: "Erreur",
-                                  message: "Certains champs n'ont pas pu être mis à jour",
-                                  okButtonText: "OK",
-                                  cancelable: true
-                                }).then(()=> {
-                                    console.log("Erreur 409 dans updateProfile");
-                                });
+                              this.dialogsErreur();
                             }
                           else
                           {
@@ -72,30 +58,14 @@ export class ProfileComponent implements OnInit {
       {
         if (this.user.password == this.checkPassaword)
           {
-            this.defaultService.updateUser(this.dataUser.id, null, null, null, this.user.password).subscribe((response) => 
+            this.defaultService.updateUser(this.dataUser.id, null, null, null, this.user.password).subscribe(() => 
                     {
-                      Dialogs.alert({
-                        title: "Information",
-                        message: "Profile mise à jour !",
-                        okButtonText: "OK",
-                        cancelable: true
-                      }).then(()=> {
-                        console.log('Update profile résussi');
-                      });
-                      
+                      this.dialogsOK();
                     },
-                  (error) => 
-                    {
+                  (error) => {
                       if(error.status == 409)
                         {
-                            Dialogs.alert({
-                              title: "Erreur",
-                              message: "Certains champs n'ont pas pu être mis à jour",
-                              okButtonText: "OK",
-                              cancelable: true
-                            }).then(()=> {
-                                console.log("Erreur 409 dans updateProfile");
-                            });
+                          this.dialogsErreur();
                         }
                       else
                       {
@@ -119,7 +89,28 @@ export class ProfileComponent implements OnInit {
 
   }
 
+  dialogsErreur(): void
+  {
+    Dialogs.alert({
+      title: "Erreur",
+      message: "Certains champs n'ont pas pu être mis à jour",
+      okButtonText: "OK",
+      cancelable: true
+    }).then(()=> {
+        console.log("Erreur 409 dans updateProfile");
+    });
+  }
 
-
+  dialogsOK(): void
+  {
+    Dialogs.alert({
+      title: "Information",
+      message: "Profile mise à jour !",
+      okButtonText: "OK",
+      cancelable: true
+    }).then(()=> {
+      console.log('Update profile résussi');
+    });
+  }
 
 }
