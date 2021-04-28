@@ -74,23 +74,23 @@ export class ProfileComponent implements OnInit {
            this.errorUpdate = false;
            this.errorPasswordCheck = false;
            this.defaultService.updateUser(this.updateForm.value.id,null,null,null,this.updateForm.value.password).subscribe((response) =>
-           {
-             console.log('it ok');
-             location.reload();
-           },
-              (error) => 
                 {
-                  if(error.status == 409)
-                    {
-                      this.errorUpdate = true;
-                      console.log("Certains champs n'ont pas pu être update"); 
-                     }
-                  else
-                    {
-                      console.log(error); 
-                    }
-                }
-            );
+                  console.log('it ok');
+                  location.reload();
+                },
+                (error) => 
+                  {
+                    if(error.status == 409)
+                      {
+                        this.errorUpdate = true;
+                        console.log("Certains champs n'ont pas pu être update"); 
+                      }
+                    else
+                      {
+                        console.log(error); 
+                      }
+                  }
+              );
           }
         else
           {

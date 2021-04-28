@@ -8,7 +8,7 @@ import { SettingComponent } from '@src/app/setting/setting.component';
 import { ReportComponent } from '@src/app/report/report.component';
 import { CartComponent } from '@src/app/cart/cart.component';
 import { RegistrationComponent } from '@src/app/registration/registration.component';
-
+import { DashboardComponent } from '@src/app/dashboard/dashboard.component';
 
 export const routes: Routes = [
   {
@@ -48,4 +48,8 @@ export const routes: Routes = [
       path: 'registration',
       component: RegistrationComponent, 
   },
+  {
+       path: 'dashboard',
+       component: DashboardComponent, 
+  }
 ];

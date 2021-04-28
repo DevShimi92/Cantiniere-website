@@ -1,0 +1,27 @@
+<div *ngIf="data.SetNewSolde == true" >
+  <mat-dialog-content>    
+        <p>Modifier le solde de {{data.name}}</p>
+        <mat-form-field >
+            <mat-label>Solde</mat-label>
+        <input matInput  [(ngModel)]="data.money">
+        </mat-form-field>
+        
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="data.money" cdkFocusInitial>Valider</button>
+    <button mat-button mat-dialog-close>Annuler</button>    
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.SetNewSolde == false && data.erreur == false" >
+  <mat-dialog-content>    
+        <p>Le solde a bien été mis à jour !</p>
+  </mat-dialog-content>
+</div>
+
+
+<div *ngIf="data.SetNewSolde == false && data.erreur == true" >
+  <mat-dialog-content>    
+        <p>Une erreur est survenu !</p>
+  </mat-dialog-content>
+</div>

@@ -4,28 +4,6 @@ import { Observable } from 'rxjs';
 import { User } from './shared/models/user.model';
 import { environment } from './../environments/environment';
 
-
-export class SessionUser {
-  constructor(
-      public token: string 
-  )
-  {
-      this.token = token ;
-  }
-}
-
-export class test {
-  constructor(
-    public code_type: string,
-    public name: string
-  )
-  {
-    this.code_type = code_type;
-    this.name = name;
-  }
-}
-
-
 @Injectable({
     providedIn: 'root'
   })
@@ -38,16 +16,16 @@ export class DefaultService {
     this.user = new User();
   }
 
-  getToken (email:string,password:string) : Observable<SessionUser> {
+  getToken (email:string,password:string) : Observable<any> {
 
     const headers = { 'Content-Type': 'application/json' };
     this.user.email = email;
     this.user.password = password;
 
-    return this.http.post<SessionUser>(this.API_URL+'login',this.user,{ headers });
+    return this.http.post<any>(this.API_URL+'login',this.user,{ headers });
   }
 
-  register(last_name:string, first_name:string, email:string, password:string):Observable<SessionUser>{
+  register(last_name:string, first_name:string, email:string, password:string):Observable<any>{
     
     const headers = { 'Content-Type': 'application/json' };
     this.user.last_name = last_name;
@@ -55,19 +33,21 @@ export class DefaultService {
     this.user.email = email;
     this.user.password = password;
 
-    return this.http.post<SessionUser>(this.API_URL+'user',this.user,{ headers });
+    return this.http.post<any>(this.API_URL+'user',this.user,{ headers });
   }
 
-  updateUser(id:number,last_name:string=null, first_name:string=null, email:string=null, password:string=null):Observable<any>{
+  updateUser(id:number,last_name:string=null, first_name:string=null, email:string=null, password:string=null, money:number=null):Observable<any>{
     
-    const headers = { 'Content-Type': 'application/json' };
+    const headers = { 'Content-Type': 'application/json' ,
+    'Authorization': `Bearer ${sessionStorage.getItem('token')}` };
     this.user.id = id;
     this.user.last_name = last_name;
     this.user.first_name = first_name;
     this.user.email = email;
+    this.user.money = money;
     this.user.password = password;
 
-    return this.http.put<SessionUser>(this.API_URL+'user',this.user,{ headers });
+    return this.http.put<any>(this.API_URL+'user',this.user,{ headers });
   }
 
   getAllTypeOfArticle(): Observable<any>{
@@ -82,5 +62,13 @@ export class DefaultService {
     const headers = { 'Content-Type': 'application/json' };
 
     return this.http.get(this.API_URL+'article', { headers }) ;
+  }
+
+  getAllUser(): Observable<any>{
+
+    const headers = { 'Content-Type': 'application/json' ,
+    'Authorization': `Bearer ${sessionStorage.getItem('token')}` };
+    
+    return this.http.get(this.API_URL+'user', { headers }) ;
   }
 }

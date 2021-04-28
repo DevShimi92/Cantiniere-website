@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { trigger, transition, state, animate, style, useAnimation } from '@angular/animations';
 import { Router } from '@angular/router';
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 import { errorFormAnimation } from '././animation/animation';
 import { DefaultService } from './default.service';
@@ -54,6 +55,7 @@ import { DefaultService } from './default.service';
 export class AppComponent implements OnInit{
 
   accountLogIn = false;
+  coockerLogIn = false;
   isOpen = false;
   valueOfButton = 'Pas de compte ?'
   errorInLogin = false;
@@ -61,6 +63,9 @@ export class AppComponent implements OnInit{
   passwordEmpty = false;
   loginForm: FormGroup;
   routerLinkOnButton = '/registration';
+
+  dataUser : any;
+  helper = new JwtHelperService();
 
   constructor(private formBuilder: FormBuilder, private router: Router, private defaultService: DefaultService) {  }
 
@@ -73,7 +78,15 @@ export class AppComponent implements OnInit{
 
     if (sessionStorage.getItem('token'))
     {
-      this.accountLogIn = true;
+      if(sessionStorage.getItem('cooker') == 'true')
+        {
+          this.coockerLogIn = true;
+        }
+      else
+        {
+          this.accountLogIn = true;
+        }
+      
     }
 
   }
@@ -131,7 +144,18 @@ export class AppComponent implements OnInit{
           this.defaultService.getToken(this.loginForm.value.email,this.loginForm.value.password).subscribe((response) => 
               {
                   sessionStorage.setItem('token', response.token);
-                  this.accountLogIn= true;
+                  this.dataUser = this.helper.decodeToken(response.token);
+                  if ( this.dataUser.cooker == true )
+                    {    
+                        this.coockerLogIn= true;
+                        sessionStorage.setItem('cooker', 'true');
+                    }
+                  else
+                    {
+                        this.accountLogIn= true;
+                        sessionStorage.setItem('cooker', 'false');
+                    }
+
                   this.isOpen = false
               },
             (error) => 
@@ -155,6 +179,7 @@ export class AppComponent implements OnInit{
     {
       sessionStorage.clear();
       this.accountLogIn=false;
+      this.coockerLogIn=false;
       this.router.navigate([""]).then(() => {
         location.reload();
       });
