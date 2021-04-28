@@ -9,6 +9,8 @@ import { DefaultService } from '../default.service';
 export interface DialogData {
   name: string;
   money: number;
+  SetNewSolde: boolean;
+  erreur:boolean;
 }
 
 
