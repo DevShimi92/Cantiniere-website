@@ -50,6 +50,14 @@ export class DefaultService {
     return this.http.put<any>(this.API_URL+'user',this.user,{ headers });
   }
 
+  postTypeOfArticle(name:string):Observable<any>{
+    
+    const headers = { 'Content-Type': 'application/json' ,
+    'Authorization': `Bearer ${sessionStorage.getItem('token')}` };
+
+    return this.http.post<any>(this.API_URL+'type_article',{name : name},{ headers });
+  }
+  
   getAllTypeOfArticle(): Observable<any>{
 
     const headers = { 'Content-Type': 'application/json' };
@@ -57,12 +65,32 @@ export class DefaultService {
     return this.http.get(this.API_URL+'type_article', { headers }) ;
   }
 
+  putTypeOfArticle(code_type:number, name:string):Observable<any>{
+    
+    const headers = { 'Content-Type': 'application/json'  ,
+    'Authorization': `Bearer ${sessionStorage.getItem('token')}` };
+    const data = { code_type: code_type ,name : name }
+
+    return this.http.put<any>(this.API_URL+'type_article',data,{ headers });
+  }
+
+  deleteTypeOfArticle(code_type:number):Observable<any>{
+    
+    const headers = { 'Content-Type': 'application/json'  ,
+    'Authorization': `Bearer ${sessionStorage.getItem('token')}` };
+    const data = { code_type: code_type }
+
+    return this.http.request<any>('delete',this.API_URL+'type_article',{ headers,body :data });
+  }
+  
   getAllArticle(): Observable<any>{
 
     const headers = { 'Content-Type': 'application/json' };
 
     return this.http.get(this.API_URL+'article', { headers }) ;
   }
+
+  
 
   getAllUser(): Observable<any>{
 

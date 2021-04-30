@@ -12,6 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
 
 
 import { AppRoutingModule } from '@src/app/app-routing.module';
@@ -23,7 +24,7 @@ import { SettingComponent } from '@src/app/setting/setting.component';
 import { ReportComponent } from '@src/app/report/report.component';
 import { CartComponent } from '@src/app/cart/cart.component';
 import { RegistrationComponent } from '@src/app/registration/registration.component';
-import { DashboardComponent, DashboardComponentEditSolde } from '@src/app/dashboard/dashboard.component';
+import { DashboardComponent, DashboardComponentDialogEditSolde, DashboardComponentDialogTypeArticle } from '@src/app/dashboard/dashboard.component';
 
 
 
@@ -38,7 +39,8 @@ import { DashboardComponent, DashboardComponentEditSolde } from '@src/app/dashbo
     CartComponent,
     RegistrationComponent,
     DashboardComponent,
-    DashboardComponentEditSolde
+    DashboardComponentDialogEditSolde,
+    DashboardComponentDialogTypeArticle,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +58,7 @@ import { DashboardComponent, DashboardComponentEditSolde } from '@src/app/dashbo
     MatDialogModule,
     MatMenuModule,
     MatPaginatorModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

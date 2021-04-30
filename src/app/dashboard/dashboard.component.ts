@@ -4,12 +4,14 @@ import {MatDialog , MatDialogRef,  MAT_DIALOG_DATA} from '@angular/material/dial
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 
+
 import { DefaultService } from '../default.service';
 
 export interface DialogData {
   name: string;
   money: number;
   SetNewSolde: boolean;
+  FormDialogTypeArticle: number;
   erreur:boolean;
 }
 
@@ -21,11 +23,14 @@ export interface DialogData {
 })
 export class DashboardComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'first_name', 'last_name', 'money','edit'];
+  displayedColumnsListUser: string[] = ['id', 'first_name', 'last_name', 'money','edit'];
+  displayedColumnsCustom: string[] = ['code_type','name','edit'];
+
   resultsLength = 0;
   dataSource;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('listCustomPaginatpr') listCustomPaginatpr: MatPaginator;
   
   constructor( public dialog: MatDialog, private defaultService: DefaultService ) {
    // do nothing.
@@ -36,7 +41,7 @@ export class DashboardComponent implements OnInit {
   }
 
   click($event):void{
-    const dialogRef = this.dialog.open(DashboardComponentEditSolde,{
+    const dialogRef = this.dialog.open(DashboardComponentDialogEditSolde,{
       data: { SetNewSolde : true, name : $event.last_name, money : $event.money, }
     });
 
@@ -45,7 +50,7 @@ export class DashboardComponent implements OnInit {
         {
           this.defaultService.updateUser($event.id,null,null,null,null,result).subscribe((response) =>
               {
-                this.dialog.open(DashboardComponentEditSolde,{
+                this.dialog.open(DashboardComponentDialogEditSolde,{
                   data: { SetNewSolde : false , erreur :false }
                 });
               },
@@ -53,7 +58,7 @@ export class DashboardComponent implements OnInit {
                 {
                   if(error.status == 409)
                     {
-                      this.dialog.open(DashboardComponentEditSolde,{
+                      this.dialog.open(DashboardComponentDialogEditSolde,{
                         data: { SetNewSolde : false , erreur :true }
                       });
                     }
@@ -82,18 +87,23 @@ export class DashboardComponent implements OnInit {
         console.log('Voir les commandes');
         break;
       case 1 :
+        this.dataSource = '';
         this.defaultService.getAllUser().subscribe((response) =>
           {
-            this.resultsLength = response.length;
-            this.dataSource = new MatTableDataSource(response);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.filterPredicate = function(data, filter: string): boolean {
-              return data.first_name.toLowerCase().includes(filter) || data.last_name.toLowerCase().includes(filter) || data.id.toString() === filter;
-            };
+            if(response != null)
+            {
+              
+              this.resultsLength = response.length;
+              this.dataSource = new MatTableDataSource(response);
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.filterPredicate = function(data, filter: string): boolean {
+                return data.first_name.toLowerCase().includes(filter) || data.last_name.toLowerCase().includes(filter) || data.id.toString() === filter;
+              };
+            }
           });
         break;
       case 2 :
-          console.log('Voir menu');
+         this.dataSource = '';
           break;
       case 3 :
           console.log('Paramètre');
@@ -121,16 +131,116 @@ export class DashboardComponent implements OnInit {
     }
   }
   
+  createTypeArticle():void{
+    const dialogRef = this.dialog.open(DashboardComponentDialogTypeArticle,{
+      data: { FormDialogTypeArticle : 0 }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        if(result) {
+          this.defaultService.postTypeOfArticle(result).subscribe(() => 
+            {
+              const dialogRef = this.dialog.open(DashboardComponentDialogTypeArticle,{
+                data: { FormDialogTypeArticle : 3, name : result }
+              });
+            },
+            (error) => 
+              {
+                const dialogRef = this.dialog.open(DashboardComponentDialogTypeArticle,{
+                  data: { FormDialogTypeArticle : 4, name : error.status }
+                });
+              });
+        }
+      });
+          
+  }
+
+  checkAllTypeArticle():void{
+    this.defaultService.getAllTypeOfArticle().subscribe((response) =>
+          {
+            if(response != null)
+            {
+              this.resultsLength = response.length;
+              this.dataSource = new MatTableDataSource(response);
+              this.dataSource.paginator = this.listCustomPaginatpr;
+              this.dataSource.filterPredicate = function(data, filter: string): boolean {
+                return data.name.toLowerCase().includes(filter) || data.code_type.toString() === filter;
+              };
+            }
+          });
+          
+  }
+
+  editTypeArticle($event):void{
+    const dialogRef = this.dialog.open(DashboardComponentDialogTypeArticle,{
+      data: { FormDialogTypeArticle : 1, name : $event.name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        if(result !== $event.name && ( result !== undefined &&  result !== '') ) {
+          this.defaultService.putTypeOfArticle( $event.code_type,result).subscribe(() => 
+            {
+              const dialogRef = this.dialog.open(DashboardComponentDialogTypeArticle,{
+                data: { FormDialogTypeArticle : 5, name : result }
+              });
+            },
+            (error) => 
+              {
+                const dialogRef = this.dialog.open(DashboardComponentDialogTypeArticle,{
+                  data: { FormDialogTypeArticle : 4, name : error.status }
+                });
+              });
+        }
+      });
+          
+  }
+
+  deleteTypeArticle($event):void{
+    const dialogRef = this.dialog.open(DashboardComponentDialogTypeArticle,{
+      data: { FormDialogTypeArticle : 2, name : $event.name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        if(result == true && ( result !== undefined &&  result !== '') ) {
+          this.defaultService.deleteTypeOfArticle( $event.code_type).subscribe((response) => 
+            {
+              const dialogRef = this.dialog.open(DashboardComponentDialogTypeArticle,{
+                data: { FormDialogTypeArticle : 6 }
+              });
+            },
+            (error) => 
+              {
+                const dialogRef = this.dialog.open(DashboardComponentDialogTypeArticle,{
+                  data: { FormDialogTypeArticle : 4, name : error.status }
+                });
+              });
+        }
+      });
+          
+  }
+
 }
 
 @Component({
-  selector: 'app-dashboard-dialog',
+  selector: 'app-dashboard-dialog-edit-solde',
   templateUrl: 'dashboard.component-dialog-edit-solde.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponentEditSolde {
+export class DashboardComponentDialogEditSolde {
   
-  constructor( public dialogRef: MatDialogRef<DashboardComponentEditSolde>,
+  constructor( public dialogRef: MatDialogRef<DashboardComponentDialogEditSolde>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+}
+
+@Component({
+  selector: 'app-dashboard-dialog-type-article',
+  templateUrl: 'dashboard.component-dialog-type-article.html',
+  styleUrls: ['./dashboard.component.css']
+})
+export class DashboardComponentDialogTypeArticle {
+  
+  constructor( public dialogRef: MatDialogRef<DashboardComponentDialogTypeArticle>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
 }

@@ -1,0 +1,62 @@
+<div *ngIf="data.FormDialogTypeArticle == 0" >
+  <mat-dialog-content>    
+        <p>Nom du nouveau type d'article</p>
+        <mat-form-field >
+            <mat-label>Nom </mat-label>
+            <input matInput  [(ngModel)]="data.name">
+        </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="data.name" cdkFocusInitial>Créer</button>
+    <button mat-button mat-dialog-close>Annuler</button>    
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.FormDialogTypeArticle == 1" >
+  <mat-dialog-content>    
+        <p>Modifier le nom du type d'article</p>
+        <mat-form-field >
+            <mat-label>Nom </mat-label>
+            <input matInput  [(ngModel)]="data.name">
+        </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="data.name" cdkFocusInitial>Modifier</button>
+    <button mat-button mat-dialog-close>Annuler</button>    
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.FormDialogTypeArticle == 2" >
+  <mat-dialog-content>    
+        <p>Etes-vous sûr(e) de vouloir supprimer {{data.name}} ?</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]=true cdkFocusInitial>Oui</button>
+    <button mat-button mat-dialog-close>Non</button>    
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.FormDialogTypeArticle == 3" >
+  <mat-dialog-content>    
+        <p>{{data.name}} à été crée ! </p>
+  </mat-dialog-content>
+</div>
+
+
+<div *ngIf="data.FormDialogTypeArticle == 4" >
+  <mat-dialog-content>    
+        <p>Une erreur est survenu ! ( code : {{data.name}} )</p>
+  </mat-dialog-content>
+</div>
+
+<div *ngIf="data.FormDialogTypeArticle == 5" >
+  <mat-dialog-content>    
+        <p>Type d'article bien renommé en {{data.name}} </p>
+  </mat-dialog-content>
+</div>
+
+<div *ngIf="data.FormDialogTypeArticle == 6" >
+  <mat-dialog-content>    
+        <p>Le Type d'article bien été supprimé </p>
+  </mat-dialog-content>
+</div>
