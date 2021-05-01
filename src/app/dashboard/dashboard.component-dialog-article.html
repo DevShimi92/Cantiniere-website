@@ -1,0 +1,88 @@
+<div *ngIf="data.FormDialogArticle == 0" >
+  <mat-dialog-content>    
+        <p>Création d'un nouvel article </p>
+
+        <mat-form-field >
+            <mat-label>Nom </mat-label>
+            <input matInput  [(ngModel)]="data.name">
+        </mat-form-field>
+
+        <mat-form-field >
+          <mat-label>Prix </mat-label>
+          <input matInput [(ngModel)]="data.price" >
+      </mat-form-field>
+
+    <mat-form-field>
+      <mat-select [(ngModel)]="data.value">
+        <mat-option *ngFor="let value of data.listTypeArticle" [value]="value">{{ value }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Créer</button>
+    <button mat-button mat-dialog-close>Annuler</button>    
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.FormDialogArticle == 1" >
+  <mat-dialog-content>    
+        <p>Modifier l'article</p>
+        <mat-form-field >
+            <mat-label>Nom </mat-label>
+            <input matInput  [(ngModel)]="data.name">
+        </mat-form-field>
+
+        <mat-form-field >
+          <mat-label>Prix </mat-label>
+          <input matInput  [(ngModel)]="data.price">
+      </mat-form-field>
+
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Modifier</button>
+    <button mat-button mat-dialog-close>Annuler</button>    
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.FormDialogArticle == 2" >
+  <mat-dialog-content>    
+        <p>Etes-vous sûr(e) de vouloir supprimer {{data.name}} ?</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]=true cdkFocusInitial>Oui</button>
+    <button mat-button mat-dialog-close>Non</button>    
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.FormDialogArticle == 3" >
+  <mat-dialog-content>    
+        <p>{{data.name}} à été crée ! </p>
+  </mat-dialog-content>
+</div>
+
+
+<div *ngIf="data.FormDialogArticle == 4" >
+  <mat-dialog-content>    
+        <p>Une erreur est survenu ! ( code : {{data.name}} )</p>
+  </mat-dialog-content>
+</div>
+
+<div *ngIf="data.FormDialogArticle == 5" >
+  <mat-dialog-content>    
+        <p>L'article a été modifié</p>
+  </mat-dialog-content>
+</div>
+
+<div *ngIf="data.FormDialogArticle == 6" >
+  <mat-dialog-content>    
+        <p>L'article bien été supprimé </p>
+  </mat-dialog-content>
+</div>
+
+<div *ngIf="data.FormDialogArticle == 7" >
+  <mat-dialog-content>    
+        <p>Pour créer un article, vous devez avoir au moins 1 type d'article de défini  </p>
+  </mat-dialog-content>
+</div>

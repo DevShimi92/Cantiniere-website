@@ -82,6 +82,38 @@ export class DefaultService {
 
     return this.http.request<any>('delete',this.API_URL+'type_article',{ headers,body :data });
   }
+
+  postArticle(name:string, price:number, code_type:number):Observable<any>{
+    
+    const headers = { 'Content-Type': 'application/json' ,
+    'Authorization': `Bearer ${sessionStorage.getItem('token')}` };
+
+    const data = {
+      name : name,
+      price: price,
+      code_type_src : code_type
+    }
+    return this.http.post<any>(this.API_URL+'article',data,{ headers });
+  }
+
+  putArticle(id:number, name:string=null,price:number=null):Observable<any>{
+    
+    const headers = { 'Content-Type': 'application/json' ,
+    'Authorization': `Bearer ${sessionStorage.getItem('token')}` };
+
+    const data = { id: id ,price : price ,name : name}
+
+    return this.http.put<any>(this.API_URL+'article',data,{ headers });
+  }
+
+  deleteArticle(id:number):Observable<any>{
+    
+    const headers = { 'Content-Type': 'application/json' ,
+    'Authorization': `Bearer ${sessionStorage.getItem('token')}` };
+    const data = { id: id }
+
+    return this.http.request<any>('delete',this.API_URL+'article',{ headers,body :data });
+  }
   
   getAllArticle(): Observable<any>{
 

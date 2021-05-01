@@ -24,7 +24,7 @@ import { SettingComponent } from '@src/app/setting/setting.component';
 import { ReportComponent } from '@src/app/report/report.component';
 import { CartComponent } from '@src/app/cart/cart.component';
 import { RegistrationComponent } from '@src/app/registration/registration.component';
-import { DashboardComponent, DashboardComponentDialogEditSolde, DashboardComponentDialogTypeArticle } from '@src/app/dashboard/dashboard.component';
+import { DashboardComponent, DashboardComponentDialogEditSolde, DashboardComponentDialogTypeArticle, DashboardComponentDialogArticle } from '@src/app/dashboard/dashboard.component';
 
 
 
@@ -41,6 +41,7 @@ import { DashboardComponent, DashboardComponentDialogEditSolde, DashboardCompone
     DashboardComponent,
     DashboardComponentDialogEditSolde,
     DashboardComponentDialogTypeArticle,
+    DashboardComponentDialogArticle,
   ],
   imports: [
     BrowserModule,

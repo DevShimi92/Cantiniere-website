@@ -9,9 +9,14 @@ import { DefaultService } from '../default.service';
 
 export interface DialogData {
   name: string;
+  listTypeArticle: string;
+  value:string;
   money: number;
+  price: number;
+  code_type: number;
   SetNewSolde: boolean;
   FormDialogTypeArticle: number;
+  FormDialogArticle: number;
   erreur:boolean;
 }
 
@@ -25,9 +30,11 @@ export class DashboardComponent implements OnInit {
 
   displayedColumnsListUser: string[] = ['id', 'first_name', 'last_name', 'money','edit'];
   displayedColumnsCustom: string[] = ['code_type','name','edit'];
-
+  displayCategory = 0;
   resultsLength = 0;
   dataSource;
+  listTypeArticle: string[] = [];
+  tabTypeArticle = new Map();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('listCustomPaginatpr') listCustomPaginatpr: MatPaginator;
@@ -103,8 +110,9 @@ export class DashboardComponent implements OnInit {
           });
         break;
       case 2 :
-         this.dataSource = '';
-          break;
+        this.displayCategory = 0 ;
+        this.dataSource = '';
+        break;
       case 3 :
           console.log('Paramètre');
           break;
@@ -131,6 +139,47 @@ export class DashboardComponent implements OnInit {
     }
   }
   
+
+  editFunction($event):void
+  {
+    switch(this.displayCategory)
+    {
+      case 0 :
+        console.log('Case 0');
+        break;
+      case 1 :
+        this.editTypeArticle($event);
+        break;
+      case 2 :
+        this.editArticle($event);
+        break;
+      case 3 :
+          console.log('Case 3');
+          break;
+    }
+
+  }
+
+  deleteFunction($event):void
+  {
+    switch(this.displayCategory)
+    {
+      case 0 :
+        console.log('Case 0');
+        break;
+      case 1 :
+        this.deleteTypeArticle($event);
+        break;
+      case 2 :
+        this.deleteArticle($event);
+        break;
+      case 3 :
+          console.log('Case 3');
+          break;
+    }
+
+  }
+
   createTypeArticle():void{
     const dialogRef = this.dialog.open(DashboardComponentDialogTypeArticle,{
       data: { FormDialogTypeArticle : 0 }
@@ -155,11 +204,13 @@ export class DashboardComponent implements OnInit {
           
   }
 
-  checkAllTypeArticle():void{
+  checkTypeArticle():void{
+    this.displayCategory = 1 ;
     this.defaultService.getAllTypeOfArticle().subscribe((response) =>
           {
             if(response != null)
             {
+              this.displayedColumnsCustom = ['code_type','name','edit'];
               this.resultsLength = response.length;
               this.dataSource = new MatTableDataSource(response);
               this.dataSource.paginator = this.listCustomPaginatpr;
@@ -219,6 +270,127 @@ export class DashboardComponent implements OnInit {
           
   }
 
+  createArticle():void{
+
+    this.defaultService.getAllTypeOfArticle().subscribe((reponse) =>
+    {
+      if(reponse)
+        {
+          this.listTypeArticle = [];
+
+          for (const key of reponse) {
+            this.tabTypeArticle.set(key.name,key.code_type);             
+            this.listTypeArticle.push(key.name);
+          }
+
+          const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
+              data: { FormDialogArticle : 0, listTypeArticle : this.listTypeArticle }
+            });
+
+          dialogRef.afterClosed().subscribe(result => {
+                    if(result) {
+
+                      this.defaultService.postArticle(result.name,result.price,this.tabTypeArticle.get(result.value)).subscribe(()=> ///result.price
+                      {
+                        const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
+                          data: { FormDialogArticle : 3 , name : result.name }
+                        });
+                      },
+                      (error) => 
+                        {
+                          const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
+                            data: { FormDialogArticle : 4 , name : error.status }
+                          });
+                        });
+                    }
+              });
+
+          }
+          else
+              {
+                const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
+              data: { FormDialogArticle : 7 }
+            });
+          }
+      },
+      (error) => 
+        {
+          const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
+            data: { FormDialogArticle : 4, name : error.status }
+          });
+        });
+          
+  }
+
+  checkArticle():void{
+    this.displayCategory = 2 ;
+    this.defaultService.getAllArticle().subscribe((response) =>
+          {
+           if(response != null)
+            {
+              this.displayedColumnsCustom = ['id','name','price','edit'];
+              this.resultsLength = response.length;
+              this.dataSource = new MatTableDataSource(response);
+              this.dataSource.paginator = this.listCustomPaginatpr;
+              this.dataSource.filterPredicate = function(data, filter: string): boolean {
+                return data.name.toLowerCase().includes(filter) || data.id.toString() === filter;
+              };
+            }
+          });
+          
+  }
+
+  
+
+  editArticle($event):void{
+    const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
+      data: { FormDialogArticle : 1, name : $event.name, price : $event.price }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        if(( result !== undefined &&  result !== '') && ((result.name !== $event.name)||(result.price !== $event.price)) ) {
+          this.defaultService.putArticle( $event.id,result.name, result.price).subscribe(() => 
+            {
+              const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
+                data: { FormDialogArticle : 5, name : result.name }
+              });
+            },
+            (error) => 
+              {
+                const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
+                  data: { FormDialogArticle : 4, name : error.status }
+                });
+              });
+        }
+      });
+          
+  }
+
+  
+
+  deleteArticle($event):void{
+    const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
+      data: { FormDialogArticle : 2, name : $event.name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        if(result == true && ( result !== undefined &&  result !== '') ) {
+          this.defaultService.deleteArticle( $event.id).subscribe((response) => 
+            {
+              const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
+                data: { FormDialogArticle : 6 }
+              });
+            },
+            (error) => 
+              {
+                const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
+                  data: { FormDialogArticle : 4, name : error.status }
+                });
+              });
+        }
+      });
+          
+  }
 }
 
 @Component({
@@ -241,6 +413,18 @@ export class DashboardComponentDialogEditSolde {
 export class DashboardComponentDialogTypeArticle {
   
   constructor( public dialogRef: MatDialogRef<DashboardComponentDialogTypeArticle>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+}
+
+@Component({
+  selector: 'app-dashboard-dialog-article',
+  templateUrl: 'dashboard.component-dialog-article.html',
+  styleUrls: ['./dashboard.component.css']
+})
+export class DashboardComponentDialogArticle {
+  
+  constructor( public dialogRef: MatDialogRef<DashboardComponentDialogArticle>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
 }
