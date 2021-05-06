@@ -1,1 +1,26 @@
-<Label text="Menu" ></Label>
+<GridLayout columns="*" rows="auto,*" visibility="{{ menuHaveSomething ? 'visible' : 'hidden' }}"> 
+	<StackLayout row="0" col="0" >
+		<SearchBar hint="Nom de plats/consommations" (loaded)="onSearchBarLoaded($event)" (textChange)="applyFilter($event)"   (clear)="onClear($event)"></SearchBar>
+	</StackLayout>
+	<ScrollView row="1" col="0">
+		<WrapLayout>
+			<CardView *ngFor="let item of listArticle" class="card" elevation="40" radius="10" ios:shadowRadius="3"  width="50%" height="50%">
+				<StackLayout class="card-layout" (longPress)="showDescription(item)">
+					<!--<image src="https://wallpapercave.com/wp/wp2587127.jpg"></image>-->
+					<Label class="h2" [text]="item.name"></Label>
+					<Label class="body" textWrap="true" text="{{item.price}} €"></Label>
+					<button text="Réserver" (tap)="pickArticle(item)"></button>
+
+				</StackLayout>
+			</CardView>
+			<StackLayout visibility="{{ notFound ? 'visible' : 'hidden' }}" >
+				<Label text="Aucun article ne correspond a votre recherche  !"></Label>
+			</StackLayout>
+				
+		</WrapLayout>
+	</ScrollView>
+  </GridLayout>
+<StackLayout visibility="{{ menuHaveSomething ? 'hidden' : 'visible' }}" >
+	<Label text="Pas d'article a l'achat de disponible !"></Label>
+</StackLayout>
+    

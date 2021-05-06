@@ -3,5 +3,35 @@
 </div>
 <div [hidden]="!menuHaveSomething">
     <h2>Carte</h2>
+    <div class="menuOptions">
+        <mat-form-field appearance="fill">
+            <mat-label>Catégorie</mat-label>
+            <mat-select [(value)]="selectedTypeArticle" (selectionChange)="selectType()">
+                <mat-option *ngFor="let value of listTypeArticle" [value]="value" >{{ value }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    
+    <mat-form-field >
+        <mat-label>Boisson/nouriture</mat-label>
+        <input matInput (keyup)="applyFilter($event)" [(ngModel)]='search' />
+    </mat-form-field>
+</div>
+        <mat-paginator [length]="length" [pageSize]="pageSize" (page)="OnPageChange($event)"></mat-paginator>
+    
+
+
+    <mat-grid-list cols="4" rowHeight="200px">
+        <mat-grid-tile *ngFor="let item of listArticle">
+            <mat-card class="card">
+                <mat-card-header>
+                    <mat-card-title>{{item.name}} {{item.price}}€</mat-card-title>   
+                </mat-card-header>
+                <mat-card-actions>
+                    <button mat-button (click)="selectItem(item)" >Réserver</button>
+                  </mat-card-actions>
+            </mat-card>
+        </mat-grid-tile>
+      </mat-grid-list>
+      
 </div>
     

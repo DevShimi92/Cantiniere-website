@@ -1,1 +1,11 @@
-/* Nothing */
+.menuOptions{
+    float:left;
+    margin-right:5px;
+  }
+mat-grid-tile {
+  background: lightblue;
+}
+
+.card {
+    max-width: 400px;
+  }

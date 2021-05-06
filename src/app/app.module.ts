@@ -13,7 +13,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
-
+import { MatCardModule } from '@angular/material/card';
 
 import { AppRoutingModule } from '@src/app/app-routing.module';
 import { AppComponent } from '@src/app/app.component';
@@ -60,6 +60,7 @@ import { DashboardComponent, DashboardComponentDialogEditSolde, DashboardCompone
     MatMenuModule,
     MatPaginatorModule,
     MatSelectModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
