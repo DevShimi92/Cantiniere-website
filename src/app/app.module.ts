@@ -14,6 +14,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 
 import { AppRoutingModule } from '@src/app/app-routing.module';
 import { AppComponent } from '@src/app/app.component';
@@ -24,7 +26,7 @@ import { SettingComponent } from '@src/app/setting/setting.component';
 import { ReportComponent } from '@src/app/report/report.component';
 import { CartComponent } from '@src/app/cart/cart.component';
 import { RegistrationComponent } from '@src/app/registration/registration.component';
-import { DashboardComponent, DashboardComponentDialogEditSolde, DashboardComponentDialogTypeArticle, DashboardComponentDialogArticle } from '@src/app/dashboard/dashboard.component';
+import { DashboardComponent, DashboardComponentDialogEditSolde, DashboardComponentDialogTypeArticle, DashboardComponentDialogArticle, DashboardComponentDialogMenu } from '@src/app/dashboard/dashboard.component';
 
 
 
@@ -42,6 +44,7 @@ import { DashboardComponent, DashboardComponentDialogEditSolde, DashboardCompone
     DashboardComponentDialogEditSolde,
     DashboardComponentDialogTypeArticle,
     DashboardComponentDialogArticle,
+    DashboardComponentDialogMenu,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +64,7 @@ import { DashboardComponent, DashboardComponentDialogEditSolde, DashboardCompone
     MatPaginatorModule,
     MatSelectModule,
     MatCardModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

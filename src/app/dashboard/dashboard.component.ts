@@ -1,11 +1,21 @@
   
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import {MatDialog , MatDialogRef,  MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
-
+import { Component, OnInit, ViewChild, Inject, AfterViewInit } from '@angular/core';
+import { MatDialog , MatDialogRef,  MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource} from '@angular/material/table';
 
 import { DefaultService } from '../default.service';
+
+export class ArticleCheckBox {    
+  
+  constructor(
+    public id: string,
+    public name: string,
+    public price: string,
+    public checked: boolean,
+  ) {}
+
+}
 
 export interface DialogData {
   name: string;
@@ -17,7 +27,9 @@ export interface DialogData {
   SetNewSolde: boolean;
   FormDialogTypeArticle: number;
   FormDialogArticle: number;
+  FormDialogMenu: number;
   erreur:boolean;
+  data;
 }
 
 
@@ -144,9 +156,6 @@ export class DashboardComponent implements OnInit {
   {
     switch(this.displayCategory)
     {
-      case 0 :
-        console.log('Case 0');
-        break;
       case 1 :
         this.editTypeArticle($event);
         break;
@@ -154,7 +163,7 @@ export class DashboardComponent implements OnInit {
         this.editArticle($event);
         break;
       case 3 :
-          console.log('Case 3');
+        this.editMenu($event);
           break;
     }
 
@@ -164,9 +173,6 @@ export class DashboardComponent implements OnInit {
   {
     switch(this.displayCategory)
     {
-      case 0 :
-        console.log('Case 0');
-        break;
       case 1 :
         this.deleteTypeArticle($event);
         break;
@@ -174,7 +180,7 @@ export class DashboardComponent implements OnInit {
         this.deleteArticle($event);
         break;
       case 3 :
-          console.log('Case 3');
+        this.deleteMenu($event);
           break;
     }
 
@@ -323,6 +329,7 @@ export class DashboardComponent implements OnInit {
   }
 
   checkArticle():void{
+    this.dataSource='';
     this.displayCategory = 2 ;
     this.defaultService.getAllArticle().subscribe((response) =>
           {
@@ -339,8 +346,6 @@ export class DashboardComponent implements OnInit {
           });
           
   }
-
-  
 
   editArticle($event):void{
     const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
@@ -366,8 +371,6 @@ export class DashboardComponent implements OnInit {
           
   }
 
-  
-
   deleteArticle($event):void{
     const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
       data: { FormDialogArticle : 2, name : $event.name }
@@ -391,6 +394,191 @@ export class DashboardComponent implements OnInit {
       });
           
   }
+
+  createMenu():void{
+
+    let menuName = '';
+
+    this.defaultService.getAllArticle().subscribe((response) =>
+          {
+          if(response)
+            {
+              const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+                data: { FormDialogMenu : 0 }
+              });
+
+              dialogRef.afterClosed().subscribe(result => {
+                  if ((result != undefined ) &&  (result != '' ))
+                  {
+                      menuName = result ;
+                      const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+                        data: { FormDialogMenu : 1, name : result, data : response }
+                      });
+
+                      dialogRef.afterClosed().subscribe(result => {
+                        if((result != undefined ) &&  (result != '' ))
+                          {
+                            if(this.checkIfMenuHaveContent(result) == false)
+                              {
+                                const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+                                  data: { FormDialogMenu : 2 }
+                                });
+
+                                dialogRef.afterClosed().subscribe(result => {
+                                  if(result == true )
+                                    {
+                                      console.log("L'article ne contient pas d'article")
+                                      this.defaultService.postMenu(menuName).subscribe(() =>
+                                      {
+                                        const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+                                          data: { FormDialogMenu : 3, name : menuName }
+                                        });
+                                      },
+                                      (error) => 
+                                        {
+                                          const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+                                            data: { FormDialogMenu : 4, name : error.status }
+                                          });
+                                        });
+                                    }
+                                });
+                              }
+                            else
+                            {
+                              this.defaultService.postMenu(menuName).subscribe((reponse) =>
+                              {
+                                let errorCreate = false;
+                                for(let  i = 0; i < Object.keys(result).length; i++)
+                                    {
+                                      if(result[i].checked == true)
+                                      {
+                                          this.defaultService.postMenuContent(reponse.id,result[i].id).subscribe(() =>
+                                          (error) => 
+                                            {
+                                              errorCreate = true;
+                                            });
+                                      }
+                                    }
+                                  
+                                if(errorCreate)
+                                {
+                                  const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+                                    data: { FormDialogMenu : 5, name : menuName }
+                                  });
+                                }
+                                else
+                                {
+                                  const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+                                    data: { FormDialogMenu : 3, name : menuName }
+                                  });
+                                }
+
+
+
+                              },
+                              (error) => 
+                                {
+                                  const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+                                    data: { FormDialogMenu : 4, name : error.status }
+                                  });
+                                });
+                            }
+                          }
+                      });
+                  
+                  }
+
+                
+              });
+            }
+          else
+            {
+              const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+                data: { FormDialogMenu : 10 }
+              });
+            }
+            
+          
+          });
+
+  }
+
+  checkMenu():void{
+    this.dataSource='';
+    this.displayCategory = 3 ;
+    this.defaultService.getAllMenu().subscribe((response) =>
+          {
+            if(response != null)
+            {
+              this.displayedColumnsCustom = ['id','name','editMenu'];
+              this.resultsLength = response.length;
+              this.dataSource = new MatTableDataSource(response);
+              this.dataSource.paginator = this.listCustomPaginatpr;
+              this.dataSource.filterPredicate = function(data, filter: string): boolean {
+                return data.name.toLowerCase().includes(filter) || data.id.toString() === filter;
+              };
+            }
+          });
+
+  }
+
+  editMenu($event):void{
+
+    this.defaultService.getMenuContent($event.id).subscribe((reponse) =>
+    {
+      if(reponse)
+      {
+        const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+          data: { FormDialogMenu : 8, name : $event.name, data : reponse }
+        });
+      }
+      else
+        {
+          const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+            data: { FormDialogMenu : 8, name : $event.name }
+          });
+        }
+    });
+
+  }
+
+  deleteMenu($event):void{
+    const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+      data: { FormDialogMenu : 7, name : $event.name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        if(result == true && ( result !== undefined &&  result !== '') ) {
+          this.defaultService.deleteMenu( $event.id).subscribe((response) => 
+            {
+              const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+                data: { FormDialogMenu : 6 }               
+              });
+            },
+            (error) => 
+              {
+                const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+                  data: { FormDialogMenu : 4, name : error.status }
+                });
+              });
+        }
+      });
+          
+  }
+
+  checkIfMenuHaveContent(any:ArticleCheckBox):boolean{
+
+ 
+    for(let  i = 0; i < Object.keys(any).length; i++)
+    {
+      if(any[i].checked == true)
+        {
+          return true;
+        }
+    }
+    return false;
+  }
+
 }
 
 @Component({
@@ -427,4 +615,153 @@ export class DashboardComponentDialogArticle {
   constructor( public dialogRef: MatDialogRef<DashboardComponentDialogArticle>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
+}
+
+@Component({
+  selector: 'app-dashboard-dialog-menu',
+  templateUrl: 'dashboard.component-dialog-menu.html',
+  styleUrls: ['./dashboard.component.css']
+})
+export class DashboardComponentDialogMenu {
+  
+  displayedColumnsDialog: string[] = ['id','name','checkbox'];
+  displayedColumnsDialogShow: string[] = ['id','name','price','delete'];
+  listArticle: ArticleCheckBox[] = [];
+  resultsLength = 0;
+  editMenuContent = false;
+  dataSource;
+
+  @ViewChild('listDialogPaginatpr') listDialogPaginatpr: MatPaginator;
+
+  constructor( public dialogRef: MatDialogRef<DashboardComponentDialogMenu>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, public dialog: MatDialog, private defaultService: DefaultService) {}
+    
+
+    ngOnInit(): void {
+
+      if(this.data.data)
+      {
+        if( this.data.FormDialogMenu == 8)
+          {
+            for(let  i = 0; i < Object.keys(this.data.data).length; i++)
+              {
+                this.listArticle.push(new ArticleCheckBox(this.data.data[i].id_article,this.data.data[i]["Article.name"],this.data.data[i]["Article.price"], false));
+              }
+          }
+        else
+          {
+            for (const key of this.data.data) { 
+              this.listArticle.push(new ArticleCheckBox(key.id,key.name, key.price, false));
+            }
+          }
+        
+        this.resultsLength = this.data.data.length;
+        this.dataSource = new MatTableDataSource(this.listArticle); 
+        this.dataSource.filterPredicate = function(data, filter: string): boolean {
+          return data.name.toLowerCase().includes(filter) || data.id.toString() === filter;
+        };
+
+      }
+     }
+
+    ngAfterViewInit(){
+      if(this.data.data)
+          {
+          this.dataSource.paginator = this.listDialogPaginatpr;
+          }
+    }
+
+     applyFilter(event: Event) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
+    }
+
+    deleteArticleOfMenu($event):void{
+
+      const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+        data: { FormDialogMenu : 11, name : $event.name}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == true)
+        {
+          this.defaultService.deleteMenuContent(this.data.data[0].id_menu,$event.id).subscribe(result => {
+            
+              this.dialog.open(DashboardComponentDialogMenu,{
+                data: { FormDialogMenu : 9  }
+              });
+            },
+          
+            (error) => 
+              {
+                    this.dialog.open(DashboardComponentDialogEditSolde,{
+                      data: { FormDialogMenu : 4 , name : error.status }
+                    });
+            
+              });
+        }
+      });
+    }
+
+    addArticleOnMenu():void{
+
+      this.defaultService.getAllArticle().subscribe((response) =>
+          {
+            const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+              data: { FormDialogMenu : 1, name : this.data.name, data : response}
+            });
+
+            dialogRef.afterClosed().subscribe(result => {
+              if((result != undefined ) &&  (result != '' ))
+                {
+                  if(this.checkIfMenuHaveContent(result) == true)
+                  {
+                    let errorCreate=false;
+                    for(let  i = 0; i < Object.keys(result).length; i++)
+                          {
+                            if(result[i].checked == true)
+                            {
+                                this.defaultService.postMenuContent(this.data.data[0].id_menu,result[i].id).subscribe(() =>
+                                (error) => 
+                                  {
+                                        errorCreate = true;
+                                  });
+                            }
+                          }
+                      if(errorCreate)
+                          {
+                            const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+                              data: { FormDialogMenu : 5, name : this.data.name }
+                            });
+                          }
+                          else
+                          {
+                            const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+                              data: { FormDialogMenu : 9 }
+                            });
+                          }
+
+                  
+
+                  }
+                }});
+          })
+
+    }
+
+    checkIfMenuHaveContent(any:ArticleCheckBox):boolean{
+
+ 
+      for(let  i = 0; i < Object.keys(any).length; i++)
+      {
+        if(any[i].checked == true)
+          {
+            return true;
+          }
+      }
+      return false;
+    }
 }
