@@ -15,12 +15,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
 
 
 import { AppRoutingModule } from '@src/app/app-routing.module';
 import { AppComponent } from '@src/app/app.component';
 import { HomeComponent } from '@src/app/home/home.component';
-import { MenuComponent } from '@src/app/menu/menu.component';
+import { MenuComponent, MenuComponentDialog } from '@src/app/menu/menu.component';
 import { ProfileComponent } from '@src/app/profile/profile.component';
 import { SettingComponent } from '@src/app/setting/setting.component';
 import { ReportComponent } from '@src/app/report/report.component';
@@ -45,6 +46,7 @@ import { DashboardComponent, DashboardComponentDialogEditSolde, DashboardCompone
     DashboardComponentDialogTypeArticle,
     DashboardComponentDialogArticle,
     DashboardComponentDialogMenu,
+    MenuComponentDialog,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +67,7 @@ import { DashboardComponent, DashboardComponentDialogEditSolde, DashboardCompone
     MatSelectModule,
     MatCardModule,
     MatCheckboxModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

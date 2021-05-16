@@ -1,8 +1,9 @@
-  
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
 import { DefaultService } from '../default.service';
 import { Article } from '../shared/models/article.model';
+import { Cart } from '../shared/models/cart.model';
 
 @Component({
   selector: 'app-menu',
@@ -24,7 +25,7 @@ export class MenuComponent implements OnInit {
   listArticleSearch: Article[] = [];
   listFilteredArticle: Article[] = [];
 
-  constructor(private defaultService: DefaultService) {
+  constructor( public dialog: MatDialog, private defaultService: DefaultService) {
    // do nothing.
  }
 
@@ -125,10 +126,33 @@ export class MenuComponent implements OnInit {
     
   }
 
-  selectItem(event: Event)
+  selectItem(event: Article)
   {
-    // do nothing.
+    let cart: Cart[] = [];
+    
+    if (!sessionStorage.getItem('cart'))
+    {
+      cart.push(new Cart(event.id,event.name,event.price,event.code_type_src));
+      sessionStorage.setItem('cart', JSON.stringify(cart));
+    }
+    else
+    {
+      cart = JSON.parse(sessionStorage.getItem('cart'));
+      cart.push(new Cart(event.id,event.name,event.price,event.code_type_src));
+      sessionStorage.setItem('cart', JSON.stringify(cart));
+    }
+    
+    this.dialog.open(MenuComponentDialog);
+    
   }
 
 
 }
+
+
+@Component({
+  selector: 'app-menu-dialog',
+  templateUrl: 'menu.component-dialog.html'
+})
+
+export class MenuComponentDialog {}

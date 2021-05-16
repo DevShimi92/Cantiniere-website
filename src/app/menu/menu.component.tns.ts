@@ -1,9 +1,11 @@
 import { Component, OnInit} from '@angular/core';
 import { CardView } from '@nstudio/nativescript-cardview';
 import { registerElement } from '@nativescript/angular';
-import { SearchBar } from '@nativescript/core'
+import { Dialogs, SearchBar } from '@nativescript/core';
+import { setString, getString } from '@nativescript/core/application-settings';
 import { DefaultService } from '../default.service';
 import { Article } from '../shared/models/article.model';
+import { Cart } from '../shared/models/cart.model';
 
 registerElement('CardView', () => CardView);
 @Component({
@@ -18,6 +20,13 @@ export class MenuComponent implements OnInit {
   listArticleDefault: Article[] = [];
   listArticle: Article[] = [];
   data = [];
+
+  private addToCart = {
+    title: 'Ajouté au pannier !',
+    defaultText: 'Cet article a été ajouté au pannier.',
+    okButtonText: 'OK',
+    cancelable: true
+  }
   
 
   constructor(private defaultService: DefaultService) {
@@ -47,9 +56,24 @@ export class MenuComponent implements OnInit {
 
   }
 
-  pickArticle(item:any):void
+  pickArticle(item:Article):void
   {
-    // do nothing.
+    let cart: Cart[] = [];
+    
+   if (!getString('cart'))
+    {
+      cart.push(new Cart(item.id,item.name,item.price,item.code_type_src));
+      setString('cart', JSON.stringify(cart));
+    }
+    else
+    {
+      cart = JSON.parse(getString('cart'));
+      cart.push(new Cart(item.id,item.name,item.price,item.code_type_src));
+      setString('cart', JSON.stringify(cart));
+    }
+
+    Dialogs.prompt(this.addToCart);
+
   }
 
   showDescription(item:any):void

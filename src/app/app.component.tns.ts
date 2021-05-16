@@ -43,6 +43,8 @@ export class AppComponent implements AfterViewInit,OnInit {
       this.drawer.showDrawer();
   }
 
+
+
   public onCloseDrawerTap(): void {
       this.drawer.closeDrawer();
   }
@@ -77,5 +79,8 @@ export class AppComponent implements AfterViewInit,OnInit {
     this.drawerComponent.sideDrawer.closeDrawer();
   }
 
+  public navigateToCart(): void {
+    this.routerExtensions.navigate(["/cart"], { clearHistory: true });
+  }
 
 }

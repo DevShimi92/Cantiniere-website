@@ -1,5 +1,5 @@
   
-import { Component, OnInit, ViewChild, Inject, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatDialog , MatDialogRef,  MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource} from '@angular/material/table';
@@ -9,9 +9,9 @@ import { DefaultService } from '../default.service';
 export class ArticleCheckBox {    
   
   constructor(
-    public id: string,
+    public id: number,
     public name: string,
-    public price: string,
+    public price: number,
     public checked: boolean,
   ) {}
 

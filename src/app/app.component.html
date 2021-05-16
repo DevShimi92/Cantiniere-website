@@ -13,13 +13,16 @@
           <a class="nav-link" routerLink="/menu" (click)="isOpen = false" >Voir la carte</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" routerLink="/cart" *ngIf="coockerLogIn == false">Panier</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" *ngIf="accountLogIn == true"  routerLink="/profile">Profile</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" *ngIf="coockerLogIn == true"  routerLink="/dashboard">Tableau de bord</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" *ngIf="accountLogIn == false && coockerLogIn == false" routerLink=""(click)="toggle()" >Se connecter</a>
+          <a class="nav-link" *ngIf="accountLogIn == false && coockerLogIn == false" (click)="toggle()" >Se connecter</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/report" (click)="isOpen = false" >Signalez un bug</a>

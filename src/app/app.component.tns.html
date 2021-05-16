@@ -12,8 +12,9 @@
       </ScrollView>
     </GridLayout>
   <StackLayout tkMainContent >
-    <GridLayout columns="3, auto,*" width="425" height="50" >
-      <Button text="&#xf039;" class="fas fa-align-justify" (tap)="openDrawer()" col="1" ></Button>
+    <GridLayout columns="*,*,*" width="425" height="50">
+      <Button text="&#xf039;" class="fas fa-align-justify" (tap)="openDrawer()" col="0" ></Button>
+      <Button text="&#xf07a;" class="fas fa-align-justify" (tap)="navigateToCart()" col="4" colSpan="1"  ></Button>
     </GridLayout>
     <page-router-outlet actionBarVisibility="never"  ></page-router-outlet>
   </StackLayout>

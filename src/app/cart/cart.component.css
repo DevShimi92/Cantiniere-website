@@ -1,1 +1,30 @@
-/* Nothing */
+/* Nothing */mat-grid-tile {
+  background: lightblue;
+}
+
+table {
+  width: 100%;
+  background: red;
+  
+}
+
+.cart-container {
+  height: 300px;
+  width: 100%;
+  overflow: auto;
+}
+
+tr.mat-footer-row {
+  font-weight: bold;
+}
+
+.example-button-row {
+  display: table-cell;
+  width: 490px;
+}
+
+
+.example-card {
+  max-width: 400px;
+}
+

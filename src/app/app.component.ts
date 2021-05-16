@@ -67,7 +67,11 @@ export class AppComponent implements OnInit{
   dataUser : any;
   helper = new JwtHelperService();
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private defaultService: DefaultService) {  }
+  constructor(private formBuilder: FormBuilder, private router: Router, private defaultService: DefaultService) { 
+    defaultService.changeEmitted$.subscribe(any => {
+      this.toggle();
+    });
+   }
 
   ngOnInit():void {
 
@@ -92,7 +96,7 @@ export class AppComponent implements OnInit{
   }
 
 
-  toggle():void {
+  public toggle():void {
     this.isOpen = !this.isOpen;
   }
 

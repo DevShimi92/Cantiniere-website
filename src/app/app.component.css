@@ -37,16 +37,16 @@
 
    .navBarCssLogout {
       position: fixed;
-      left: 75%;
+      left: 70%;
       top: 5%;
-      width: 22%;
+      width: 24.5%;
    }
 
    .navBarCssLogin {
       position: fixed;
-      left: 72.5%;
+      left: 67%;
       top: 5%;
-      width: 24.5%;
+      width: 27.5%;
    }
 
    .body{

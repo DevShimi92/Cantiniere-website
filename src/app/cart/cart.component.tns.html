@@ -1,1 +1,20 @@
-<Label text="Cart" ></Label>
+<GridLayout columns="*" rows="auto,*" visibility="{{ cartHaveSomething ? 'visible' : 'hidden' }}"> 
+	<ScrollView row="1" col="0">
+		<WrapLayout>
+			<CardView *ngFor="let item of cart" class="card" elevation="40" radius="10" ios:shadowRadius="3"  width="100%" height="100%">
+				<StackLayout class="card-layout" (longPress)="showDescription(item)">
+					<Label class="h2" [text]="item.name"></Label>
+					<Label class="body" textWrap="true" text="{{item.price}} €"></Label>
+					<button text="Supprimer l'article" (tap)="deleteArticle(item)" ></button>
+
+				</StackLayout>
+			</CardView>
+		</WrapLayout>
+	</ScrollView>
+	<Button text="Valider la commande de {{finalPrice}} €" class="btn btn-primary" (tap)="orderCart()" ></Button>
+  </GridLayout>
+
+<StackLayout visibility="{{ cartHaveSomething ? 'hidden' : 'visible' }}" >
+	<Label text="Votre pannier est vide !"></Label>
+</StackLayout>
+    
