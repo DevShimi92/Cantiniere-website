@@ -209,4 +209,54 @@ export class DefaultService {
     return this.http.request<any>('delete',this.API_URL+'menu/content/',{ headers,body :data });
   }
 
+  postOrderInfo(idClient:number,soldBeforeOrder:number,total:number): Observable<any>{
+
+    const headers = { 'Content-Type': 'application/json',
+    'Authorization': `Bearer ${sessionStorage.getItem('token')}` };
+    const data = {
+      id_client : idClient,
+      sold_before_order : soldBeforeOrder,
+      total : total ,
+    }
+    
+    return this.http.post<any>(this.API_URL+'order',data, { headers }) ;
+  }
+
+  postOrderInfoMobie(token:any,idClient:number,soldBeforeOrder:number,total:number): Observable<any>{
+
+    const headers = { 'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}` };
+    const data = {
+      id_client : idClient,
+      sold_before_order : soldBeforeOrder,
+      total : total ,
+    }
+    
+    return this.http.post<any>(this.API_URL+'order',data, { headers }) ;
+  }
+
+  postOrderContent(idArticle:number,idOrder:number): Observable<any>{
+
+    const headers = { 'Content-Type': 'application/json',
+    'Authorization': `Bearer ${sessionStorage.getItem('token')}` };
+    const data = {
+      id_article : idArticle,
+      id_order   : idOrder
+    }
+    
+    return this.http.post<any>(this.API_URL+'order/content',data, { headers }) ;
+  }
+
+  postOrderContentMobile(token:any,idArticle:number,idOrder:number): Observable<any>{
+
+    const headers = { 'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}` };
+    const data = {
+      id_article : idArticle,
+      id_order   : idOrder
+    }
+    
+    return this.http.post<any>(this.API_URL+'order/content',data, { headers }) ;
+  }
+
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit} from '@angular/core';
+import { JwtHelperService } from "@auth0/angular-jwt";
 import { setString, getString } from '@nativescript/core/application-settings';
 import { Dialogs } from "@nativescript/core";
 import { RouterExtensions } from "@nativescript/angular";
@@ -15,12 +16,35 @@ export class CartComponent implements OnInit {
   cart: Cart[] = [];
   cartHaveSomething  = false;
   accountLogIn = false;
+  helper = new JwtHelperService();
+  dataUser : any;
   finalPrice = 0;
 
   private accountNotLogin = {
     title: 'Non connencté !',
     message: 'Vous devez être connecté pour valider votre panier !',
     okButtonText: 'Allez à la page de connexion',
+    cancelable: true
+  }
+
+  private notMoneyForBuy = {
+    title: 'Solde insuffisant !',
+    message: "Vous n'avez pas assez de crédit sur votre compte pour passer une commande !",
+    okButtonText: 'OK',
+    cancelable: true
+  }
+
+  private errorOnOrder = {
+    title: 'Anomalie sur votre commande !',
+    message: "Une erreur est survenue durant la prise de commande. Veuillez prendre contact avec votre responsable de site",
+    okButtonText: 'OK',
+    cancelable: true
+  }
+
+  private orderOK = {
+    title: 'Valider !',
+    message: "Votre commande a été enregistré avec succée",
+    okButtonText: 'OK',
     cancelable: true
   }
 
@@ -79,9 +103,51 @@ export class CartComponent implements OnInit {
   }
 
   orderCart():void {
+    
     if(this.accountLogIn)
       {
-        //Nothing
+        this.dataUser = this.helper.decodeToken(getString("token"));
+        if(this.dataUser.money >= this.finalPrice)
+          {
+            let errorCreate = false;
+            console.log('sssss');
+            console.log(this.dataUser.id);
+            console.log(this.dataUser.money);
+            console.log(this.finalPrice);
+            this.defaultService.postOrderInfoMobie(getString("token"),this.dataUser.id,this.dataUser.money,this.finalPrice).subscribe((response) => {
+              console.log('1');
+              for(let  i = 0; i < Object.keys(this.cart).length; i++)
+              {
+                this.defaultService.postOrderContentMobile(getString("token"),this.cart[i].id,response.id).subscribe(() =>
+                (error) => 
+                  {
+                    errorCreate = true;
+                  });
+              }
+
+              console.log('2');
+
+              if (errorCreate == true)
+                {
+                  console.log('4');
+                  Dialogs.alert(this.errorOnOrder);
+                }
+              else
+                {
+                  console.log('3');
+                  this.cart = [];
+                  this.updateCartOnVisually();
+                  setString('cart', JSON.stringify(this.cart));
+                  Dialogs.alert(this.orderOK);
+                  this.cartHaveSomething  = false;
+                }
+
+            });
+          }
+        else
+          {
+            Dialogs.alert(this.notMoneyForBuy);
+          }
       }
     else{
       Dialogs.confirm(this.accountNotLogin).then(result => {

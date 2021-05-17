@@ -28,3 +28,6 @@ tr.mat-footer-row {
   max-width: 400px;
 }
 
+.error {
+  background: red;
+}
