@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { setString, getString } from "@nativescript/core/application-settings";
-import { Observable, interval, pipe } from 'rxjs';
-import { tap, catchError, map, switchMap } from "rxjs/operators";
+import { interval } from 'rxjs';
 import { JwtHelperService } from "@auth0/angular-jwt";
 
 import { User } from '../shared/models/user.model';
@@ -23,25 +22,6 @@ export class AuthService {
     constructor(private http: HttpClient) { 
         this.user = new User();
       }
-
-    login(email:string,password:string) :Promise<boolean> {
-
-        this.user.email = email;
-        this.user.password = password;
-
-        return new Promise<boolean>((resolve, reject) => {
-
-            this.http.post<any>(this.API_URL+'login',this.user).toPromise().then( response => {
-
-                this.updateDataSesion(response.token, response.refresh_token);
-                
-                return resolve(true);
-
-        }).catch((error) => {
-                return reject(error);
-            });
-        });        
-    }
     
     refreshToken() :Promise<boolean> {
 
@@ -76,6 +56,25 @@ export class AuthService {
             this.interval.unsubscribe();
         }
 
+    }
+
+    login(email:string,password:string) :Promise<boolean> {
+
+        this.user.email = email;
+        this.user.password = password;
+
+        return new Promise<boolean>((resolve, reject) => {
+
+            this.http.post<any>(this.API_URL+'login',this.user).toPromise().then( response => {
+
+                this.updateDataSesion(response.token, response.refresh_token);
+                
+                return resolve(true);
+
+        }).catch((error) => {
+                return reject(error);
+            });
+        });        
     }
 
     checkingTokenOnInterval(intervalTime:number):void{
