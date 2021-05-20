@@ -1,5 +1,6 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NativeScriptModule } from '@nativescript/angular';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from '@src/app/app-routing.module';
 import { AppComponent } from '@src/app/app.component';
@@ -11,6 +12,8 @@ import { SettingComponent } from '@src/app/setting/setting.component';
 import { ReportComponent } from '@src/app/report/report.component';
 import { CartComponent } from '@src/app/cart/cart.component';
 import { RegistrationComponent } from '@src/app/registration/registration.component';
+import { AuthInterceptor } from '@src/app/interceptors/auth.interceptor';
+import { ErrorInterceptor } from '@src/app/interceptors/error.interceptor';
 
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
 import { NativeScriptFormsModule } from '@nativescript/angular';
@@ -39,7 +42,8 @@ import { NativeScriptHttpClientModule } from '@nativescript/angular';
     NativeScriptFormsModule,
     NativeScriptHttpClientModule,
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA]
 })

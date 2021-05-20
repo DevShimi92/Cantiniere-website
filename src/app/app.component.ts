@@ -6,6 +6,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 
 import { errorFormAnimation } from '././animation/animation';
 import { DefaultService } from './default.service';
+import { AuthService } from './service/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -67,7 +68,7 @@ export class AppComponent implements OnInit{
   dataUser : any;
   helper = new JwtHelperService();
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private defaultService: DefaultService) { 
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService, private defaultService: DefaultService) { 
     defaultService.changeEmitted$.subscribe(any => {
       this.toggle();
     });
@@ -123,7 +124,7 @@ export class AppComponent implements OnInit{
           }
 }
 
-  onSubmit():void {
+  async onSubmit():Promise<void> {
       
       this.errorInLogin = false;
 
@@ -145,37 +146,28 @@ export class AppComponent implements OnInit{
         }
       else if(this.loginForm.value.email != '' && this.loginForm.value.password != '')
         {
-          this.defaultService.getToken(this.loginForm.value.email,this.loginForm.value.password).subscribe((response) => 
+          this.authService.login(this.loginForm.value.email,this.loginForm.value.password).then((logtinOK) => {
+
+          if (logtinOK)
               {
-                  sessionStorage.setItem('token', response.token);
-                  this.dataUser = this.helper.decodeToken(response.token);
-                  if ( this.dataUser.cooker == true )
+                  if ( sessionStorage.getItem('cooker') == 'true' )
                     {    
                         this.coockerLogIn= true;
-                        sessionStorage.setItem('cooker', 'true');
                     }
                   else
                     {
                         this.accountLogIn= true;
-                        sessionStorage.setItem('cooker', 'false');
                     }
 
                   this.isOpen = false
-              },
-            (error) => 
-              {
-                if(error.status == 401)
-                {
-                  this.errorInLogin = true;
-                  this.valueOfButton = 'Identifiant oublié?';
-                  this.routerLinkOnButton = '/login';
-                }
-                else
-                {
-                  console.log(error);
-                }
               }
-          );
+
+          }).catch(() => {
+            this.errorInLogin = true;
+            this.valueOfButton = 'Identifiant oublié?';
+            this.routerLinkOnButton = '/login'; 
+          });
+          
         }
     }
 

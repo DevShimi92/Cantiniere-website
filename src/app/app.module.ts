@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,7 +28,8 @@ import { ReportComponent } from '@src/app/report/report.component';
 import { CartComponent } from '@src/app/cart/cart.component';
 import { RegistrationComponent } from '@src/app/registration/registration.component';
 import { DashboardComponent, DashboardComponentDialogEditSolde, DashboardComponentDialogTypeArticle, DashboardComponentDialogArticle, DashboardComponentDialogMenu } from '@src/app/dashboard/dashboard.component';
-
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import { DashboardComponent, DashboardComponentDialogEditSolde, DashboardCompone
     MatCheckboxModule,
     MatButtonModule,
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+              { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

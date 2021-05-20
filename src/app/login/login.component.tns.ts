@@ -5,6 +5,7 @@ import { RouterExtensions } from "@nativescript/angular";
 
 
 import { User } from '../shared/models/user.model';
+import { AuthService } from '../service/auth.service';
 import { DefaultService } from '../default.service';
 
 @Component({
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
     cancelable: true
   }
 
-  constructor(private routerExtensions: RouterExtensions, private defaultService: DefaultService) {
+  constructor(private routerExtensions: RouterExtensions, private defaultService: DefaultService, private authService: AuthService) {
     this.user = new User();
     this.user.last_name = '';
     this.user.first_name = '';
@@ -144,31 +145,34 @@ export class LoginComponent implements OnInit {
 
     if (this.user.email != '' && this.user.password != '' )
       {
-        this.defaultService.getToken(this.user.email,this.user.password).subscribe((response) => 
-              {
-                setString("token", response.token);
-                this.routerExtensions.navigate(["/home"], { clearHistory: true });
-              },
-            (error) => 
-              {
-                if(error.status == 401)
-                {
-                  Dialogs.alert({
-                    title: "Erreur",
-                    message: "Identifiant incorrect",
-                    okButtonText: "OK",
-                    cancelable: true
-                }).then(()=> {
-                    console.log("Erreur 401 dans login");
-                });
-                
-                }
-                else
-                {
-                  console.log(error);
-                }
-              }
-          );
+        this.authService.login(this.user.email,this.user.password).then(() =>
+        {
+            this.routerExtensions.navigate(["/home"], { clearHistory: true });
+
+        }).catch((error) => {
+          if(error.status == 401)
+            {
+              console.log("Erreur dans login : ");
+              console.log(error);
+              Dialogs.alert({
+                title: "Erreur",
+                message: "Identifiant incorrect",
+                okButtonText: "OK",
+                cancelable: true
+            });
+            }
+          else
+            {
+              Dialogs.alert({
+                title: "Erreur",
+                message: "Erreur inattendu avec le serveur, veuillez réessayer plus tard .",
+                okButtonText: "OK",
+                cancelable: true
+              });
+            }
+
+        });
+
       }
     else
     {
