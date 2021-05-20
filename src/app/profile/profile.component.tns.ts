@@ -1,10 +1,9 @@
 import { Component, OnInit} from '@angular/core';
-import { JwtHelperService } from "@auth0/angular-jwt";
 import { getString } from "@nativescript/core/application-settings";
 import { Dialogs } from "@nativescript/core";
 
 import { User } from '../shared/models/user.model';
-import { DefaultService } from '../default.service';
+import { UserService } from '../service/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,64 +14,74 @@ export class ProfileComponent implements OnInit {
   
   dataUser : any;
   checkPassaword : string;
-  helper = new JwtHelperService();
-  public user : User;
+  fieldsUser : User;
+  user : User;
 
-  constructor( private defaultService: DefaultService ) {
+  constructor( private userService: UserService ) {
     this.user = new User();
+    this.fieldsUser = new User();
   }
 
 
   ngOnInit(): void {
+
+    this.dataUser = JSON.parse(getString('userData'));
     
-    this.dataUser = this.helper.decodeToken(getString("token"));
-    this.user.last_name = this.dataUser.last_name; 
-    this.user.first_name = this.dataUser.first_name; 
-    this.user.email = this.dataUser.email; 
-    this.user.password = '';
+    this.fieldsUser.id = this.dataUser.id;
+    this.fieldsUser.last_name = this.dataUser.last_name; 
+    this.fieldsUser.first_name = this.dataUser.first_name; 
+    this.fieldsUser.email = this.dataUser.email; 
+    this.fieldsUser.password = '';
   }
 
   submit():void {
     
-    if ((this.dataUser.last_name != this.user.last_name) || (this.dataUser.first_name != this.user.first_name) || (this.dataUser.email != this.user.email) )
+    if ((this.dataUser.last_name != this.fieldsUser.last_name) || (this.dataUser.first_name != this.fieldsUser.first_name) || (this.dataUser.email != this.fieldsUser.email) )
       {
-        this.defaultService.updateUser(this.dataUser.id, this.user.last_name, this.user.first_name, this.user.email).subscribe(() => 
-                        {
-                          this.dialogsOK();
-                          
-                        },
-                      (error) => 
-                        {
-                          if(error.status == 409)
-                            {
-                              this.dialogsErreur();
-                            }
-                          else
-                          {
-                            console.log(error);
-                          }
-                        }
-                    );
+        this.user.id = this.fieldsUser.id;
+        this.user.last_name = this.fieldsUser.last_name; 
+        this.user.first_name = this.fieldsUser.first_name; 
+        this.user.email = this.fieldsUser.email; 
+
+        this.userService.updateUser(this.user).then(() => {
+          
+          this.dialogsOK();
+
+        }).catch((error) => {
+          if(error.status == 409)
+            {
+              this.dialogsErreur();
+            }
+          else
+            {
+              console.log(error);
+            }
+
+        });
+ 
       }
-    if (this.user.password)
+    if (this.fieldsUser.password)
       {
-        if (this.user.password == this.checkPassaword)
+        if (this.fieldsUser.password == this.checkPassaword)
           {
-            this.defaultService.updateUser(this.dataUser.id, null, null, null, this.user.password).subscribe(() => 
-                    {
-                      this.dialogsOK();
-                    },
-                  (error) => {
-                      if(error.status == 409)
-                        {
-                          this.dialogsErreur();
-                        }
-                      else
-                      {
-                        console.log(error);
-                      }
-                    }
-                );
+            this.user.id = this.fieldsUser.id;
+            this.user.password = this.fieldsUser.password;
+
+              this.userService.updateUser(this.user).then(() => {
+                
+                this.dialogsOK();
+
+              }).catch((error) => {
+                if(error.status == 409)
+                  {
+                    this.dialogsErreur();
+                  }
+                else
+                  {
+                    console.log(error);
+                  }
+
+              });
           }
         else
           {

@@ -25,33 +25,6 @@ export class DefaultService {
     this.user = new User();
   }
 
-  register(last_name:string, first_name:string, email:string, password:string):Observable<any>{
-    
-    this.user.last_name = last_name;
-    this.user.first_name = first_name;
-    this.user.email = email;
-    this.user.password = password;
-
-    return this.http.post<any>(this.API_URL+'user',this.user);
-  }
-
-  getAllUser(): Observable<any>{
-    
-    return this.http.get(this.API_URL+'user') ;
-  }
-
-  updateUser(id:number,last_name:string=null, first_name:string=null, email:string=null, password:string=null, money:number=null):Observable<any>{
-    
-    this.user.id = id;
-    this.user.last_name = last_name;
-    this.user.first_name = first_name;
-    this.user.email = email;
-    this.user.money = money;
-    this.user.password = password;
-
-    return this.http.put<any>(this.API_URL+'user',this.user);
-  }
-
   postTypeOfArticle(name:string):Observable<any>{
 
     return this.http.post<any>(this.API_URL+'type_article',{name : name});

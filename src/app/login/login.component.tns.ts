@@ -5,8 +5,8 @@ import { RouterExtensions } from "@nativescript/angular";
 
 
 import { User } from '../shared/models/user.model';
-import { AuthServiceNS } from '../service/auth.service.tns';
-import { DefaultService } from '../default.service';
+import { AuthService } from '../service/auth.service.tns';
+import { UserService } from '../service/user.service';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     cancelable: true
   }
 
-  constructor(private routerExtensions: RouterExtensions, private defaultService: DefaultService, private authService: AuthServiceNS) {
+  constructor(private routerExtensions: RouterExtensions, private userService: UserService, private authService: AuthService) {
     this.user = new User();
     this.user.last_name = '';
     this.user.first_name = '';
@@ -73,6 +73,35 @@ export class LoginComponent implements OnInit {
               }
             else if(this.user.password == this.confirmedPassword)
               {
+
+                this.userService.createUser(this.user).then(() => {
+
+                  this.routerExtensions.navigate(["/home"], { clearHistory: true });
+
+                })
+                .catch((error) => {
+
+                  if(error.status == 409)
+                        {
+                          console.log("L'email utilisé pour l'enregistrement est déja exsitant dans la base de donnée. Demmande de réinitialisation de mot de passe...")
+                          Dialogs.confirm(this.acountExistOptions).then(result => {
+                            if( result == true )
+                              {
+                                  console.log('Vers la page de restoration de mdp...');
+                              }
+                            else
+                              {
+                                console.log("L'utilisateur n'a pas voulu tenté de réinitialiser son mot de passe")
+                              }
+                          });
+                        }
+                        else
+                        {
+                          console.log(error);
+                        }
+
+                });
+                /*
                 this.defaultService.register(this.user.last_name, this.user.first_name, this.user.email, this.user.password).subscribe((response) => 
                       {
                           setString("token", response.token);
@@ -99,7 +128,7 @@ export class LoginComponent implements OnInit {
                           console.log(error);
                         }
                       }
-                  );
+                  );*/
               }
             else
               {

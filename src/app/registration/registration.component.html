@@ -3,12 +3,12 @@
         <h1>Création de compte</h1>
         <div class="form-group">
             <label for="name">Nom </label>
-            <input formControlName="lastName" type="text " name="registrationForm.value.lastName"  placeholder="Votre nom" required> 
+            <input formControlName="last_name" type="text " name="registrationForm.value.last_name"  placeholder="Votre nom" required> 
             <div [hidden]="!emptyLastName" class="alert alert-danger">Nom requis</div>
         </div>
         <div class="form-group">
             <label for="name">Prénom </label>
-            <input formControlName="firstNName" type="text " placeholder="Votre prénom"> 
+            <input formControlName="first_name" type="text " placeholder="Votre prénom"> 
             <div [hidden]="!emptyName" class="alert alert-danger">Prénom requis</div>
         </div>
         <div class="form-group">

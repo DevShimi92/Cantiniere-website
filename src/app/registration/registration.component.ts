@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { DefaultService } from '../default.service'
+import { User } from '../shared/models/user.model';
+import { UserService } from '../service/user.service'
 
 @Component({
   selector: 'app-registration',
@@ -11,6 +12,8 @@ import { DefaultService } from '../default.service'
 })
 
 export class RegistrationComponent implements OnInit {
+
+  user : User;
   
   registrationForm: FormGroup;
 
@@ -22,13 +25,15 @@ export class RegistrationComponent implements OnInit {
   errorCheckPassword = false;
   errorPasswordMsg ='';
 
-  constructor( private formBuilder: FormBuilder, private router: Router, private defaultService: DefaultService ) { }
+  constructor( private formBuilder: FormBuilder, private router: Router, private userService: UserService ) { 
+    this.user = new User();
+  }
 
   ngOnInit(): void {
     
     this.registrationForm = this.formBuilder.group({
-      lastName:'',
-      firstNName:'',
+      last_name:'',
+      first_name:'',
       email: '',
       password: '',
       checkPassword: ''
@@ -38,7 +43,7 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit():void {
 
-    if(!this.registrationForm.value.lastName)
+    if(!this.registrationForm.value.last_name)
       {
         this.emptyLastName = true;
       }
@@ -47,7 +52,7 @@ export class RegistrationComponent implements OnInit {
         this.emptyLastName = false;
       }
 
-    if(!this.registrationForm.value.firstNName)
+    if(!this.registrationForm.value.first_name)
       {
         this.emptyName = true;
       }
@@ -99,26 +104,28 @@ export class RegistrationComponent implements OnInit {
     
     if(!this.emptyLastName && !this.emptyName && !this.errorEmail && ! this.errorPassword  && ! this.errorCheckPassword)
       {
-        this.defaultService.register(this.registrationForm.value.lastName, this.registrationForm.value.firstNName, this.registrationForm.value.email, this.registrationForm.value.password).subscribe((response) => 
-              {
-                  sessionStorage.setItem('token', response.token);
-                  this.router.navigate([""]).then(() => {
-                    location.reload();
-                  });
-              },
-            (error) => 
-              {
-                if(error.status == 409)
-                  {
-                    this.errorEmail = true;
-                    this.errorEmailMsg = 'Cet email est déja présente dans notre base de donnée.'
-                  }
-                else
-                  {
-                    console.log(error); 
-                  }
-              }
-          );
+
+        this.user = this.registrationForm.value;
+        console.log(this.user);
+
+        this.userService.createUser(this.user).then(() => {
+
+            this.router.navigate([""]).then(() => {
+              location.reload();
+            });
+        })
+        .catch((error) => {
+          if(error.status == 409)
+            {
+              this.errorEmail = true;
+              this.errorEmailMsg = 'Cet email est déja présente dans notre base de donnée.'
+            }
+          else
+            {
+              console.log(error); 
+            }
+        });
+
       }
     
   }

@@ -32,25 +32,8 @@ export class AuthService {
 
             this.http.post<any>(this.API_URL+'login',this.user).toPromise().then( response => {
 
-                sessionStorage.setItem('token', response.token);
-                sessionStorage.setItem('refresh_token', response.refresh_token);
-    
-                const dataUser = this.helper.decodeToken(response.token);
-    
-                const expToken = new Date(0);
-                expToken.setUTCSeconds(dataUser.exp);
-                const timeInMsc = new Date(expToken).getTime() - new Date().getTime();
-                this.checkingTokenOnInterval(timeInMsc);
-    
-                this.user = dataUser; 
-    
-                sessionStorage.setItem('userData', JSON.stringify(this.user));
-    
-                if ( this.user.cooker == true )
-                    sessionStorage.setItem('cooker', 'true');
-                else
-                    sessionStorage.setItem('cooker', 'false');
-                
+                this.updateDataSesion(response.token, response.refresh_token);
+                    
                 return resolve(true);
 
         }).catch((error) => {
@@ -75,21 +58,7 @@ export class AuthService {
 
                 this.http.post<any>(this.API_URL+'refresh_token',data).toPromise().then((response)=> 
                 {
-                    sessionStorage.setItem('token', response.token);
-                    sessionStorage.setItem('refresh_token', response.refresh_token);
-                    
-                    if(!this.interval)
-                    {
-                        const dataUser = this.helper.decodeToken(response.token);
-                        const expToken = new Date(0);
-                        expToken.setUTCSeconds(dataUser.exp);
-                        const timeInMsc = new Date(expToken).getTime() - new Date().getTime();
-                        this.checkingTokenOnInterval(timeInMsc);
-                    }
-
-                    this.user = this.helper.decodeToken(response.token);
-
-                    sessionStorage.setItem('userData', JSON.stringify(this.user));
+                    this.updateDataSesion(response.token, response.refresh_token);
 
                     return resolve(true);
 
@@ -108,7 +77,29 @@ export class AuthService {
     checkingTokenOnInterval(intervalTime:number):void{
     
         this.interval = interval(intervalTime).pipe(switchMap(async () => this.refreshToken())).subscribe();
-   }
+    }
 
+    updateDataSesion(token:string, refresh_token:string):void{
+
+        sessionStorage.setItem('token', token);
+        sessionStorage.setItem('refresh_token', refresh_token);
+
+        if(!this.interval)
+            {
+                const dataUser = this.helper.decodeToken(token);
+                const expToken = new Date(0);
+                expToken.setUTCSeconds(dataUser.exp);
+                const timeInMsc = new Date(expToken).getTime() - new Date().getTime();
+                this.checkingTokenOnInterval(timeInMsc);
+            }
+        
+        this.user = this.helper.decodeToken(token);
+        sessionStorage.setItem('userData', JSON.stringify(this.user));
+        
+        if(this.user.cooker == true)
+            sessionStorage.setItem('cooker','true');
+        else
+            sessionStorage.setItem('cooker','false');
+    }
    
 }

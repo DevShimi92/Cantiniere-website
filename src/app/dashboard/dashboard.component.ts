@@ -3,8 +3,9 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatDialog , MatDialogRef,  MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource} from '@angular/material/table';
-
+import { UserService } from '../service/user.service';
 import { DefaultService } from '../default.service';
+import { User } from '../shared/models/user.model';
 
 export class ArticleCheckBox {    
   
@@ -47,12 +48,13 @@ export class DashboardComponent implements OnInit {
   dataSource;
   listTypeArticle: string[] = [];
   tabTypeArticle = new Map();
+  user : User;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('listCustomPaginatpr') listCustomPaginatpr: MatPaginator;
   
-  constructor( public dialog: MatDialog, private defaultService: DefaultService ) {
-   // do nothing.
+  constructor( public dialog: MatDialog, private userService: UserService, private defaultService: DefaultService ) {
+    this.user = new User();
  }
 
   ngOnInit(): void {
@@ -67,26 +69,30 @@ export class DashboardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result !== $event.money)
         {
-          this.defaultService.updateUser($event.id,null,null,null,null,result).subscribe((response) =>
+          this.user.id = $event.id;
+          this.user.money = result;
+
+          this.userService.updateUser(this.user).then(() => {
+
+            this.dialog.open(DashboardComponentDialogEditSolde,{
+              data: { SetNewSolde : false , erreur :false }
+            });
+
+          }).catch((error) => {
+
+            if(error.status == 409)
               {
                 this.dialog.open(DashboardComponentDialogEditSolde,{
-                  data: { SetNewSolde : false , erreur :false }
-                });
-              },
-            (error) => 
-                {
-                  if(error.status == 409)
-                    {
-                      this.dialog.open(DashboardComponentDialogEditSolde,{
-                        data: { SetNewSolde : false , erreur :true }
-                      });
-                    }
-                  else
-                    {
-                      console.log(error); 
-                    }
-                }
-            );
+                    data: { SetNewSolde : false , erreur :true }
+                  });
+              }
+            else
+              {
+                console.log(error); 
+              }
+
+          });
+
         }
     });
   }
@@ -107,7 +113,7 @@ export class DashboardComponent implements OnInit {
         break;
       case 1 :
         this.dataSource = '';
-        this.defaultService.getAllUser().subscribe((response) =>
+        this.userService.getAllUser().subscribe((response) =>
           {
             if(response != null)
             {

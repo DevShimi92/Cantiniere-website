@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { trigger, transition, state, animate, style, useAnimation } from '@angular/animations';
 import { Router } from '@angular/router';
-import { JwtHelperService } from "@auth0/angular-jwt";
 
 import { errorFormAnimation } from '././animation/animation';
 import { DefaultService } from './default.service';
@@ -66,7 +65,6 @@ export class AppComponent implements OnInit{
   routerLinkOnButton = '/registration';
 
   dataUser : any;
-  helper = new JwtHelperService();
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService, private defaultService: DefaultService) { 
     defaultService.changeEmitted$.subscribe(any => {
@@ -162,7 +160,8 @@ export class AppComponent implements OnInit{
                   this.isOpen = false
               }
 
-          }).catch(() => {
+          })
+          .catch(() => {
             this.errorInLogin = true;
             this.valueOfButton = 'Identifiant oublié?';
             this.routerLinkOnButton = '/login'; 

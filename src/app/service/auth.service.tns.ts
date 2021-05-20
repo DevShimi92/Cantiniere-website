@@ -12,7 +12,7 @@ import { environment } from '../../environments/environment';
     providedIn: 'root'
   })
 
-export class AuthServiceNS {
+export class AuthService {
 
     public interval;
 
@@ -33,19 +33,7 @@ export class AuthServiceNS {
 
             this.http.post<any>(this.API_URL+'login',this.user).toPromise().then( response => {
 
-                setString('token', response.token);
-                setString('refresh_token', response.refresh_token);
-    
-                const dataUser = this.helper.decodeToken(response.token);
-    
-                const expToken = new Date(0);
-                expToken.setUTCSeconds(dataUser.exp);
-                const timeInMsc = new Date(expToken).getTime() - new Date().getTime();
-                this.checkingTokenOnInterval(timeInMsc);
-    
-                this.user = dataUser; 
-    
-                setString('userData', JSON.stringify(this.user));
+                this.updateDataSesion(response.token, response.refresh_token);
                 
                 return resolve(true);
 
@@ -70,21 +58,7 @@ export class AuthServiceNS {
 
                 this.http.post<any>(this.API_URL+'refresh_token',data).toPromise().then((response)=> 
                 {
-                    setString('token', response.token);
-                    setString('refresh_token', response.refresh_token);
-                    
-                    if(!this.interval)
-                    {
-                        const dataUser = this.helper.decodeToken(response.token);
-                        const expToken = new Date(0);
-                        expToken.setUTCSeconds(dataUser.exp);
-                        const timeInMsc = new Date(expToken).getTime() - new Date().getTime();
-                        this.checkingTokenOnInterval(timeInMsc);
-                    }
-
-                    this.user = this.helper.decodeToken(response.token);
-
-                    setString('userData', JSON.stringify(this.user));
+                    this.updateDataSesion(response.token, response.refresh_token);
 
                     return resolve(true);
 
@@ -108,7 +82,25 @@ export class AuthServiceNS {
         this.interval = interval(intervalTime).subscribe(() => {
             this.refreshToken();
         })
-   }
+    }
+
+    updateDataSesion(token:string, refresh_token:string):void{
+
+        setString('token', token);
+        setString('refresh_token', refresh_token);
+
+        if(!this.interval)
+            {
+                const dataUser = this.helper.decodeToken(token);
+                const expToken = new Date(0);
+                expToken.setUTCSeconds(dataUser.exp);
+                const timeInMsc = new Date(expToken).getTime() - new Date().getTime();
+                this.checkingTokenOnInterval(timeInMsc);
+            }
+
+        this.user = this.helper.decodeToken(token);
+        setString('userData', JSON.stringify(this.user));
+    }
 
    
 }
