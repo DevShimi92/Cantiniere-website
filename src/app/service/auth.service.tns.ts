@@ -12,7 +12,7 @@ import { environment } from '../../environments/environment';
     providedIn: 'root'
   })
 
-export class AuthService {
+export class AuthServiceNS {
 
     public interval;
 
@@ -56,7 +56,7 @@ export class AuthService {
     }
     
     refreshToken() :Promise<boolean> {
-        
+
         if(getString('refresh_token'))
         {
             this.user = JSON.parse(getString('userData'));

@@ -1,7 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { clear } from "@nativescript/core/application-settings";
 import { RouterExtensions } from "@nativescript/angular";
-import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-setting',
@@ -11,7 +10,7 @@ import { AuthService } from '../service/auth.service';
 export class SettingComponent implements OnInit {
   title = 'Cantiniere-website';
 
-  constructor(private authService: AuthService, private routerExtensions: RouterExtensions) {
+  constructor( private routerExtensions: RouterExtensions) {
    // do nothing.
   }
 

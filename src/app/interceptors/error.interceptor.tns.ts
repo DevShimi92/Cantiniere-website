@@ -5,13 +5,13 @@ import { clear } from "@nativescript/core/application-settings";
 import { RouterExtensions } from "@nativescript/angular";
 import { Observable, throwError  } from "rxjs"
 import { catchError } from "rxjs/operators";
-import { AuthService } from '../service/auth.service';
+import { AuthServiceNS } from '../service/auth.service.tns';
 
 @Injectable()
 
 export class ErrorInterceptor implements HttpInterceptor {
 
-    constructor(private authService: AuthService, private routerExtensions: RouterExtensions) { 
+    constructor(private authService: AuthServiceNS, private routerExtensions: RouterExtensions) { 
 
     }
 

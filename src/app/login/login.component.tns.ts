@@ -5,7 +5,7 @@ import { RouterExtensions } from "@nativescript/angular";
 
 
 import { User } from '../shared/models/user.model';
-import { AuthService } from '../service/auth.service';
+import { AuthServiceNS } from '../service/auth.service.tns';
 import { DefaultService } from '../default.service';
 
 @Component({
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     cancelable: true
   }
 
-  constructor(private routerExtensions: RouterExtensions, private defaultService: DefaultService, private authService: AuthService) {
+  constructor(private routerExtensions: RouterExtensions, private defaultService: DefaultService, private authService: AuthServiceNS) {
     this.user = new User();
     this.user.last_name = '';
     this.user.first_name = '';
