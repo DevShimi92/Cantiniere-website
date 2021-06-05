@@ -1,1 +1,14 @@
-<Label text="Report" ></Label>
+<StackLayout class="form">
+
+<StackLayout  class="input-field">
+    <TextField class="input" hint='Sujet du bug'  [(ngModel)]='reportSubject' ></TextField>
+  </StackLayout>
+
+  <StackLayout  class="input-field">
+    <TextView  class="input"  hint='Décrivez le bug' maxLength="707"  [(ngModel)]='reportMessage' ></TextView >
+  </StackLayout>
+
+  <Button text="Envoyer" class="btn btn-primary"  (tap)="submit()" ></Button>
+
+
+</StackLayout>

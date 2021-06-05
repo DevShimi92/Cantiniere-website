@@ -1,1 +1,28 @@
-<strong>Report</strong>
+<mat-grid-list cols="1"rowHeight="30:1">
+    <mat-grid-tile>
+        <h3 >Signalez un bug :</h3>      
+    </mat-grid-tile>
+  </mat-grid-list>
+
+<form [formGroup]="reportForm" (ngSubmit)="onSubmit()" #form="ngForm">
+
+  <mat-grid-list cols="1"rowHeight="30:1">
+    <mat-grid-tile  >
+      <label class="space" >Sujet du bug :</label> 
+      <input matInput  placeholder="Sujet du bug" formControlName="sujet">
+    </mat-grid-tile>
+  </mat-grid-list>
+  <div [hidden]="!errorReport" class="alert alert-danger">{{errorReportMsg}}</div>
+  <div [hidden]="!sendReport" class="alert alert-success">Votre message a bien été envoyé !</div>
+  <mat-grid-list cols="1:"rowHeight="4:1"> 
+    <h3 style="text-align: center"  >Votre message :</h3>  
+    <mat-grid-tile>
+      <textarea name="text" cols="100" rows="15" placeholder="Votre message" formControlName="message" ></textarea>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <div>
+    <button mat-raised-button type="submit">Envoyer</button>
+  </div>
+
+</form>
+  

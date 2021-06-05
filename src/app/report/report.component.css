@@ -1,1 +1,13 @@
-/* Nothing */
+.space{
+    margin: 10px;
+    margin-top: -2.5px;
+}
+
+div{
+  text-align: center;
+}
+
+.input {
+  font-size: 20; 
+  font-weight: 100;
+}
