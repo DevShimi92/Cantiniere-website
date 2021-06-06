@@ -1,1 +1,16 @@
-<strong>Login</strong>
+<h3>Mot de passe oublié ? </h3>
+<div [hidden]="!done" class="alert alert-success">Un email à été envoyé à votre adresse mail ! </div>
+<div [hidden]="!error" class="alert alert-danger">Votre email n'est pas valide ! </div>
+
+<div [hidden]="done" >
+    <form [formGroup]="ForgotPasswordForm" (ngSubmit)="onSubmit()" #form="ngForm"  class="form">
+
+        <mat-form-field class="full-width">
+            <mat-label>Votre email utilisé sur votre compte :</mat-label>
+            <input type="email" matInput formControlName="email" placeholder="Votre email">
+        </mat-form-field>
+
+        <input  type="submit" value="Envoyé un lien de réinitialisation" >
+
+    </form>
+</div>

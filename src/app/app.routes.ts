@@ -9,6 +9,7 @@ import { ReportComponent } from '@src/app/report/report.component';
 import { CartComponent } from '@src/app/cart/cart.component';
 import { RegistrationComponent } from '@src/app/registration/registration.component';
 import { DashboardComponent } from '@src/app/dashboard/dashboard.component';
+import { RestPasswordComponent } from '@src/app/restPassword/restPassword.component';
 
 export const routes: Routes = [
   {
@@ -51,5 +52,9 @@ export const routes: Routes = [
   {
        path: 'dashboard',
        component: DashboardComponent, 
+  },
+  {
+        path: 'rest_password/:token',
+        component: RestPasswordComponent, 
   }
 ];

@@ -41,6 +41,44 @@ export class AuthService {
             });
         });        
     }
+
+    forgotPassword(email:string) :Promise<boolean> {
+
+        const data = {
+            email : email
+        };
+
+        return new Promise<boolean>((resolve, reject) => {
+
+            this.http.post<any>(this.API_URL+'forgot_password',data).toPromise().then( () => {
+                
+                return resolve(true);
+
+        }).catch((error) => {
+                return reject(error);
+            });
+        });        
+    }
+    
+    restPassword(password:string, token:string) :Promise<boolean> {
+
+        const data = {
+            password : password
+        }
+        sessionStorage.setItem('token', token);
+        
+        return new Promise<boolean>((resolve, reject) => {
+
+            this.http.post<any>(this.API_URL+'rest_password',data).toPromise().then( () => {
+                    sessionStorage.clear();
+                    return resolve(true);
+
+                }).catch((error) => {
+                        sessionStorage.clear();
+                        return reject(error);
+                    });
+        });        
+    }
     
     refreshToken() :Promise<boolean> {
         

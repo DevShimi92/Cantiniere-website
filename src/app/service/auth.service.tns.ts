@@ -77,6 +77,24 @@ export class AuthService {
         });        
     }
 
+    forgotPassword(email:string) :Promise<boolean> {
+
+        const data = {
+            email : email
+        };
+
+        return new Promise<boolean>((resolve, reject) => {
+
+            this.http.post<any>(this.API_URL+'forgot_password',data).toPromise().then( () => {
+                
+                return resolve(true);
+
+        }).catch((error) => {
+                return reject(error);
+            });
+        });        
+    }
+
     checkingTokenOnInterval(intervalTime:number):void{
         this.interval = interval(intervalTime).subscribe(() => {
             this.refreshToken();
@@ -100,6 +118,8 @@ export class AuthService {
         this.user = this.helper.decodeToken(token);
         setString('userData', JSON.stringify(this.user));
     }
+
+
 
    
 }

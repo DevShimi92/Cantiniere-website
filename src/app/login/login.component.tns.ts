@@ -16,6 +16,7 @@ import { UserService } from '../service/user.service';
 export class LoginComponent implements OnInit {
 
   public isLoggingIn = true;
+  public isforgotPassword = true;
   public confirmedPassword = '';
   public user : User;
   
@@ -44,9 +45,17 @@ export class LoginComponent implements OnInit {
     this.isLoggingIn = !this.isLoggingIn;
   }
 
+  toggleFormForgotPassword() {
+    this.isforgotPassword = !this.isforgotPassword;
+  }
+
   submit():void {
 
-    if (this.isLoggingIn) {
+    if(!this.isforgotPassword)
+      {
+        this.forgotPassword();
+      }
+    else if (this.isLoggingIn) {
         this.login();
     } else {
         this.register();
@@ -101,34 +110,6 @@ export class LoginComponent implements OnInit {
                         }
 
                 });
-                /*
-                this.defaultService.register(this.user.last_name, this.user.first_name, this.user.email, this.user.password).subscribe((response) => 
-                      {
-                          setString("token", response.token);
-                          this.routerExtensions.navigate(["/home"], { clearHistory: true });
-                      },
-                    (error) => 
-                      {
-                        if(error.status == 409)
-                        {
-                          console.log("L'email utilisé pour l'enregistrement est déja exsitant dans la base de donnée. Demmande de réinitialisation de mot de passe...")
-                          Dialogs.confirm(this.acountExistOptions).then(result => {
-                            if( result == true )
-                              {
-                                  console.log('Vers la page de restoration de mdp...');
-                              }
-                            else
-                              {
-                                console.log("L'utilisateur n'a pas voulu tenté de réinitialiser son mot de passe")
-                              }
-                          });
-                        }
-                        else
-                        {
-                          console.log(error);
-                        }
-                      }
-                  );*/
               }
             else
               {
@@ -216,6 +197,48 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  forgotPassword(): void {
+    
+    if(this.validateEmail(this.user.email) && this.user.email != '')
+      {
+        this.authService.forgotPassword(this.user.email).then(() => {
+
+          Dialogs.alert({
+            title: "Email envoyé ",
+            message: "Un email de réinitiation de mot de passe à été envoyé à l'adresse indiqué.",
+            okButtonText: "OK",
+            cancelable: true
+          }).then(()=> {
+              console.log("Tentative envoié pour : "+this.user.email);
+          });
+
+        }).catch((error) => {
+
+          Dialogs.alert({
+            title: "Erreur inattentdu ",
+            message: "Une erreur s'est produit durant l'opération (code "+error.status+" )",
+            okButtonText: "OK",
+            cancelable: true
+          }).then(()=> {
+              console.log("Erreur inattentdu : ");
+              console.log(error);
+          });
+
+        })
+      }
+    else
+      {
+        Dialogs.alert({
+          title: "Erreur",
+          message: "Il nous faut le email utilisé sur votre compte pour vous envoyer un email de réinitiation de mot de passe !",
+          okButtonText: "OK",
+          cancelable: true
+        }).then(()=> {
+            console.log("Email manqnaut ou invalide pour la réinitiation de mot de passe ");
+        });
+      }
+  }
+  
   validateEmail(email:string): boolean {
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
