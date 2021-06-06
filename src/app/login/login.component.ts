@@ -33,9 +33,6 @@ export class LoginComponent implements OnInit {
         this.error = false;
         this.authService.forgotPassword(this.ForgotPasswordForm.value.email).then(() => {
           this.done = true;
-        }).catch((error) => {
-          this.done = true;
-         // console.log(error);
         });
       }
     else

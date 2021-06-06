@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { FoodStockService } from '../service/foodStock.service';
-import { DefaultService } from '../default.service';
 import { Article } from '../shared/models/article.model';
 import { Cart } from '../shared/models/cart.model';
 
@@ -26,7 +25,7 @@ export class MenuComponent implements OnInit {
   listArticleSearch: Article[] = [];
   listFilteredArticle: Article[] = [];
 
-  constructor( public dialog: MatDialog, private defaultService: DefaultService, private foodStockService: FoodStockService) {
+  constructor( public dialog: MatDialog, private foodStockService: FoodStockService) {
    // do nothing.
  }
 
@@ -48,7 +47,7 @@ export class MenuComponent implements OnInit {
         
         this.menuHaveSomething = true; 
         
-        this.defaultService.getAllArticle().subscribe((response) => 
+        this.foodStockService.getAllArticle().subscribe((response) => 
         {
 
           for (const key of response) {           

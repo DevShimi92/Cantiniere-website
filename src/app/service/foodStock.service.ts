@@ -64,5 +64,62 @@ export class FoodStockService {
     
     }
 
+    postArticle(name:string, price:number, code_type:number):Promise<boolean>{
+
+        const data = {
+          name : name,
+          price: price,
+          code_type_src : code_type
+        }
+
+        return new Promise<boolean>((resolve, reject) => {
+
+            this.http.post<any>(this.API_URL+'article',data).toPromise().then( () => {
+                return resolve(true);
+            }).catch((error) => {
+                return reject(error);
+            });
+        });
+
+        
+    
+    }
+
+    getAllArticle(): Observable<any>{
+
+         return this.http.get(this.API_URL+'article') ;
+      
+    }
+
+    putArticle(id:number, name:string=null,price:number=null):Promise<boolean>{
+
+        const data = { id: id ,price : price ,name : name};
+
+        return new Promise<boolean>((resolve, reject) => {
+    
+            this.http.put<any>(this.API_URL+'article',data).toPromise().then( () => {
+                return resolve(true);
+            }).catch((error) => {
+                    return reject(error);
+                });
+
+        });
+    }
+
+    deleteArticle(id:number):Promise<boolean>{
+    
+        const data = { id: id };
+
+        return new Promise<boolean>((resolve, reject) => {
+        
+            this.http.request<any>('delete',this.API_URL+'article',{ body :data }).toPromise().then( () => {
+                return resolve(true);
+            }).catch((error) => {
+                    return reject(error);
+                });
+        });
+    
+        
+      }
     
 }

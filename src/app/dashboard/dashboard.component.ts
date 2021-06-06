@@ -304,7 +304,7 @@ export class DashboardComponent implements OnInit {
           dialogRef.afterClosed().subscribe(result => {
                     if(result) {
 
-                      this.defaultService.postArticle(result.name,result.price,this.tabTypeArticle.get(result.value)).subscribe(()=> ///result.price
+                      this.foodStockService.postArticle(result.name,result.price,this.tabTypeArticle.get(result.value)).then(()=> ///result.price
                       {
                         const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
                           data: { FormDialogArticle : 3 , name : result.name }
@@ -339,7 +339,7 @@ export class DashboardComponent implements OnInit {
   checkArticle():void{
     this.dataSource='';
     this.displayCategory = 2 ;
-    this.defaultService.getAllArticle().subscribe((response) =>
+    this.foodStockService.getAllArticle().subscribe((response) =>
           {
            if(response != null)
             {
@@ -362,7 +362,7 @@ export class DashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
         if(( result !== undefined &&  result !== '') && ((result.name !== $event.name)||(result.price !== $event.price)) ) {
-          this.defaultService.putArticle( $event.id,result.name, result.price).subscribe(() => 
+          this.foodStockService.putArticle( $event.id,result.name, result.price).then(() => 
             {
               const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
                 data: { FormDialogArticle : 5, name : result.name }
@@ -386,7 +386,7 @@ export class DashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
         if(result == true && ( result !== undefined &&  result !== '') ) {
-          this.defaultService.deleteArticle( $event.id).subscribe((response) => 
+          this.foodStockService.deleteArticle( $event.id).then(() => 
             {
               const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
                 data: { FormDialogArticle : 6 }
@@ -407,7 +407,7 @@ export class DashboardComponent implements OnInit {
 
     let menuName = '';
 
-    this.defaultService.getAllArticle().subscribe((response) =>
+    this.foodStockService.getAllArticle().subscribe((response) =>
           {
           if(response)
             {
@@ -642,7 +642,7 @@ export class DashboardComponentDialogMenu {
   @ViewChild('listDialogPaginatpr') listDialogPaginatpr: MatPaginator;
 
   constructor( public dialogRef: MatDialogRef<DashboardComponentDialogMenu>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, public dialog: MatDialog, private defaultService: DefaultService) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, public dialog: MatDialog, private defaultService: DefaultService, private foodStockService:FoodStockService) {}
     
 
     ngOnInit(): void {
@@ -716,7 +716,7 @@ export class DashboardComponentDialogMenu {
 
     addArticleOnMenu():void{
 
-      this.defaultService.getAllArticle().subscribe((response) =>
+      this.foodStockService.getAllArticle().subscribe((response) =>
           {
             const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
               data: { FormDialogMenu : 1, name : this.data.name, data : response}

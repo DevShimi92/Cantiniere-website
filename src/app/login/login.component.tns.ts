@@ -1,6 +1,5 @@
 import { Component, OnInit} from '@angular/core';
 import { Dialogs } from "@nativescript/core";
-import { setString } from "@nativescript/core/application-settings";
 import { RouterExtensions } from "@nativescript/angular";
 
 
@@ -41,11 +40,11 @@ export class LoginComponent implements OnInit {
     // do nothing
   }
 
-  toggleForm() {
+  toggleForm():void {
     this.isLoggingIn = !this.isLoggingIn;
   }
 
-  toggleFormForgotPassword() {
+  toggleFormForgotPassword():void {
     this.isforgotPassword = !this.isforgotPassword;
   }
 

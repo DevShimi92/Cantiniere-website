@@ -25,35 +25,6 @@ export class DefaultService {
     this.user = new User();
   }
 
-  postArticle(name:string, price:number, code_type:number):Observable<any>{
-
-    const data = {
-      name : name,
-      price: price,
-      code_type_src : code_type
-    }
-    return this.http.post<any>(this.API_URL+'article',data);
-  }
-
-  getAllArticle(): Observable<any>{
-
-
-    return this.http.get(this.API_URL+'article') ;
-  }
-
-  putArticle(id:number, name:string=null,price:number=null):Observable<any>{
-
-    const data = { id: id ,price : price ,name : name}
-
-    return this.http.put<any>(this.API_URL+'article',data);
-  }
-
-  deleteArticle(id:number):Observable<any>{
-    
-    const data = { id: id }
-
-    return this.http.request<any>('delete',this.API_URL+'article',{ body :data });
-  }
 
   postMenu(name:string): Observable<any>{
     
