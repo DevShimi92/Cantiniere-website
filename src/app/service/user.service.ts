@@ -36,7 +36,6 @@ export class UserService {
         return this.http.get(this.API_URL+'user') ;
     }
     
-
     updateUser(user:User):Promise<boolean>{
     
         return new Promise<boolean>((resolve, reject) => {

@@ -25,30 +25,6 @@ export class DefaultService {
     this.user = new User();
   }
 
-  postTypeOfArticle(name:string):Observable<any>{
-
-    return this.http.post<any>(this.API_URL+'type_article',{name : name});
-  }
-  
-  getAllTypeOfArticle(): Observable<any>{
-
-    return this.http.get(this.API_URL+'type_article') ;
-  }
-
-  putTypeOfArticle(code_type:number, name:string):Observable<any>{
-    
-    const data = { code_type: code_type ,name : name }
-
-    return this.http.put<any>(this.API_URL+'type_article',data);
-  }
-
-  deleteTypeOfArticle(code_type:number):Observable<any>{
-    
-    const data = { code_type: code_type }
-
-    return this.http.request<any>('delete',this.API_URL+'type_article',{body :data });
-  }
-
   postArticle(name:string, price:number, code_type:number):Observable<any>{
 
     const data = {

@@ -1,4 +1,4 @@
-import { animation, trigger, animateChild, group, transition, animate, style, query, keyframes } from '@angular/animations';
+import { animation, animate, style, keyframes } from '@angular/animations';
   
   export const errorFormAnimation = animation([
     animate('0.5s', keyframes([

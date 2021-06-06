@@ -4,6 +4,7 @@ import { MatDialog , MatDialogRef,  MAT_DIALOG_DATA } from '@angular/material/di
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource} from '@angular/material/table';
 import { UserService } from '../service/user.service';
+import { FoodStockService } from '../service/foodStock.service';
 import { DefaultService } from '../default.service';
 import { User } from '../shared/models/user.model';
 
@@ -53,7 +54,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('listCustomPaginatpr') listCustomPaginatpr: MatPaginator;
   
-  constructor( public dialog: MatDialog, private userService: UserService, private defaultService: DefaultService ) {
+  constructor( public dialog: MatDialog, private userService: UserService, private foodStockService: FoodStockService, private defaultService: DefaultService ) {
     this.user = new User();
  }
 
@@ -199,7 +200,8 @@ export class DashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
         if(result) {
-          this.defaultService.postTypeOfArticle(result).subscribe(() => 
+
+          this.foodStockService.postTypeOfArticle(result).then(() => 
             {
               const dialogRef = this.dialog.open(DashboardComponentDialogTypeArticle,{
                 data: { FormDialogTypeArticle : 3, name : result }
@@ -218,7 +220,7 @@ export class DashboardComponent implements OnInit {
 
   checkTypeArticle():void{
     this.displayCategory = 1 ;
-    this.defaultService.getAllTypeOfArticle().subscribe((response) =>
+    this.foodStockService.getAllTypeOfArticle().subscribe((response) =>
           {
             if(response != null)
             {
@@ -241,7 +243,7 @@ export class DashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
         if(result !== $event.name && ( result !== undefined &&  result !== '') ) {
-          this.defaultService.putTypeOfArticle( $event.code_type,result).subscribe(() => 
+          this.foodStockService.putTypeOfArticle( $event.code_type,result).then(() => 
             {
               const dialogRef = this.dialog.open(DashboardComponentDialogTypeArticle,{
                 data: { FormDialogTypeArticle : 5, name : result }
@@ -265,7 +267,7 @@ export class DashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
         if(result == true && ( result !== undefined &&  result !== '') ) {
-          this.defaultService.deleteTypeOfArticle( $event.code_type).subscribe((response) => 
+          this.foodStockService.deleteTypeOfArticle( $event.code_type).then((response) => 
             {
               const dialogRef = this.dialog.open(DashboardComponentDialogTypeArticle,{
                 data: { FormDialogTypeArticle : 6 }
@@ -284,7 +286,7 @@ export class DashboardComponent implements OnInit {
 
   createArticle():void{
 
-    this.defaultService.getAllTypeOfArticle().subscribe((reponse) =>
+    this.foodStockService.getAllTypeOfArticle().subscribe((reponse) =>
     {
       if(reponse)
         {
