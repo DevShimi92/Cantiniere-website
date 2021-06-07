@@ -3,7 +3,10 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import { setString, getString } from '@nativescript/core/application-settings';
 import { Dialogs } from "@nativescript/core";
 import { RouterExtensions } from "@nativescript/angular";
-import { DefaultService } from '../default.service';
+import { OrderService } from '../service/order.service';
+import { AuthService } from '../service/auth.service';
+
+
 import { Cart } from '../shared/models/cart.model';
 
 @Component({
@@ -48,7 +51,7 @@ export class CartComponent implements OnInit {
     cancelable: true
   }
 
-  constructor(private routerExtensions: RouterExtensions, private defaultService: DefaultService) {
+  constructor(private routerExtensions: RouterExtensions, private authService: AuthService, private orderService: OrderService) {
    // do nothing.
   }
 
@@ -114,11 +117,11 @@ export class CartComponent implements OnInit {
             console.log(this.dataUser.id);
             console.log(this.dataUser.money);
             console.log(this.finalPrice);
-            this.defaultService.postOrderInfoMobie(getString("token"),this.dataUser.id,this.dataUser.money,this.finalPrice).subscribe((response) => {
+            this.orderService.postOrderInfo(this.dataUser.id,this.dataUser.money,this.finalPrice).then((idOrder) => {
               console.log('1');
               for(let  i = 0; i < Object.keys(this.cart).length; i++)
               {
-                this.defaultService.postOrderContentMobile(getString("token"),this.cart[i].id,response.id).subscribe(() =>
+                this.orderService.postOrderContent(this.cart[i].id,idOrder).then(() =>
                 (error) => 
                   {
                     errorCreate = true;
@@ -127,7 +130,7 @@ export class CartComponent implements OnInit {
 
               console.log('2');
 
-              if (errorCreate == true)
+              if (errorCreate)
                 {
                   console.log('4');
                   Dialogs.alert(this.errorOnOrder);
@@ -139,6 +142,7 @@ export class CartComponent implements OnInit {
                   this.updateCartOnVisually();
                   setString('cart', JSON.stringify(this.cart));
                   Dialogs.alert(this.orderOK);
+                  this.authService.refreshToken();
                   this.cartHaveSomething  = false;
                 }
 
@@ -151,7 +155,7 @@ export class CartComponent implements OnInit {
       }
     else{
       Dialogs.confirm(this.accountNotLogin).then(result => {
-        if( result == true )
+        if( result )
           {
             this.routerExtensions.navigate(["/login"], { clearHistory: true });
           }

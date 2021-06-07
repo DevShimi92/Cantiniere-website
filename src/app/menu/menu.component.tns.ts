@@ -3,7 +3,7 @@ import { CardView } from '@nstudio/nativescript-cardview';
 import { registerElement } from '@nativescript/angular';
 import { Dialogs, SearchBar } from '@nativescript/core';
 import { setString, getString } from '@nativescript/core/application-settings';
-import { DefaultService } from '../default.service';
+import { FoodStockService } from '../service/foodStock.service';
 import { Article } from '../shared/models/article.model';
 import { Cart } from '../shared/models/cart.model';
 
@@ -29,14 +29,14 @@ export class MenuComponent implements OnInit {
   }
   
 
-  constructor(private defaultService: DefaultService) {
+  constructor(private foodStockService: FoodStockService) {
    // do nothing.
   }
 
 
   ngOnInit(): void {
     
-    this.defaultService.getAllArticle().subscribe((response) => 
+    this.foodStockService.getAllArticle().subscribe((response) => 
     {
       if(response)
         { 

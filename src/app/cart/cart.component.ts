@@ -3,6 +3,8 @@ import { Cart } from '../shared/models/cart.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource} from '@angular/material/table';
 import { DefaultService } from '../default.service';
+import { OrderService } from '../service/order.service';
+import { AuthService } from '../service/auth.service';
 import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Component({
@@ -25,7 +27,7 @@ export class CartComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private defaultService: DefaultService) {
+  constructor(private defaultService: DefaultService, private orderService: OrderService, private authService: AuthService) {
    // do nothing.
  }
 
@@ -81,11 +83,11 @@ export class CartComponent implements OnInit {
       {
         let errorCreate = false;
         this.error = false;
-        this.defaultService.postOrderInfo(this.dataUser.id,this.dataUser.money,this.finalPrice).subscribe((response) => {
+        this.orderService.postOrderInfo(this.dataUser.id,this.dataUser.money,this.finalPrice).then((idOrder) => {
         
           for(let  i = 0; i < Object.keys(this.cart).length; i++)
               {
-                this.defaultService.postOrderContent(this.cart[i].id,response.id).subscribe(() =>
+                this.orderService.postOrderContent(this.cart[i].id,idOrder).then(
                 (error) => 
                   {
                     errorCreate = true;
@@ -98,7 +100,7 @@ export class CartComponent implements OnInit {
           }
         else
           {
-            console.log('aaaa')
+            this.authService.refreshToken();
             sessionStorage.removeItem('cart');
             this.cart = [];
             this.updateCartOnVisually();

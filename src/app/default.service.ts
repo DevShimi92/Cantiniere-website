@@ -79,46 +79,4 @@ export class DefaultService {
     return this.http.request<any>('delete',this.API_URL+'menu/content/');
   }
 
-  postOrderInfo(idClient:number,soldBeforeOrder:number,total:number): Observable<any>{
-
-    const data = {
-      id_client : idClient,
-      sold_before_order : soldBeforeOrder,
-      total : total ,
-    }
-    
-    return this.http.post<any>(this.API_URL+'order',data) ;
-  }
-
-  postOrderInfoMobie(token:any,idClient:number,soldBeforeOrder:number,total:number): Observable<any>{
-
-    const data = {
-      id_client : idClient,
-      sold_before_order : soldBeforeOrder,
-      total : total ,
-    }
-    
-    return this.http.post<any>(this.API_URL+'order',data) ;
-  }
-
-  postOrderContent(idArticle:number,idOrder:number): Observable<any>{
-
-    const data = {
-      id_article : idArticle,
-      id_order   : idOrder
-    }
-    
-    return this.http.post<any>(this.API_URL+'order/content',data) ;
-  }
-
-  postOrderContentMobile(token:any,idArticle:number,idOrder:number): Observable<any>{
-
-    const data = {
-      id_article : idArticle,
-      id_order   : idOrder
-    }
-    
-    return this.http.post<any>(this.API_URL+'order/content',data) ;
-  }
-
 }

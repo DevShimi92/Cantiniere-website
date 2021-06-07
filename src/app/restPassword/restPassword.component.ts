@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { Observable, interval, pipe } from 'rxjs';
-import { tap, catchError, map, switchMap } from "rxjs/operators";
+import { interval } from 'rxjs';
+import { switchMap } from "rxjs/operators";
 
 
 import { AuthService } from '../service/auth.service'

@@ -16,9 +16,7 @@ import { AuthInterceptor } from '@src/app/interceptors/auth.interceptor';
 import { ErrorInterceptor } from '@src/app/interceptors/error.interceptor';
 
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
-import { NativeScriptFormsModule } from '@nativescript/angular';
-import { NativeScriptHttpClientModule } from '@nativescript/angular';
-
+import { NativeScriptFormsModule, NativeScriptHttpClientModule } from '@nativescript/angular';
 
 // Uncomment and add to NgModule imports if you need to use two-way binding and/or HTTP wrapper
 // import { NativeScriptFormsModule, NativeScriptHttpClientModule } from '@nativescript/angular';
