@@ -63,7 +63,7 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  OnPageChange(event: PageEvent){
+  OnPageChange(event: PageEvent): void{
 
     const startIndex = event.pageIndex * event.pageSize;
     let endIndex = startIndex + event.pageSize;
@@ -76,7 +76,7 @@ export class MenuComponent implements OnInit {
       this.listArticle = this.listArticleSearch.slice(startIndex, endIndex);    
   }
 
-  selectType() {
+  selectType(): void{
     const selected = this.tabTypeArticle.get(this.selectedTypeArticle) ;
 
     this.listArticle = this.listArticleDefault;
@@ -101,7 +101,7 @@ export class MenuComponent implements OnInit {
 
   }
 
-  applyFilter(event: KeyboardEvent) {
+  applyFilter(event: KeyboardEvent): void{
 
     const filterValue = (event.target as HTMLInputElement).value;
     if(event.key == 'Backspace')
@@ -126,7 +126,7 @@ export class MenuComponent implements OnInit {
     
   }
 
-  selectItem(event: Article)
+  selectItem(event: Article): void
   {
     let cart: Cart[] = [];
     

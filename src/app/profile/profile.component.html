@@ -1,31 +1,67 @@
-<div>
-    <h3>Votre solde actuelle est de : {{dataUser.money}} €</h3>
-    <h2>----------------------------------</h2>
-    <h2> Modifier votre profile : </h2><br>
-    <div [hidden]="!errorUpdate" class="alert alert-danger">Erreur : Certains champs n'ont pas pu être mit a jour</div>
-    <form [formGroup]="updateForm" (ngSubmit)="onSubmit()"  #form="ngForm">
+<mat-grid-list cols="2" rowHeight="1.25:1">
+    <mat-grid-tile>
         <div>
-            <h4>Nom</h4> 
-            <input type="text" id="lastName" name="lastName" formControlName="lastName">
+            <h3>Votre solde actuelle est de : {{dataUser.money}} €</h3>
+            <h2>----------------------------------</h2>
+            <h2> Modifier votre profile : </h2><br>
+            <div [hidden]="!errorUpdate" class="alert alert-danger">Erreur : Certains champs n'ont pas pu être mit a jour</div>
+            <form [formGroup]="updateForm" (ngSubmit)="onSubmit()"  #form="ngForm">
+                <div>
+                    <h4>Nom</h4> 
+                    <input type="text" id="lastName" name="lastName" formControlName="lastName">
+                </div>
+                <div>
+                    <h4>Prénom</h4> 
+                    <input type="text" id="firstName" name="firstName" formControlName="firstName">
+                </div>
+                <div>
+                    <h4>Email</h4> 
+                    <input type="text" id="email" name="email" formControlName="email">
+                    <div [hidden]="!errorEmail" class="alert alert-danger">Email Incorrect</div>
+                </div>
+                <div>
+                    <h4>Nouveau Mot de passe</h4>
+                    <input type="text" id="password" name="password" formControlName="password">
+                </div>
+                <h4>Confirmez votre nouveau mot de passe</h4>
+                    <input type="text" id="checkPassword" name="checkPassword" formControlName="checkPassword">
+                    <div [hidden]="!errorPasswordCheck" class="alert alert-danger">Le mot de passe de confirmation est différent du mot de passe entrée précédenemt</div>
+                <br>
+                <input  type="submit" value="Modifier" >
+            </form>
+            
+        </div> 
+</mat-grid-tile>
+    <mat-grid-tile>
+            <div>
+                <div>Liste des commandes passées :</div>
+                <table  mat-table [dataSource]="dataSource" aria-describedby ="listOrder">
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef scope="col" > N° Commande </th>
+                        <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="createdAt">
+                        <th mat-header-cell *matHeaderCellDef scope="col" > Date de commande </th>
+                        <td mat-cell *matCellDef="let row"> {{ convertDate(row.createdAt) }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="total">
+                        <th mat-header-cell *matHeaderCellDef scope="col" > Prix de la commande : </th>
+                        <td mat-cell *matCellDef="let row"> {{ row.total }} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="show">
+                        <th mat-header-cell *matHeaderCellDef scope = "col" > Actions </th>   
+                            <td mat-cell *matCellDef="let row"> 
+                                <button mat-menu-item (click)="orderContent(row.id,row.total,row)">Détails</button> 
+                            </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsListOrder"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsListOrder;"></tr>
+                </table>
+            <mat-paginator [length]="ListOrderLength" [pageSize]="5 "></mat-paginator>
         </div>
-        <div>
-            <h4>Prénom</h4> 
-            <input type="text" id="firstName" name="firstName" formControlName="firstName">
-        </div>
-        <div>
-            <h4>Email</h4> 
-            <input type="text" id="email" name="email" formControlName="email">
-            <div [hidden]="!errorEmail" class="alert alert-danger">Email Incorrect</div>
-        </div>
-        <div>
-            <h4>Nouveau Mot de passe</h4>
-            <input type="text" id="password" name="password" formControlName="password">
-        </div>
-        <h4>Confirmez votre nouveau mot de passe</h4>
-            <input type="text" id="checkPassword" name="checkPassword" formControlName="checkPassword">
-            <div [hidden]="!errorPasswordCheck" class="alert alert-danger">Le mot de passe de confirmation est différent du mot de passe entrée précédenemt</div>
-        <br>
-        <input  type="submit" value="Modifier" >
-    </form>
-    
-</div>
+    </mat-grid-tile>
+  </mat-grid-list>

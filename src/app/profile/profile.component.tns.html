@@ -1,19 +1,62 @@
-<Label text="Votre Solde est de {{dataUser.money}}" textAlignment="center" ></Label>
-
 <StackLayout class="form">
-    <Label text="Nom" ></Label>
-        <TextField class="input" hint='Votre Nom' [(ngModel)]='fieldsUser.last_name' ></TextField>
-    <Label text="Prénom" ></Label>
-        <TextField class="input" hint='Votre Prénom' [(ngModel)]='fieldsUser.first_name' ></TextField>
-    <Label text="Email" ></Label>
-        <TextField class="input" hint='Votre Email' [(ngModel)]='fieldsUser.email' ></TextField>
-    <Label text="Nouveau mot de passe" ></Label>
-        <TextField class="input" hint='Mot de passe' [(ngModel)]='fieldsUser.password' ></TextField>
-    <Label text="Confirmez votre nouveau mot de passe" ></Label>
-        <TextField class="input" hint='Mot de passe'  [(ngModel)]='checkPassaword' ></TextField>
+    <div *ngIf="!isShowOrder && !isShowOrderContent">
+        <Label text="Votre Solde est de {{dataUser.money}} €" textAlignment="center" ></Label>
+        <Label text="Nom" ></Label>
+            <TextField class="input" hint='Votre Nom' [(ngModel)]='fieldsUser.last_name' ></TextField>
+        <Label text="Prénom" ></Label>
+            <TextField class="input" hint='Votre Prénom' [(ngModel)]='fieldsUser.first_name' ></TextField>
+        <Label text="Email" ></Label>
+            <TextField class="input" hint='Votre Email' [(ngModel)]='fieldsUser.email' ></TextField>
+        <Label text="Nouveau mot de passe" ></Label>
+            <TextField class="input" hint='Mot de passe' [(ngModel)]='fieldsUser.password' ></TextField>
+        <Label text="Confirmez votre nouveau mot de passe" ></Label>
+            <TextField class="input" hint='Mot de passe'  [(ngModel)]='checkPassaword' ></TextField>
 
-    <Button text="Modifier"  class="btn btn-primary"  (tap)="submit()" ></Button>
-
+        <Button text="Modifier"  class="btn btn-primary"  (tap)="submit()" ></Button>
+        <Button text="Liste des commmandes passée"  class="btn btn-primary"  (tap)="toggle()" ></Button>
+    </div>
+    <div *ngIf="isShowOrder && !isShowOrderContent">
+        <Button text="Voir/Modifier son profile"  class="btn btn-primary"  (tap)="toggle()" ></Button>
+        <ScrollView row="1" col="0" orientation="vertical" height="100%" > 
+            <WrapLayout>
+                <CardView *ngFor="let item of listOrderLocal" class="card" elevation="40" radius="10" ios:shadowRadius="3"  width="100%" height="50%">
+                    <StackLayout class="card-layout" (longPress)="showOrderContent(item.id)" >
+                        <Label class="h2" textWrap="true">
+                            <FormattedString>
+                                <span text="Commande n° "></span>
+                                <span [text]="item.id"></span>
+                                <span text="\nDate de la commande : "></span>
+                                <span [text]="convertDate(item.createdAt)"></span>
+                                <span text="\nTotal de la commande : "></span>
+                                <span [text]="item.total"></span>
+                                <span text=" €"></span>
+                              </FormattedString>
+                        </Label>
+                    </StackLayout>
+                </CardView>
+            </WrapLayout>
+        </ScrollView>
+    </div>
+    <div *ngIf="isShowOrderContent">
+        <Button text="Retour"  class="btn btn-primary"  (tap)="toggle()" ></Button>
+        <ScrollView row="1" col="0" orientation="vertical" height="100%">
+            <WrapLayout>
+                <CardView *ngFor="let item of contentOrderLocal; let i = index;" class="card" elevation="40" radius="10" ios:shadowRadius="3"  width="100%" height="50%">
+                    <StackLayout class="card-layout" orientation="vertical">
+                        <Label class="h2" textWrap="true">
+                            <FormattedString>
+                                <span text="Nom de l'article : "></span>
+                                <span [text]="convertArticleName(this.contentOrderLocal[i])"></span>
+                                <span text="\nPrix : "></span>
+                                <span [text]="convertArticlePrice(this.contentOrderLocal[i])"></span>
+                                <span text="€"></span>
+                            </FormattedString>
+                        </Label>
+                    </StackLayout>
+                </CardView>
+            </WrapLayout>
+        </ScrollView>
+    </div>
 </StackLayout>
 
   

@@ -23,7 +23,7 @@ import { AppComponent } from '@src/app/app.component';
 import { HomeComponent } from '@src/app/home/home.component';
 import { LoginComponent } from '@src/app/login/login.component';
 import { MenuComponent, MenuComponentDialog } from '@src/app/menu/menu.component';
-import { ProfileComponent } from '@src/app/profile/profile.component';
+import { ProfileComponent, ProfileComponentDialog } from '@src/app/profile/profile.component';
 import { SettingComponent } from '@src/app/setting/setting.component';
 import { ReportComponent } from '@src/app/report/report.component';
 import { CartComponent } from '@src/app/cart/cart.component';
@@ -52,6 +52,7 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     DashboardComponentDialogMenu,
     RestPasswordComponent,
     MenuComponentDialog,
+    ProfileComponentDialog,
   ],
   imports: [
     BrowserModule,

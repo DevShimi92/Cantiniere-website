@@ -1,1 +1,7 @@
-/* Nothing */
+table {
+    width: 100%;
+    text-align: center;
+  }
+  .mat-header-cell{
+    text-align: center;
+  }

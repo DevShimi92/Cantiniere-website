@@ -4,6 +4,7 @@ import { Dialogs } from "@nativescript/core";
 
 import { User } from '../shared/models/user.model';
 import { UserService } from '../service/user.service';
+import { OrderService } from '../service/order.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,12 +13,16 @@ import { UserService } from '../service/user.service';
 })
 export class ProfileComponent implements OnInit {
   
+  listOrderLocal;
+  contentOrderLocal;
   dataUser : any;
   checkPassaword : string;
   fieldsUser : User;
   user : User;
+  isShowOrder = false;
+  isShowOrderContent = false;
 
-  constructor( private userService: UserService ) {
+  constructor( private userService: UserService, private orderService: OrderService ) {
     this.user = new User();
     this.fieldsUser = new User();
   }
@@ -32,6 +37,75 @@ export class ProfileComponent implements OnInit {
     this.fieldsUser.first_name = this.dataUser.first_name; 
     this.fieldsUser.email = this.dataUser.email; 
     this.fieldsUser.password = '';
+  }
+
+  toggle():void{
+    if(this.isShowOrderContent)
+      this.isShowOrderContent=false; 
+    else
+      this.isShowOrder = !this.isShowOrder;
+
+    if(this.isShowOrder)
+      {
+          this.refresListOrder();
+      }
+  }
+
+  refresListOrder():void{
+
+      this.orderService.getAllOrderOneAccount(this.dataUser.id).subscribe((response) => {
+        this.listOrderLocal = response;
+      },(error) => {
+        console.log(error);
+      });
+  }
+
+  showOrderContent(idOrder:number):void{
+
+    this.orderService.getOrderContent(idOrder).subscribe((response) => {
+      this.contentOrderLocal = response;
+      //console.log(this.contentOrderLocal[0]["Article.name"])
+      this.isShowOrderContent = true;
+    },(error) => {
+      console.log(error);
+    });
+
+  }
+
+  convertArticleName(row:any):string
+    {
+      const name : string = row["Article.name"];
+      return name;
+    }
+
+  convertArticlePrice(row:any):string
+    {
+      const price : string = row["Article.price"];
+      return price;
+    }
+
+  convertDate(dateISOstring:string):string{
+    const dateOrder = new Date(dateISOstring);
+    const year = dateOrder.getFullYear();
+    const month = dateOrder.getMonth()+1;
+    const day = dateOrder.getDate();
+    let dateFormated : string;
+
+    if (day < 10) {
+      dateFormated = '0' + day+'/';
+    }
+    else{
+      dateFormated = day+'/';
+    }
+
+    if (month < 10) {
+      dateFormated = dateFormated +'0' + month+'/'+year;
+    }
+    else{
+      dateFormated = dateFormated + month+'/'+year;
+    }
+    
+    return dateFormated;
   }
 
   submit():void {

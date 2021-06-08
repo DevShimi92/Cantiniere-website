@@ -1,6 +1,8 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NativeScriptModule } from '@nativescript/angular';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NativeScriptModule, NativeScriptFormsModule, NativeScriptHttpClientModule } from '@nativescript/angular';
+import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
+
 
 import { AppRoutingModule } from '@src/app/app-routing.module';
 import { AppComponent } from '@src/app/app.component';
@@ -14,9 +16,6 @@ import { CartComponent } from '@src/app/cart/cart.component';
 import { RegistrationComponent } from '@src/app/registration/registration.component';
 import { AuthInterceptor } from '@src/app/interceptors/auth.interceptor';
 import { ErrorInterceptor } from '@src/app/interceptors/error.interceptor';
-
-import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
-import { NativeScriptFormsModule, NativeScriptHttpClientModule } from '@nativescript/angular';
 
 // Uncomment and add to NgModule imports if you need to use two-way binding and/or HTTP wrapper
 // import { NativeScriptFormsModule, NativeScriptHttpClientModule } from '@nativescript/angular';

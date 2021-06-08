@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
@@ -55,6 +56,15 @@ export class OrderService {
     
     }
 
+    getAllOrderOneAccount(idClient:number): Observable<any>{
+
+        return this.http.get(this.API_URL+'order/'+idClient) ;
+    }
+
+    getOrderContent(idOrder:number): Observable<any>{
+
+        return this.http.get(this.API_URL+'order/content/'+idOrder) ;
+    }
 
 
 }
