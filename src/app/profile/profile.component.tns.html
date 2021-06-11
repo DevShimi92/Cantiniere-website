@@ -24,6 +24,13 @@
             </FormattedString>
         </Label>
         </div>
+        <div  *ngIf="emptylistOrder" >
+            <Label class="h1" textWrap="true" class="centerTitle">
+                <FormattedString>
+                    <span text="Vous n'avez pas encore passé de commande pour le moment !"></span>
+            </FormattedString>
+        </Label>
+        </div>
         <ScrollView row="1" col="0" orientation="vertical" height="100%" > 
             <WrapLayout>
                 <CardView *ngFor="let item of listOrderLocal" class="card" elevation="40" radius="10" ios:shadowRadius="3"  width="100%" height="50%">

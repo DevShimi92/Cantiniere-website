@@ -22,6 +22,7 @@ export class ProfileComponent implements OnInit {
   fieldsUser : User;
   user : User;
   Expired = false;
+  emptylistOrder = false;
   isShowOrder = false;
   isShowOrderContent = false;
   isShowMenuContent = false;
@@ -66,8 +67,17 @@ export class ProfileComponent implements OnInit {
   refresListOrder():void{
 
       this.orderService.getAllOrderOneAccount(this.dataUser.id).subscribe((response) => {
-        this.listOrderLocal = response;
         this.Expired = false;
+        if(response)
+          {
+            this.emptylistOrder = false;
+            this.listOrderLocal = response;
+          }
+        else
+          {
+            this.emptylistOrder = true;
+          }
+        
       },(error) => {
         this.Expired = true;
         console.log(error);
