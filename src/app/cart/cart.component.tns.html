@@ -5,7 +5,7 @@
 				<StackLayout class="card-layout" (longPress)="showDescription(item)">
 					<Label class="h2" [text]="item.name"></Label>
 					<Label class="body" textWrap="true" text="{{item.price}} €"></Label>
-					<button text="Supprimer l'article" (tap)="deleteArticle(item)" ></button>
+					<button text="Supprimer" (tap)="deleteArticle(item)" ></button>
 
 				</StackLayout>
 			</CardView>

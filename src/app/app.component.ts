@@ -4,8 +4,8 @@ import { trigger, transition, state, animate, style, useAnimation } from '@angul
 import { Router } from '@angular/router';
 
 import { errorFormAnimation } from '././animation/animation';
-import { DefaultService } from './default.service';
 import { AuthService } from './service/auth.service';
+import { EventEmitterService } from './service/event-emitter.service';
 
 @Component({
   selector: 'app-root',
@@ -66,11 +66,11 @@ export class AppComponent implements OnInit{
 
   dataUser : any;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService, private defaultService: DefaultService) { 
-    defaultService.changeEmitted$.subscribe(any => {
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService, private eventEmitterService: EventEmitterService) { 
+    this.eventEmitterService.changeEmitted$.subscribe(any => {
       this.toggle();
     });
-   }
+  }
 
   ngOnInit():void {
 

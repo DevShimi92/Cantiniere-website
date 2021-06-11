@@ -1,1 +1,39 @@
-<Label text="Home" ></Label>
+<div *ngIf="!here">
+    <Label text="Il n'y a pas de menu de disponible" ></Label>
+</div>
+<div *ngIf="here">
+    <StackLayout>
+        <!-- <ListPicker [items]="listday" class="picker"> </ListPicker> -->
+    <StackLayout class="contentMenuText" >
+        <Label class="h1" [text]="this.selectedMenu.name" ></Label>
+        <Image src="res://imagenotfound" ></Image>
+        <Label class="h2" textWrap="true">
+            <FormattedString>
+                <span [text]="this.selectedMenu.price_final" ></span>
+                <span text=" €" ></span>
+                <span [text]="this.selectedMenu.description"></span>
+            </FormattedString>
+        </Label>  
+    </StackLayout>
+    <StackLayout>
+       <ScrollView orientation="horizontal">
+           <WrapLayout>
+               <CardView *ngFor="let item of menuList; let i = index;" class="card" elevation="40" radius="10" ios:shadowRadius="3" width="500px" height="20%">
+                   <StackLayout [class.Selected]="i===selectedIndex" (tap)="selected(i,item)" class="Unselected">
+                        <Label class="h2" textWrap="true">
+                            <FormattedString>
+                                <span [text]="item.name"></span>
+                                <span text="\n"></span>
+                                <span [text]="item.price_final"></span>
+                                <span text=" €"></span>
+                            </FormattedString>
+                        </Label>  
+                   </StackLayout>
+               </CardView>
+           </WrapLayout>
+       </ScrollView> 
+       <button text="Réserver ce menu !" (tap)="pickMenu()" ></button>
+
+    </StackLayout>
+</StackLayout>
+</div>

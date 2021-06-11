@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse } from "@angular/common/http"
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from "@angular/common/http"
 import { getString } from "@nativescript/core/application-settings";
 
 import { Observable } from "rxjs"

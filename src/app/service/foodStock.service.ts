@@ -121,6 +121,107 @@ export class FoodStockService {
         });
     
         
-      }
+    }
+    
+    postMenu(name:string,price_final=0,description:string=null): Promise<number>{
+
+        const data = {
+            name : name,
+            price_final : price_final,
+            description :description
+        };
+
+        return new Promise<number>((resolve, reject) => {
+
+            this.http.post<any>(this.API_URL+'menu',data).toPromise().then((response) => {
+                return resolve(response.id);
+            }).catch((error) => {
+                return reject(error);
+            });
+        });
+    
+    }
+
+    getAllMenu(): Observable<any>{
+
+        return this.http.get<any>(this.API_URL+'menu') ;
+    
+    }
+
+    putMenu(id:number, name:string=null,price_final=0,description:string=null):Promise<boolean>{
+ 
+        const data = { 
+          id: id ,
+          name : name,
+          price_final : price_final,
+          description :description
+      };
+
+        return new Promise<boolean>((resolve, reject) => {
+
+            this.http.put<any>(this.API_URL+'menu',data).toPromise().then( () => {
+                return resolve(true);
+            }).catch((error) => {
+                return reject(error);
+            });
+        });
+    
+    }
+
+    deleteMenu(id:number):Promise<boolean>{
+
+        const data = { id: id };
+
+        return new Promise<boolean>((resolve, reject) => {
+
+            this.http.request<any>('delete',this.API_URL+'menu',{ body :data }).toPromise().then( () => {
+                    return resolve(true);
+                }).catch((error) => {
+                    return reject(error);
+                });
+        });
+    }
+
+    postMenuContent(idMenu:number,idArticle:number): Promise<boolean>{
+
+        const data = {
+          id_menu : idMenu,
+          id_article: idArticle,
+        }
+
+        return new Promise<boolean>((resolve, reject) => {
+
+            this.http.post<any>(this.API_URL+'menu/content',data).toPromise().then( () => {
+                return resolve(true);
+            }).catch((error) => {
+                return reject(error);
+            });
+        });
+        
+    }
+
+    getMenuContent(idMenu:number): Observable<any>{
+    
+        return this.http.get<any>(this.API_URL+'menu/content/'+idMenu) ;
+      
+    }
+
+    deleteMenuContent(idMenu:number, idArticle:number): Promise<boolean>{
+
+        const data = {
+          id_menu : idMenu,
+          id_article: idArticle,
+        }
+
+        return new Promise<boolean>((resolve, reject) => {
+        
+            this.http.request<any>('delete',this.API_URL+'menu/content/',{ body :data }).toPromise().then( () => {
+                return resolve(true);
+            }).catch((error) => {
+                return reject(error);
+            });
+        
+        });
+    }
     
 }

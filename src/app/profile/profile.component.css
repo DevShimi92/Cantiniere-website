@@ -5,3 +5,6 @@ table {
   .mat-header-cell{
     text-align: center;
   }
+  .centerTitle {
+    text-align: center;
+}

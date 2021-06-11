@@ -6,7 +6,7 @@
 		<WrapLayout>
 			<CardView *ngFor="let item of listArticle" class="card" elevation="40" radius="10" ios:shadowRadius="3"  width="50%" height="50%">
 				<StackLayout class="card-layout" (longPress)="showDescription(item)">
-					<!--<image src="https://wallpapercave.com/wp/wp2587127.jpg"></image>-->
+					<image src="res://imagenotfound"></image>
 					<Label class="h2" [text]="item.name"></Label>
 					<Label class="body" textWrap="true" text="{{item.price}} €"></Label>
 					<button text="Réserver" (tap)="pickArticle(item)"></button>

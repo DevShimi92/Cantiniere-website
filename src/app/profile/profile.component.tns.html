@@ -1,5 +1,5 @@
 <StackLayout class="form">
-    <div *ngIf="!isShowOrder && !isShowOrderContent">
+    <div *ngIf="!isShowOrder && !isShowOrderContent && !isShowMenuContent">
         <Label text="Votre Solde est de {{dataUser.money}} €" textAlignment="center" ></Label>
         <Label text="Nom" ></Label>
             <TextField class="input" hint='Votre Nom' [(ngModel)]='fieldsUser.last_name' ></TextField>
@@ -15,8 +15,15 @@
         <Button text="Modifier"  class="btn btn-primary"  (tap)="submit()" ></Button>
         <Button text="Liste des commmandes passée"  class="btn btn-primary"  (tap)="toggle()" ></Button>
     </div>
-    <div *ngIf="isShowOrder && !isShowOrderContent">
+    <div *ngIf="isShowOrder && !isShowOrderContent && !isShowMenuContent">
         <Button text="Voir/Modifier son profile"  class="btn btn-primary"  (tap)="toggle()" ></Button>
+        <div  *ngIf="Expired" >
+            <Label class="h1" textWrap="true" class="centerTitle">
+                <FormattedString>
+                    <span text="Session expiré ! \n Réessayer d'affichez cette page."></span>
+            </FormattedString>
+        </Label>
+        </div>
         <ScrollView row="1" col="0" orientation="vertical" height="100%" > 
             <WrapLayout>
                 <CardView *ngFor="let item of listOrderLocal" class="card" elevation="40" radius="10" ios:shadowRadius="3"  width="100%" height="50%">
@@ -37,18 +44,43 @@
             </WrapLayout>
         </ScrollView>
     </div>
-    <div *ngIf="isShowOrderContent">
-        <Button text="Retour"  class="btn btn-primary"  (tap)="toggle()" ></Button>
+    <div *ngIf="isShowOrderContent  && !isShowMenuContent">
+        <Button text="Retour sur la liste des commandes"  class="btn btn-primary"  (tap)="toggle()" ></Button>
         <ScrollView row="1" col="0" orientation="vertical" height="100%">
             <WrapLayout>
                 <CardView *ngFor="let item of contentOrderLocal; let i = index;" class="card" elevation="40" radius="10" ios:shadowRadius="3"  width="100%" height="50%">
-                    <StackLayout class="card-layout" orientation="vertical">
+                    <StackLayout class="card-layout" orientation="vertical" (longPress)="showMenuContent(this.contentOrderLocal[i])">
                         <Label class="h2" textWrap="true">
                             <FormattedString>
-                                <span text="Nom de l'article : "></span>
-                                <span [text]="convertArticleName(this.contentOrderLocal[i])"></span>
+                                <span text="Nom du menu ou de l'article : \n"></span>
+                                <span [text]="convertName(this.contentOrderLocal[i])"></span>
                                 <span text="\nPrix : "></span>
-                                <span [text]="convertArticlePrice(this.contentOrderLocal[i])"></span>
+                                <span [text]="convertPrice(this.contentOrderLocal[i])"></span>
+                                <span text="€"></span>
+                            </FormattedString>
+                        </Label>
+                    </StackLayout>
+                </CardView>
+            </WrapLayout>
+        </ScrollView>
+    </div>
+    <div *ngIf="isShowOrderContent && isShowMenuContent">
+        <Button text="Retour sur la commande"  class="btn btn-primary"  (tap)="toggle()" ></Button>
+        <Label class="h1" textWrap="true" class="centerTitle">
+                <FormattedString>
+                    <span text="Contenu du menu : \n"></span>
+            </FormattedString>
+        </Label>
+        <ScrollView row="1" col="0" orientation="vertical" height="100%">
+            <WrapLayout>
+               <CardView *ngFor="let item of contentMenuLocal; let i = index;" class="card" elevation="40" radius="10" ios:shadowRadius="3"  width="100%" height="50%">
+                    <StackLayout class="card-layout" orientation="vertical">
+                        <Label class="h2" textWrap="true">
+                            <FormattedString> 
+                                <span text="Nom de l'article : \n"></span>
+                                <span [text]="convertName(this.contentMenuLocal[i])"></span>
+                                <span text="\nPrix : "></span>
+                                <span [text]="convertPrice(this.contentMenuLocal[i])"></span>
                                 <span text="€"></span>
                             </FormattedString>
                         </Label>

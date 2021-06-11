@@ -23,7 +23,7 @@ export class MenuComponent implements OnInit {
 
   private addToCart = {
     title: 'Ajouté au pannier !',
-    defaultText: 'Cet article a été ajouté au pannier.',
+    message: 'Cet article a été ajouté au pannier.',
     okButtonText: 'OK',
     cancelable: true
   }
@@ -72,7 +72,7 @@ export class MenuComponent implements OnInit {
       setString('cart', JSON.stringify(cart));
     }
 
-    Dialogs.prompt(this.addToCart);
+    Dialogs.alert(this.addToCart);
 
   }
 

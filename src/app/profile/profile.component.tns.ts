@@ -5,6 +5,7 @@ import { Dialogs } from "@nativescript/core";
 import { User } from '../shared/models/user.model';
 import { UserService } from '../service/user.service';
 import { OrderService } from '../service/order.service';
+import { FoodStockService } from '../service/foodStock.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,14 +16,17 @@ export class ProfileComponent implements OnInit {
   
   listOrderLocal;
   contentOrderLocal;
+  contentMenuLocal;
   dataUser : any;
   checkPassaword : string;
   fieldsUser : User;
   user : User;
+  Expired = false;
   isShowOrder = false;
   isShowOrderContent = false;
+  isShowMenuContent = false;
 
-  constructor( private userService: UserService, private orderService: OrderService ) {
+  constructor( private userService: UserService, private orderService: OrderService, private foodStockService: FoodStockService ) {
     this.user = new User();
     this.fieldsUser = new User();
   }
@@ -40,14 +44,22 @@ export class ProfileComponent implements OnInit {
   }
 
   toggle():void{
-    if(this.isShowOrderContent)
-      this.isShowOrderContent=false; 
-    else
-      this.isShowOrder = !this.isShowOrder;
 
-    if(this.isShowOrder)
+    if(this.isShowMenuContent)
       {
-          this.refresListOrder();
+        this.isShowMenuContent = !this.isShowMenuContent;
+      }
+    else
+      {
+        if(this.isShowOrderContent && !this.isShowMenuContent) 
+          this.isShowOrderContent=false; 
+        else
+          this.isShowOrder = !this.isShowOrder;
+
+        if(this.isShowOrder)
+          {
+              this.refresListOrder();
+          }
       }
   }
 
@@ -55,7 +67,9 @@ export class ProfileComponent implements OnInit {
 
       this.orderService.getAllOrderOneAccount(this.dataUser.id).subscribe((response) => {
         this.listOrderLocal = response;
+        this.Expired = false;
       },(error) => {
+        this.Expired = true;
         console.log(error);
       });
   }
@@ -64,7 +78,6 @@ export class ProfileComponent implements OnInit {
 
     this.orderService.getOrderContent(idOrder).subscribe((response) => {
       this.contentOrderLocal = response;
-      //console.log(this.contentOrderLocal[0]["Article.name"])
       this.isShowOrderContent = true;
     },(error) => {
       console.log(error);
@@ -72,16 +85,39 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  convertArticleName(row:any):string
+  showMenuContent(row:any):void{
+    if(row["MenuInfo.id"])
+      {
+        this.foodStockService.getMenuContent(row["MenuInfo.id"]).subscribe((response) => {
+          this.isShowMenuContent = true;
+          this.contentMenuLocal  = response;
+        });
+      }
+  }
+
+  convertName(row:any):string
     {
-      const name : string = row["Article.name"];
-      return name;
+      if(row["MenuInfo.id"] == null)
+        {
+          return row["Article.name"];
+        }
+      else
+        {
+          return row["MenuInfo.name"];
+        }
     }
 
-  convertArticlePrice(row:any):string
+  convertPrice(row:any):string
     {
-      const price : string = row["Article.price"];
-      return price;
+      if(row["MenuInfo.id"] == null)
+        {
+          return row["Article.price"];
+        }
+      else
+        {
+          return row["MenuInfo.price_final"];
+        }
+
     }
 
   convertDate(dateISOstring:string):string{

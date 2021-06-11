@@ -51,7 +51,7 @@
 
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="listArticle" cdkFocusInitial>Créer le menu</button>
+    <button mat-button [mat-dialog-close]="listArticle" cdkFocusInitial>Suivant</button>
     <button mat-button mat-dialog-close>Annuler</button>    
   </mat-dialog-actions>
 </div>
@@ -105,9 +105,19 @@
   <mat-dialog-content>    
         <p>Informationt du menu :</p>
         <mat-form-field >
-          <mat-label>Nom </mat-label>
+          <mat-label>Nom du menu :</mat-label>
           <input matInput  [(ngModel)]="data.name">
       </mat-form-field>
+      <mat-form-field >
+        <mat-label>Prix du menu :</mat-label>
+        <input matInput  [(ngModel)]="data.total">
+      </mat-form-field>
+      <div>
+      <mat-form-field >
+        <mat-label>Description du menu : </mat-label>
+        <input matInput  [(ngModel)]="data.description">
+      </mat-form-field>
+    </div>
       <p>Ce menu contient comme article :</p>
 
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" aria-describedby = "listDialogShow">
@@ -167,5 +177,22 @@
   <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]=true cdkFocusInitial>Oui</button>
     <button mat-button mat-dialog-close>Non</button>    
+  </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.FormDialogMenu == 12" >
+  <mat-dialog-content>    
+    <p>Description du menu :</p>
+    <mat-form-field >
+        <input matInput  [(ngModel)]="data.description">
+    </mat-form-field>
+        <p>Prix du menu :</p>
+        <mat-form-field >
+            <input matInput  [(ngModel)]="data.total">
+        </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Créer le menu</button>
+    <button mat-button mat-dialog-close>Annuler</button>    
   </mat-dialog-actions>
 </div>

@@ -12,7 +12,7 @@ import { RegistrationComponent } from '@src/app/registration/registration.compon
 export const routes: Routes = [
   {
       path: '',
-      redirectTo: '/profile',
+      redirectTo: '/home',
       pathMatch: 'full',
   },
   {

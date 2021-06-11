@@ -2,10 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Cart } from '../shared/models/cart.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource} from '@angular/material/table';
-import { DefaultService } from '../default.service';
+import { JwtHelperService } from "@auth0/angular-jwt";
+
 import { OrderService } from '../service/order.service';
 import { AuthService } from '../service/auth.service';
-import { JwtHelperService } from "@auth0/angular-jwt";
+import { EventEmitterService } from '../service/event-emitter.service';
 
 @Component({
   selector: 'app-cart',
@@ -27,7 +28,7 @@ export class CartComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private defaultService: DefaultService, private orderService: OrderService, private authService: AuthService) {
+  constructor(private eventEmitterService: EventEmitterService, private orderService: OrderService, private authService: AuthService) {
    // do nothing.
  }
 
@@ -72,7 +73,7 @@ export class CartComponent implements OnInit {
   }
 
   open():void{
-    this.defaultService.emitChange();
+    this.eventEmitterService.emitChange();
   }
 
   orderCart():void {
@@ -87,7 +88,7 @@ export class CartComponent implements OnInit {
         
           for(let  i = 0; i < Object.keys(this.cart).length; i++)
               {
-                this.orderService.postOrderContent(this.cart[i].id,idOrder).then(
+                this.orderService.postOrderContent(idOrder,this.cart[i].id).then(
                 (error) => 
                   {
                     errorCreate = true;

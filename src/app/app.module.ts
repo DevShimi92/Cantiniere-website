@@ -28,7 +28,10 @@ import { SettingComponent } from '@src/app/setting/setting.component';
 import { ReportComponent } from '@src/app/report/report.component';
 import { CartComponent } from '@src/app/cart/cart.component';
 import { RegistrationComponent } from '@src/app/registration/registration.component';
-import { DashboardComponent, DashboardComponentDialogEditSolde, DashboardComponentDialogTypeArticle, DashboardComponentDialogArticle, DashboardComponentDialogMenu } from '@src/app/dashboard/dashboard.component';
+import { DashboardComponent } from '@src/app/dashboard/dashboard.component';
+import { DashboardTabUserComponent, DashboardComponentDialogEditSolde } from '@src/app/dashboard/dashboard-tab-user.component';
+import { DashboardTabEditFoodComponent, DashboardComponentDialogTypeArticle, DashboardComponentDialogArticle } from '@src/app/dashboard/dashboard-tab-edit-food.component';
+import { DashboardComponentDialogMenu } from '@src/app/dashboard/dashboard-dialog-menu.component';
 import { RestPasswordComponent } from '@src/app/restPassword/restPassword.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
@@ -46,7 +49,9 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     CartComponent,
     RegistrationComponent,
     DashboardComponent,
+    DashboardTabUserComponent,
     DashboardComponentDialogEditSolde,
+    DashboardTabEditFoodComponent,
     DashboardComponentDialogTypeArticle,
     DashboardComponentDialogArticle,
     DashboardComponentDialogMenu,

@@ -35,14 +35,18 @@ export class OrderService {
         
     }
 
-    postOrderContent(idArticle:number,idOrder:number):Promise<boolean>{
+    postOrderContent(idOrder:number,idArticle:number=null,idMenu:number=null):Promise<boolean>{
 
         const data = {
           id_article : idArticle,
-          id_order   : idOrder
+          id_order   : idOrder,
+          id_menu    : idMenu
         };
 
         return new Promise<boolean>((resolve, reject) => { 
+
+            if((idArticle == null) && (idMenu == null))
+                return reject('Need Id Article or Id Menu !');
 
             this.http.post<any>(this.API_URL+'order/content',data).toPromise().then( () => {
                 return resolve(true);
@@ -51,9 +55,7 @@ export class OrderService {
             });
 
         });
-        
-       
-    
+             
     }
 
     getAllOrderOneAccount(idClient:number): Observable<any>{

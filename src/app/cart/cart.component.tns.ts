@@ -22,6 +22,7 @@ export class CartComponent implements OnInit {
   helper = new JwtHelperService();
   dataUser : any;
   finalPrice = 0;
+  errorCreate = false;
 
   private accountNotLogin = {
     title: 'Non connencté !',
@@ -112,39 +113,41 @@ export class CartComponent implements OnInit {
         this.dataUser = this.helper.decodeToken(getString("token"));
         if(this.dataUser.money >= this.finalPrice)
           {
-            let errorCreate = false;
-            console.log('sssss');
-            console.log(this.dataUser.id);
-            console.log(this.dataUser.money);
-            console.log(this.finalPrice);
-            this.orderService.postOrderInfo(this.dataUser.id,this.dataUser.money,this.finalPrice).then((idOrder) => {
-              console.log('1');
+            
+            this.orderService.postOrderInfo(this.dataUser.id,this.dataUser.money,this.finalPrice).then(async (idOrder) => {
+
               for(let  i = 0; i < Object.keys(this.cart).length; i++)
               {
-                this.orderService.postOrderContent(this.cart[i].id,idOrder).then(() =>
-                (error) => 
+                if(this.cart[i].code_type_src != null )
                   {
-                    errorCreate = true;
-                  });
+                    await this.orderService.postOrderContent(idOrder,this.cart[i].id).then(() =>
+                        (error) => 
+                          {
+                            console.log(error);
+                            Dialogs.alert(this.errorOnOrder);
+                          });
+
+                  }
+                else
+                  {
+                    await this.orderService.postOrderContent(idOrder,null,this.cart[i].id).then(() =>
+                    (error) => 
+                      {
+                        console.log(error);
+                        Dialogs.alert(this.errorOnOrder);
+                      });
+    
+                  }
+
               }
 
-              console.log('2');
-
-              if (errorCreate)
-                {
-                  console.log('4');
-                  Dialogs.alert(this.errorOnOrder);
-                }
-              else
-                {
-                  console.log('3');
                   this.cart = [];
                   this.updateCartOnVisually();
                   setString('cart', JSON.stringify(this.cart));
                   Dialogs.alert(this.orderOK);
                   this.authService.refreshToken();
                   this.cartHaveSomething  = false;
-                }
+                
 
             });
           }
