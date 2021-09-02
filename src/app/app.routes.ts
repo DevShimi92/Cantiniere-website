@@ -19,7 +19,7 @@ export const routes: Routes = [
   },
   {
       path: 'home',
-      component: HomeComponent,
+      component: MenuComponent,
   },
   {
       path: 'menu',

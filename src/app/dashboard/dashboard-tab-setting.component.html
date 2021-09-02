@@ -1,0 +1,31 @@
+<mat-grid-list cols="1" >
+  <form *ngIf="settingForm" [formGroup]="settingForm" (ngSubmit)="onSubmit()" #form="ngForm">
+    <h5> Heure limite de la prise de commande :</h5>
+    <div>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Heure limite</mat-label>
+        <input type="time" id="hourlimit" matInput formControlName="hourlimit" placeholder="Ex : 10:45">
+      </mat-form-field>
+    </div>
+    <h5> Nombre limite de plats à la journée :</h5>
+    <div>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Limite de plats </mat-label>
+        <input type="number" id="totalOrderLimitDay" matInput formControlName="totalOrderLimitDay" placeholder="Ex : 50">
+      </mat-form-field>
+    </div>
+    <h5> Nombre de plats limite par personne :</h5>
+    <div>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Limite par personne</mat-label>
+        <input type="number" id="totalOrderLimitAccountDay" matInput formControlName="totalOrderLimitAccountDay" placeholder="Ex :5">
+      </mat-form-field>
+    </div>
+        <div>
+          <mat-slide-toggle id="canPreOrder" formControlName="canPreOrder"> Autoriser les commandes a l'avance</mat-slide-toggle>
+        </div>
+        <div>
+          <input  type="submit" value="Sauvegarder" >
+        </div>
+         </form>
+</mat-grid-list>
