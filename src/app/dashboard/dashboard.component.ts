@@ -29,25 +29,6 @@ export class DashboardComponent  {
     }
   }
 
-  dayOn($event):void{
-    switch($event.index){
-      case 0 :
-        console.log('Case 0');
-        break;
-      case 1 :
-        console.log('Case 1');
-        break;
-      case 2 :
-          console.log('Case 2');
-          break;
-      case 3 :
-          console.log('Case 3');
-          break;
-      case 4 :
-          console.log('Case 4');
-          break;
-    }
-  }
 
 
 }

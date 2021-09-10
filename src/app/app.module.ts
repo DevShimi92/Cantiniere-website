@@ -18,6 +18,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 import { AppRoutingModule } from '@src/app/app-routing.module';
@@ -34,6 +35,7 @@ import { DashboardComponent } from '@src/app/dashboard/dashboard.component';
 import { DashboardTabUserComponent, DashboardComponentDialogEditSolde } from '@src/app/dashboard/dashboard-tab-user.component';
 import { DashboardTabEditFoodComponent, DashboardComponentDialogTypeArticle, DashboardComponentDialogArticle } from '@src/app/dashboard/dashboard-tab-edit-food.component';
 import { DashboardSettingComponent} from '@src/app/dashboard/dashboard-tab-setting.component';
+import { DashboardRecapOrderComponent} from '@src/app/dashboard/dashboard-tab-recap-order.component';
 import { DashboardComponentDialogMenu } from '@src/app/dashboard/dashboard-dialog-menu.component';
 import { RestPasswordComponent } from '@src/app/restPassword/restPassword.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -56,6 +58,7 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     DashboardComponentDialogEditSolde,
     DashboardTabEditFoodComponent,
     DashboardSettingComponent,
+    DashboardRecapOrderComponent,
     DashboardComponentDialogTypeArticle,
     DashboardComponentDialogArticle,
     DashboardComponentDialogMenu,
@@ -85,6 +88,7 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     MatButtonModule,
     MatSlideToggleModule,
     MatSnackBarModule,
+    MatExpansionModule,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
               { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],

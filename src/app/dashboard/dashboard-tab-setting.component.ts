@@ -28,9 +28,6 @@ import { SettingService } from '../service/setting.service';
           totalOrderLimitAccountDay: response.totalOrderLimitAccountDay,
           canPreOrder: JSON.parse(response.canPreOrder)
         });
-
-        console.log(this.dataReponse);
-        console.log(this.settingForm.value);
       
       });
     }

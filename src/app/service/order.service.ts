@@ -68,5 +68,47 @@ export class OrderService {
         return this.http.get(this.API_URL+'order/content/'+idOrder) ;
     }
 
+    getAllOrder() : Observable<any>{
+
+        return this.http.get(this.API_URL+'order/recapAll/') ;
+
+    }
+
+    getRecapOrder(): Observable<any>{
+
+        return this.http.get(this.API_URL+'order/recap/') ;
+        
+    }
+
+
+    putValidOrder(idOrder:number):Promise<boolean>{
+
+        const data = { id_order : idOrder };
+        console.log(idOrder);
+        return new Promise<boolean>((resolve, reject) => {
+        
+            this.http.put<any>(this.API_URL+'order/valid',data ).toPromise().then( () => {
+                return resolve(true);
+            }).catch((error) => {
+                    return reject(error);
+                });
+        });
+
+    }
+
+    deleteOrder(idOrder:number):Promise<boolean>{
+
+        const data = { id_order : idOrder };
+
+        return new Promise<boolean>((resolve, reject) => {
+        
+            this.http.request<any>('delete',this.API_URL+'order',{ body :data }).toPromise().then( () => {
+                return resolve(true);
+            }).catch((error) => {
+                    return reject(error);
+                });
+        });
+        
+    }
 
 }
