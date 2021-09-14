@@ -52,6 +52,27 @@ export class CartComponent implements OnInit {
     cancelable: true
   }
 
+  private orderTimeExceeded = {
+    title: 'Service fermé !',
+    message: "Le service est fermé ! Revenez demain !",
+    okButtonText: 'OK',
+    cancelable: true
+  }
+  
+  private limitOrderAccount = {
+    title: 'Limite de commande attient !',
+    message: "Vous ne pouvez plus passé de commande pour aujourd'hui ! Revenez demain !",
+    okButtonText: 'OK',
+    cancelable: true
+  }
+
+  private limitOrderExceeded = {
+    title: 'Fin de prise de commande!',
+    message: "Le service ne peut plus prendre de commande pour aujourd'hui ! Revenez demain !",
+    okButtonText: 'OK',
+    cancelable: true
+  }
+
   constructor(private routerExtensions: RouterExtensions, private authService: AuthService, private orderService: OrderService) {
    // do nothing.
   }
@@ -149,7 +170,31 @@ export class CartComponent implements OnInit {
                   this.cartHaveSomething  = false;
                 
 
-            });
+            },
+            (error) => 
+              {
+                if(error.status == 403)
+                {
+                  if(error.error.error == "Order time exceeded")
+                    {
+                      Dialogs.alert(this.orderTimeExceeded);
+                    }
+                  else if(error.error.error == "Limit Order for this account exceeded")
+                    {
+                      Dialogs.alert(this.limitOrderAccount);
+                    }
+                  else if(error.error.error == "Limit Order exceeded")
+                    {
+                      Dialogs.alert(this.limitOrderExceeded);
+                    }
+                }
+                else
+                  {
+                    Dialogs.alert(this.errorOnOrder);
+                    console.log(error);
+                  }
+                
+              });
           }
         else
           {

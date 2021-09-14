@@ -3,6 +3,7 @@ import { Cart } from '../shared/models/cart.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource} from '@angular/material/table';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { MatSnackBar}  from '@angular/material/snack-bar';
 
 import { OrderService } from '../service/order.service';
 import { AuthService } from '../service/auth.service';
@@ -28,7 +29,7 @@ export class CartComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private eventEmitterService: EventEmitterService, private orderService: OrderService, private authService: AuthService) {
+  constructor(private eventEmitterService: EventEmitterService, private _snackBar: MatSnackBar, private orderService: OrderService, private authService: AuthService) {
    // do nothing.
  }
 
@@ -111,9 +112,27 @@ export class CartComponent implements OnInit {
         },
         (error) => 
           {
-            if(error.status == 500)
+            if(error.status == 403){
+
+              console.log(error.error.error);
+
+              if(error.error.error == "Order time exceeded")
+                {
+                  this._snackBar.open('Les commandes ne sont plus accepté pour aujourd hui !', 'OK');
+                }
+              else if(error.error.error == "Limit Order for this account exceeded")
               {
-                console.log("error");  
+                this._snackBar.open('Vous ne pouvez plus passé de commande pour aujourd hui !', 'OK');
+              }
+              else if(error.error.error == "Limit Order exceeded")
+              {
+                this._snackBar.open('Le service ne peut plus prendre de commande pour aujourd hui !', 'OK');
+              }
+
+            }
+            else if(error.status == 500)
+              {
+                console.log("error server");  
               }
             else
               {
@@ -131,5 +150,16 @@ export class CartComponent implements OnInit {
     
 
   }
+
+}
+
+
+@Component({
+  selector: 'cart-snack-bar-component-snack',
+  template: '<span> {{ test }} </span>',
+})
+export class CartSnackBarComponent {
+
+  test = 'error';
 
 }

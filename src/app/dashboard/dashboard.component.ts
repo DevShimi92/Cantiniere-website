@@ -15,7 +15,6 @@ export class DashboardComponent  {
   tabOn($event):void{
     switch($event.index){
       case 0 :
-        console.log('Voir les commandes');
         break;
       case 1 :
         this.eventEmitterService.onCallCheckListUser();    
@@ -24,7 +23,6 @@ export class DashboardComponent  {
         this.eventEmitterService.onCallRestTabEditFood();    
         break;
       case 3 :
-          console.log('Paramètre');
           break;
     }
   }

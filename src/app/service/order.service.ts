@@ -70,13 +70,13 @@ export class OrderService {
 
     getAllOrder() : Observable<any>{
 
-        return this.http.get(this.API_URL+'order/recapAll/') ;
+        return this.http.get(this.API_URL+'orderRecap/all/') ;
 
     }
 
     getRecapOrder(): Observable<any>{
 
-        return this.http.get(this.API_URL+'order/recap/') ;
+        return this.http.get(this.API_URL+'orderRecap/') ;
         
     }
 
