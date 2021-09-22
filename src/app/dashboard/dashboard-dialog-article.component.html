@@ -1,22 +1,32 @@
 <div *ngIf="data.FormDialogArticle == 0" >
   <mat-dialog-content>    
         <p>Création d'un nouvel article </p>
-
-        <mat-form-field >
-            <mat-label>Nom </mat-label>
-            <input matInput  [(ngModel)]="data.name">
-        </mat-form-field>
-
-        <mat-form-field >
-          <mat-label>Prix </mat-label>
-          <input  type="number" matInput [(ngModel)]="data.price" >
-      </mat-form-field>
-
-    <mat-form-field>
-      <mat-select [(ngModel)]="data.value">
-        <mat-option *ngFor="let value of data.listTypeArticle" [value]="value">{{ value }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+          <div>
+            <mat-form-field >
+              <mat-label>Nom </mat-label>
+              <input matInput  [(ngModel)]="data.name">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field >
+              <mat-label>Prix </mat-label>
+              <input  type="number" matInput [(ngModel)]="data.price" >
+           </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-select [(ngModel)]="data.value">
+                <mat-option *ngFor="let value of data.listTypeArticle" [value]="value">{{ value }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <!-- <div>
+            <div>
+              <mat-label>{{ nameFile }}</mat-label>
+            </div>
+            <button  mat-stroked-button (click)="uploader.click()"> Ajouter une image </button>
+              <input  #uploader hidden type="file" (change)="uploadFile($event)" name="file"> 
+          </div> -->
 
   </mat-dialog-content>
   <mat-dialog-actions align="end">
@@ -28,17 +38,26 @@
 <div *ngIf="data.FormDialogArticle == 1" >
   <mat-dialog-content>    
         <p>Modifier l'article</p>
-        <mat-form-field >
-            <mat-label>Nom </mat-label>
-            <input matInput  [(ngModel)]="data.name">
-        </mat-form-field>
-
-        <mat-form-field >
-          <mat-label>Prix </mat-label>
-          <input type="number" matInput [(ngModel)]="data.price">
-      </mat-form-field>
-
-
+        <div>
+            <mat-form-field >
+              <mat-label>Nom </mat-label>
+              <input matInput  [(ngModel)]="data.name">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field >
+              <mat-label>Prix </mat-label>
+              <input type="number" matInput [(ngModel)]="data.price">
+          </mat-form-field>
+        </div>
+       <!-- <div>
+          <div>
+            <mat-label>{{ nameFile }}</mat-label>
+          </div>
+          <button  mat-stroked-button (click)="uploader.click()"> Ajouter une image </button>
+            <input  #uploader hidden type="file" (change)="uploadFile($event)" name="file"> 
+        </div>-->
+        
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Modifier</button>

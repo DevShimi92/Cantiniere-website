@@ -6,11 +6,15 @@
 		<WrapLayout>
 			<CardView *ngFor="let item of listArticle" class="card" elevation="40" radius="10" ios:shadowRadius="3"  width="50%" height="50%">
 				<StackLayout class="card-layout" (longPress)="showDescription(item)">
-					<image src="res://imagenotfound"></image>
+					<div *ngIf="item.picture">
+						<image src="{{item.picture}}"></image>
+					</div>
+					<div *ngIf="!item.picture">
+						<image src="res://imagenotfound"></image>
+					</div>
 					<Label class="h2" [text]="item.name"></Label>
 					<Label class="body" textWrap="true" text="{{item.price}} €"></Label>
 					<button text="Réserver" (tap)="pickArticle(item)"></button>
-
 				</StackLayout>
 			</CardView>
 			<StackLayout visibility="{{ notFound ? 'visible' : 'hidden' }}" >

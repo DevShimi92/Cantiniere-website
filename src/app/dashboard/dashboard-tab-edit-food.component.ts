@@ -575,7 +575,13 @@ export class ArticleCheckBox {
   })
   export class DashboardComponentDialogArticle {
     
+    nameFile = "Aucun fichier sélectioné";
+
     constructor( public dialogRef: MatDialogRef<DashboardComponentDialogArticle>,
       @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
   
+      uploadFile($event) {
+        console.log($event.target.files[0]); // outputs the first file
+        this.nameFile = $event.target.files[0].name;
+    }
   }
