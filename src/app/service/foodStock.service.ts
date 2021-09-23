@@ -65,12 +65,13 @@ export class FoodStockService {
     
     }
 
-    postArticle(name:string, price:number, code_type:number):Promise<boolean>{
+    postArticle(name:string, price:number, code_type:number,description:string=null):Promise<boolean>{
 
         const data = {
           name : name,
           price: price,
-          code_type_src : code_type
+          code_type_src : code_type,
+          description: description
         }
 
         return new Promise<boolean>((resolve, reject) => {
@@ -92,9 +93,14 @@ export class FoodStockService {
       
     }
 
-    putArticle(id:number, name:string=null,price:number=null):Promise<boolean>{
+    putArticle(id:number, name:string=null,price:number=null,description:string=null):Promise<boolean>{
 
-        const data = { id: id ,price : price ,name : name};
+        const data = { 
+            id: id,
+            price: price,
+            name: name, 
+            description: description
+        };
 
         return new Promise<boolean>((resolve, reject) => {
     

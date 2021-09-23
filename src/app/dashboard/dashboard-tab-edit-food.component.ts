@@ -12,6 +12,7 @@ export interface DialogData {
     FormDialogArticle: number;
     FormDialogMenu: number;
     name: string;
+    picture: string;
     description: string;
     total: number;
   }
@@ -252,7 +253,7 @@ export class ArticleCheckBox {
               dialogRef.afterClosed().subscribe(result => {
                         if(result) {
     
-                          this.foodStockService.postArticle(result.name,result.price,this.tabTypeArticle.get(result.value)).then(()=>
+                          this.foodStockService.postArticle(result.name,result.price,this.tabTypeArticle.get(result.value),result.description).then(()=>
                           {
                                 this.dialog.open(DashboardComponentDialogArticle,{
                                     data: { FormDialogArticle : 3 , name : result.name }
@@ -286,12 +287,13 @@ export class ArticleCheckBox {
 
     editArticle($event):void{
         const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
-          data: { FormDialogArticle : 1, name : $event.name, price : $event.price }
+          data: { FormDialogArticle : 1, name : $event.name, price : $event.price, picture : $event.picture, description : $event.description }
         });
     
         dialogRef.afterClosed().subscribe(result => {
-            if(( result !== undefined &&  result !== '') && ((result.name !== $event.name) || (result.price !== $event.price)) ) {
-              this.foodStockService.putArticle( $event.id,result.name, result.price).then(() => 
+            if(( result !== undefined &&  result !== '') && ((result.name !== $event.name) || (result.price !== $event.price) || (result.description !== $event.description) ) ) {
+              console.log(result);
+              this.foodStockService.putArticle( $event.id,result.name, result.price, result.description).then(() => 
                 {
                     this.dialog.open(DashboardComponentDialogArticle,{
                         data: { FormDialogArticle : 5, name : result.name }
@@ -304,6 +306,7 @@ export class ArticleCheckBox {
                         });
                   });
             }
+
           });
               
     }
@@ -581,7 +584,7 @@ export class ArticleCheckBox {
       @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
   
       uploadFile($event) {
-        console.log($event.target.files[0]); // outputs the first file
         this.nameFile = $event.target.files[0].name;
+        this.data.picture = $event.target.files[0];
     }
   }
