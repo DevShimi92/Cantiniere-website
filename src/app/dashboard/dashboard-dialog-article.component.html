@@ -56,13 +56,13 @@
               <input type="number" matInput [(ngModel)]="data.price">
           </mat-form-field>
         </div>
-       <!--<div>
+       <div>
           <div>
             <mat-label>{{ nameFile }}</mat-label>
           </div>
           <button  mat-stroked-button (click)="uploader.click()"> Ajouter une image </button>
             <input  #uploader hidden type="file" (change)="uploadFile($event)" name="file"> 
-        </div>-->
+        </div>
         <div>
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Description du produit :</mat-label>
@@ -115,5 +115,11 @@
 <div *ngIf="data.FormDialogArticle == 7" >
   <mat-dialog-content>    
         <p>Pour créer un article, vous devez avoir au moins 1 type d'article de défini  </p>
+  </mat-dialog-content>
+</div>
+
+<div *ngIf="data.FormDialogArticle == 8" >
+  <mat-dialog-content>    
+        <p>L'image de l'article a été modifié</p>
   </mat-dialog-content>
 </div>

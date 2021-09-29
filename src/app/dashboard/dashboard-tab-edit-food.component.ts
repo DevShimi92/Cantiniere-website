@@ -287,7 +287,7 @@ export class ArticleCheckBox {
 
     editArticle($event):void{
         const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
-          data: { FormDialogArticle : 1, name : $event.name, price : $event.price, picture : $event.picture, description : $event.description }
+          data: { FormDialogArticle : 1, name : $event.name, price : $event.price, picture : '', description : $event.description }
         });
     
         dialogRef.afterClosed().subscribe(result => {
@@ -305,6 +305,20 @@ export class ArticleCheckBox {
                             data: { FormDialogArticle : 4, name : error.status }
                         });
                   });
+            }
+            if( result !== undefined && result.picture !== '')
+            {
+                this.foodStockService.putImage($event.id,result.picture).then(()=>{
+                  this.dialog.open(DashboardComponentDialogArticle,{
+                    data: { FormDialogArticle : 8, name : result.name }
+                });
+              },
+              (error)=>
+              {
+                      this.dialog.open(DashboardComponentDialogArticle,{
+                        data: { FormDialogArticle : 4, name : error.status }
+                      });
+              });
             }
 
           });

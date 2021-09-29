@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+
 import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
@@ -105,6 +107,23 @@ export class FoodStockService {
         return new Promise<boolean>((resolve, reject) => {
     
             this.http.put<any>(this.API_URL+'article',data).toPromise().then( () => {
+                return resolve(true);
+            }).catch((error) => {
+                    return reject(error);
+                });
+
+        });
+    }
+
+    putImage(id:number, picture:File):Promise<boolean>{
+
+        const formData: FormData = new FormData();
+        formData.append('id_article', id.toString());
+        formData.append('img', picture, picture.name);
+
+        return new Promise<boolean>((resolve, reject) => {
+    
+            this.http.put<any>(this.API_URL+'image',formData).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                     return reject(error);
