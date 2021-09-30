@@ -76,9 +76,15 @@ export class MenuComponent implements OnInit {
 
   }
 
-  showDescription(item:any):void
+  showDescription(item:Article):void
   {
-    // do nothing.
+    Dialogs.alert({
+      title: "Description",
+      message: item.description,
+      okButtonText: "OK",
+      cancelable: true
+    });
+
   }
 
   onSearchBarLoaded(event:any):void {
