@@ -252,8 +252,7 @@ export class ArticleCheckBox {
     
               dialogRef.afterClosed().subscribe(result => {
                         if(result) {
-    
-                          this.foodStockService.postArticle(result.name,result.price,this.tabTypeArticle.get(result.value),result.description).then(()=>
+                          this.foodStockService.postArticle(result.name,result.price,this.tabTypeArticle.get(result.value),result.description,result.picture).then(()=>
                           {
                                 this.dialog.open(DashboardComponentDialogArticle,{
                                     data: { FormDialogArticle : 3 , name : result.name }

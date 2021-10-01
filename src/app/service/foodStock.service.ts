@@ -67,18 +67,19 @@ export class FoodStockService {
     
     }
 
-    postArticle(name:string, price:number, code_type:number,description:string=null):Promise<boolean>{
+    postArticle(name:string, price:number, code_type:number,description:string=null,picture:File=null):Promise<boolean>{
 
-        const data = {
-          name : name,
-          price: price,
-          code_type_src : code_type,
-          description: description
-        }
+        const formData: FormData = new FormData();
+        formData.append('name', name);
+        formData.append('price', price.toString());
+        formData.append('code_type_src', code_type.toString());
+        formData.append('description',description);
+        if(picture)
+            formData.append('img', picture, picture.name);
 
         return new Promise<boolean>((resolve, reject) => {
 
-            this.http.post<any>(this.API_URL+'article',data).toPromise().then( () => {
+            this.http.post<any>(this.API_URL+'article',formData).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                 return reject(error);
