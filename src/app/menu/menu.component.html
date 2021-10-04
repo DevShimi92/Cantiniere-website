@@ -33,6 +33,7 @@
                     <mat-card-title>{{item.name}} {{item.price}}€</mat-card-title>   
                 </mat-card-header>
                 <mat-card-actions>
+                    <button mat-button (click)="showDescription(item)" >Infos</button>
                     <button mat-button (click)="selectItem(item)" >Réserver</button>
                   </mat-card-actions>
             </mat-card>

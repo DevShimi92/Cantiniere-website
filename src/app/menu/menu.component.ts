@@ -1,9 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef,  MAT_DIALOG_DATA  } from '@angular/material/dialog';
 import { FoodStockService } from '../service/foodStock.service';
 import { Article } from '../shared/models/article.model';
 import { Cart } from '../shared/models/cart.model';
+
+export interface DialogData {
+  FormDialog: number;
+  description: string;
+}
 
 @Component({
   selector: 'app-menu',
@@ -142,7 +147,16 @@ export class MenuComponent implements OnInit {
       sessionStorage.setItem('cart', JSON.stringify(cart));
     }
     
-    this.dialog.open(MenuComponentDialog);
+    this.dialog.open(MenuComponentDialog,{ data: { FormDialog : 0 } });
+    
+  }
+
+  showDescription(event: Article): void
+  {
+    console.log(event.description) 
+    this.dialog.open(MenuComponentDialog,{
+      data: { FormDialog : 1 , description : event.description }
+  });
     
   }
 
@@ -155,4 +169,9 @@ export class MenuComponent implements OnInit {
   templateUrl: 'menu.component-dialog.html'
 })
 
-export class MenuComponentDialog {}
+export class MenuComponentDialog {
+
+  constructor( public dialogRef: MatDialogRef<MenuComponentDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+}

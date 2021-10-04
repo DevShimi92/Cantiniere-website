@@ -1,7 +1,7 @@
 {
   "name": "cantiniere-website",
   "main": "main.tns.js",
-  "version": "0.13.4",
+  "version": "0.13.5",
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
@@ -64,7 +64,7 @@
     "@typescript-eslint/eslint-plugin": "^4.9.0",
     "@typescript-eslint/parser": "^4.9.0",
     "codelyzer": "^5.1.2",
-    "eslint": "^7.15.0",
+    "eslint": "^7.32.0",
     "eslint-plugin-angular": "^4.0.1",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
