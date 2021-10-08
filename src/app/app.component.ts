@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { trigger, transition, state, animate, style, useAnimation } from '@angular/animations';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 import { errorFormAnimation } from '././animation/animation';
 import { AuthService } from './service/auth.service';
+import { FoodStockService } from './service/foodStock.service';
 import { EventEmitterService } from './service/event-emitter.service';
 
 @Component({
@@ -66,7 +69,7 @@ export class AppComponent implements OnInit{
 
   dataUser : any;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService, private eventEmitterService: EventEmitterService) { 
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService, private FoodStockService: FoodStockService, private _snackBar: MatSnackBar, private eventEmitterService: EventEmitterService) { 
     this.eventEmitterService.changeEmitted$.subscribe(any => {
       this.toggle();
     });
@@ -91,6 +94,10 @@ export class AppComponent implements OnInit{
         }
       
     }
+
+    this.FoodStockService.getHourLimit().subscribe(( result ) =>{
+      this.HourLimitForOrder(result.hour_limit);
+    });
 
   }
 
@@ -184,5 +191,56 @@ export class AppComponent implements OnInit{
       const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     }
+
+  HourLimitForOrder(hourString:string):void{
+
+    let msg : string;
+    const hourLimit = new Date;
+    const hourNow = new Date;
+    
+    const hour : number = parseInt(hourString.toString().slice(0, 2));
+    const minute : number = parseInt(hourString.toString().slice(3, 5));
+    const seconde : number = parseInt(hourString.toString().slice(6, 8));
+
+    hourLimit.setHours(hour, minute, seconde);
+
+    const msDiff = Date.parse(hourLimit.toString()) - Date.parse(hourNow.toString());
+
+    const seconds = msDiff / 1000;
+    const minutes  = (seconds / 60) % 100 ;
+    const hours = seconds / 3600 ;
+
+    if(hours < 2 && minutes > 60  )
+      {
+        const hoursString = hours.toString().slice(0, 1);
+        msg =  "Il vous reste "+ hoursString +' heure pour commander un plat avant la fermeture des commandes pour aujourd hui !' ;
+
+        this._snackBar.open(msg,'', {
+          duration: 7 * 1000,
+        });
+
+      }
+    else if( hours < 2 && minutes < 10 && seconds > 0)
+      {
+        const minuteString = minutes.toString().slice(0, 1);
+        msg =  'Il vous reste que '+ minuteString +' minute pour commander un plat avant la fermeture des commandes pour aujourd hui !' ;
+  
+        this._snackBar.open(msg,'', {
+          duration: 7 * 1000,
+        });
+  
+      }
+    else if( hours < 2 && minutes < 60 && seconds > 0)
+    {
+      const minuteString = minutes.toString().slice(0, 2);
+      msg =  'Il vous reste que '+ minuteString +' minute pour commander un plat avant la fermeture des commandes pour aujourd hui !' ;
+
+      this._snackBar.open(msg,'', {
+        duration: 7 * 1000,
+      });
+
+    }
+
+  }
 
 }

@@ -250,4 +250,9 @@ export class FoodStockService {
         });
     }
     
+    getHourLimit(): Observable<any>{
+    
+        return this.http.get<any>(this.API_URL+'setting/hour_limit/') ;
+      
+    }
 }
