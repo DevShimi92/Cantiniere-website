@@ -9,8 +9,8 @@
           <Label (tap)="navigateToSetting()"  text="    &#xf013;   Paramètre" class="sideDrawer fa-align-justify"></Label>
           <Label (tap)="navigateToReport()" text="    &#xf071;   Siganler un bug" class="sideDrawer fa-align-justify"></Label>
           <br>
-          <Label text="{{msgLimit}}" style="horizontal-align: center"  *ngIf="showLimitTime == true" ></Label>
-          <Label text="{{msg2Limit}}" style="horizontal-align: center" *ngIf="showLimitTime == true" ></Label>
+          <Label text="{{msgLimit}}" style="text-align:center"  *ngIf="showLimitTime == true" ></Label>
+          <Label text="{{msg2Limit}}" style="text-align:center" *ngIf="showLimitTime == true" ></Label>
         </StackLayout>
       </ScrollView>
     </GridLayout>

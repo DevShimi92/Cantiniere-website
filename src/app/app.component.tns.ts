@@ -14,7 +14,7 @@ import { FoodStockService } from './service/foodStock.service';
 })
 export class AppComponent implements AfterViewInit,OnInit {
   public userOnline : boolean;
-  private  showLimitTime = false;
+  public  showLimitTime = false;
   private  hourLimitRequest  = false;
   private  hourLimit : string;
   msgLimit = 'Plus que 1 heure';
@@ -79,10 +79,7 @@ export class AppComponent implements AfterViewInit,OnInit {
     const seconds = msDiff / 1000;
     const minutes  = (seconds / 60) % 100 ;
     const hours = seconds / 3600 ;
-
-    console.log(hours);
-    console.log(minutes);
-
+    
     if(hours < 3 )
       {
         const hoursString = hours.toString().slice(0, 1);
