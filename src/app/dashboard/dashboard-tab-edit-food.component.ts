@@ -307,7 +307,7 @@ export class ArticleCheckBox {
             }
             if( result !== undefined && result.picture !== '')
             {
-                this.foodStockService.putImage($event.id,result.picture).then(()=>{
+                this.foodStockService.putImageArticle($event.id,result.picture).then(()=>{
                   this.dialog.open(DashboardComponentDialogArticle,{
                     data: { FormDialogArticle : 8, name : result.name }
                 });
@@ -405,43 +405,47 @@ export class ArticleCheckBox {
                                   });
                                   
                                   dialogRefForm12.afterClosed().subscribe(data => {
-                                    
-                                    this.foodStockService.postMenu(menuName,data.total,data.description).then((idMenu) =>
-                                  {
-                                    let errorCreate = false;
-                                    for(let  i = 0; i < Object.keys(listArticleCheckBox).length; i++)
-                                        {
-                                          if(listArticleCheckBox[i].checked == true)
-                                          {
-                                              this.foodStockService.postMenuContent(idMenu,listArticleCheckBox[i].id).then(() =>
-                                              (error) => 
-                                                {
-                                                  errorCreate = true;
-                                                  console.log(error);
-                                                });
-                                          }
-                                        }
-                                      
-                                    if(errorCreate)
-                                      {
-                                        this.dialog.open(DashboardComponentDialogMenu,{
-                                          data: { FormDialogMenu : 5, name : menuName }
-                                        });
-                                      }
-                                    else
-                                      {
-                                        this.dialog.open(DashboardComponentDialogMenu,{
-                                          data: { FormDialogMenu : 3, name : menuName }
-                                        });
-                                      }
-    
-                                  },
-                                  (error) => 
+                                    if(data)
                                     {
-                                        this.dialog.open(DashboardComponentDialogMenu,{
-                                            data: { FormDialogMenu : 4, name : error.status }
-                                        });
-                                    });
+                                    
+                                      this.foodStockService.postMenu(menuName,data.total,data.description,data.picture).then((idMenu) =>
+                                        {
+                                          let errorCreate = false;
+                                          for(let  i = 0; i < Object.keys(listArticleCheckBox).length; i++)
+                                              {
+                                                if(listArticleCheckBox[i].checked == true)
+                                                {
+                                                    this.foodStockService.postMenuContent(idMenu,listArticleCheckBox[i].id).then(() =>
+                                                    (error) => 
+                                                      {
+                                                        errorCreate = true;
+                                                        console.log(error);
+                                                      });
+                                                }
+                                              }
+                                            
+                                          if(errorCreate)
+                                            {
+                                              this.dialog.open(DashboardComponentDialogMenu,{
+                                                data: { FormDialogMenu : 5, name : menuName }
+                                              });
+                                            }
+                                          else
+                                            {
+                                              this.dialog.open(DashboardComponentDialogMenu,{
+                                                data: { FormDialogMenu : 3, name : menuName }
+                                              });
+                                            }
+          
+                                        },
+                                        (error) => 
+                                          {
+                                              this.dialog.open(DashboardComponentDialogMenu,{
+                                                  data: { FormDialogMenu : 4, name : error.status }
+                                              });
+                                          });
+
+                                    }
 
                                   });
                                 }
@@ -498,6 +502,7 @@ export class ArticleCheckBox {
 
       this.foodStockService.getMenuContent($event.id).subscribe((reponse) =>
       {
+        console.log(reponse);
         if(reponse)
         {
          const dialogRefForm8 = this.dialog.open(DashboardComponentDialogMenu,{
@@ -505,10 +510,14 @@ export class ArticleCheckBox {
           });
 
           dialogRefForm8.afterClosed().subscribe( data => {
-
+            console.log(data)
             if((data) && (($event.name != data.name) || ($event.price_final != data.total) || ($event.description != data.description)))
               {
                 this.updateMenu($event.id, data.name, data.total, data.description);
+              }
+            if((data) && (data.picture != null))
+              {
+                this.updateMenuImage($event.id,data.picture );
               }
           });
           
@@ -525,6 +534,10 @@ export class ArticleCheckBox {
                 {
                   this.updateMenu($event.id, data.name, data.total, data.description);
                 }
+              if((data) && (data.picture != null))
+                {
+                  this.updateMenuImage($event.id,data.picture );
+                }
             });
           }
       });
@@ -537,6 +550,22 @@ export class ArticleCheckBox {
         
         this.dialog.open(DashboardComponentDialogMenu,{
           data: { FormDialogMenu : 9 }
+        });
+
+      }).catch((error)=>{
+          this.dialog.open(DashboardComponentDialogMenu,{
+            data: { FormDialogMenu : 4, name : error.status }
+          });
+      });
+
+    }
+
+    updateMenuImage(id:number, picture:File):void{
+
+      this.foodStockService.putImageMenu(id, picture).then(() => {
+        
+        this.dialog.open(DashboardComponentDialogMenu,{
+          data: { FormDialogMenu : 13 }
         });
 
       }).catch((error)=>{

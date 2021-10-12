@@ -110,13 +110,20 @@
       </mat-form-field>
       <mat-form-field >
         <mat-label>Prix du menu :</mat-label>
-        <input matInput  [(ngModel)]="data.total">
-      </mat-form-field>
+        <input  type="number" matInput [(ngModel)]="data.total" >
+    </mat-form-field>
       <div>
-      <mat-form-field >
-        <mat-label>Description du menu : </mat-label>
-        <input matInput  [(ngModel)]="data.description">
-      </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Description du menu :</mat-label>
+          <textarea matInput placeholder="Ex : Prduit composé de...façon telle cuisine..." [(ngModel)]="data.description" ></textarea>
+        </mat-form-field>
+    </div>
+    <div>
+      <div>
+        <mat-label>{{ nameFile }}</mat-label>
+      </div>
+      <button  mat-stroked-button (click)="uploader.click()"> Ajouter une image </button>
+        <input  #uploader hidden type="file" (change)="uploadFile($event)" name="file"> 
     </div>
       <p>Ce menu contient comme article :</p>
 
@@ -182,17 +189,34 @@
 
 <div *ngIf="data.FormDialogMenu == 12" >
   <mat-dialog-content>    
-    <p>Description du menu :</p>
-    <mat-form-field >
-        <input matInput  [(ngModel)]="data.description">
-    </mat-form-field>
-        <p>Prix du menu :</p>
+      <div>
         <mat-form-field >
-            <input matInput  [(ngModel)]="data.total">
+          <mat-label>Prix du menu :</mat-label>
+          <input  type="number" matInput [(ngModel)]="data.total" >
+      </mat-form-field>
+      </div>
+      <div>
+        <div>
+          <mat-label>{{ nameFile }}</mat-label>
+        </div>
+        <button  mat-stroked-button (click)="uploader.click()"> Ajouter une image </button>
+          <input  #uploader hidden type="file" (change)="uploadFile($event)" name="file"> 
+      </div>
+      <div>
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Description du menu :</mat-label>
+          <textarea matInput placeholder="Ex : Prduit composé de...façon telle cuisine..." [(ngModel)]="data.description" ></textarea>
         </mat-form-field>
+      </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Créer le menu</button>
     <button mat-button mat-dialog-close>Annuler</button>    
   </mat-dialog-actions>
+</div>
+
+<div *ngIf="data.FormDialogMenu == 13" >
+  <mat-dialog-content>    
+        <p>L'image a été mise à jour</p>
+  </mat-dialog-content>
 </div>

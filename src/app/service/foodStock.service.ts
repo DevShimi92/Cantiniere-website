@@ -116,7 +116,7 @@ export class FoodStockService {
         });
     }
 
-    putImage(id:number, picture:File):Promise<boolean>{
+    putImageArticle(id:number, picture:File):Promise<boolean>{
 
         const formData: FormData = new FormData();
         formData.append('id_article', id.toString());
@@ -149,17 +149,18 @@ export class FoodStockService {
         
     }
     
-    postMenu(name:string,price_final=0,description:string=null): Promise<number>{
+    postMenu(name:string,price_final=0,description:string=null,picture:File=null): Promise<number>{
 
-        const data = {
-            name : name,
-            price_final : price_final,
-            description :description
-        };
+        const formData: FormData = new FormData();
+        formData.append('name', name);
+        formData.append('price_final', price_final.toString());
+        formData.append('description',description);
+        if(picture)
+            formData.append('img', picture, picture.name);
 
         return new Promise<number>((resolve, reject) => {
 
-            this.http.post<any>(this.API_URL+'menu',data).toPromise().then((response) => {
+            this.http.post<any>(this.API_URL+'menu',formData).toPromise().then((response) => {
                 return resolve(response.id);
             }).catch((error) => {
                 return reject(error);
@@ -192,6 +193,23 @@ export class FoodStockService {
             });
         });
     
+    }
+
+    putImageMenu(id:number, picture:File):Promise<boolean>{
+
+        const formData: FormData = new FormData();
+        formData.append('id_menu', id.toString());
+        formData.append('img', picture, picture.name);
+
+        return new Promise<boolean>((resolve, reject) => {
+    
+            this.http.put<any>(this.API_URL+'image',formData).toPromise().then( () => {
+                return resolve(true);
+            }).catch((error) => {
+                    return reject(error);
+                });
+
+        });
     }
 
     deleteMenu(id:number):Promise<boolean>{

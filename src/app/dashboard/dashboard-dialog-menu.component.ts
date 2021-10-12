@@ -21,6 +21,7 @@ export class ArticleCheckBox {
     name: string;
     value:string;
     price: number;
+    picture: string;
     description: string;
     total: number;
     FormDialogMenu: number;
@@ -39,6 +40,7 @@ export class ArticleCheckBox {
     listArticle: ArticleCheckBox[] = [];
     resultsLength = 0;
     editMenuContent = false;
+    nameFile = "Aucun fichier sélectioné";
     dataSource;
   
     @ViewChild('listDialogPaginatpr') listDialogPaginatpr: MatPaginator;
@@ -176,4 +178,9 @@ export class ArticleCheckBox {
         }
         return false;
       }
+
+      uploadFile($event) {
+        this.nameFile = $event.target.files[0].name;
+        this.data.picture = $event.target.files[0];
+    }
   }
