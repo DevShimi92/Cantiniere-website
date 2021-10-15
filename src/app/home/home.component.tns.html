@@ -4,21 +4,22 @@
 <div *ngIf="here">
     <StackLayout>
         <!-- <ListPicker [items]="listday" class="picker"> </ListPicker> -->
-    <StackLayout class="contentMenuText" >
+    <StackLayout class="contentMenuText">
         <Label class="h1" [text]="this.selectedMenu.name" ></Label>
-        <Image src="res://imagenotfound" ></Image>
-        <Label class="h2" textWrap="true">
+        <Image [src]="this.selectedMenu.picture" (longPress)="showDescription(this.selectedMenu.description)"></Image>
+        <Label class="h2" textWrap="true"  (longPress)="showDetailsMenu(this.selectedMenu.id,true)">
             <FormattedString>
                 <span [text]="this.selectedMenu.price_final" ></span>
                 <span text=" €\n" ></span>
-                <span [text]="this.selectedMenu.description"></span>
-            </FormattedString>
+                <span text="Contient : \n"></span>
+                <span [text]="showDetailsMenu(this.selectedMenu.id,false)"></span>
+           </FormattedString>
         </Label>  
     </StackLayout>
     <StackLayout>
        <ScrollView orientation="horizontal">
            <WrapLayout>
-               <CardView *ngFor="let item of menuList; let i = index;" class="card" elevation="40" radius="10" ios:shadowRadius="3" width="500px" height="20%">
+               <CardView *ngFor="let item of menuList; let i = index;" class="card" elevation="40" radius="10" ios:shadowRadius="3" width="500px" height="250px">
                    <StackLayout [class.Selected]="i===selectedIndex" (tap)="selected(i,item)" class="Unselected">
                         <Label class="h2" textWrap="true">
                             <FormattedString>
@@ -32,7 +33,7 @@
                </CardView>
            </WrapLayout>
        </ScrollView> 
-       <button text="Réserver ce menu !" (tap)="pickMenu()" ></button>
+    <button text="Réserver ce menu !" (tap)="pickMenu()" ></button>
 
     </StackLayout>
 </StackLayout>

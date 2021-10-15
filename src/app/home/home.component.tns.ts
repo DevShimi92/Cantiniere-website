@@ -5,6 +5,15 @@ import { Dialogs } from '@nativescript/core';
 import { FoodStockService } from '../service/foodStock.service';
 import { Cart } from '../shared/models/cart.model';
 
+export class ArticleOfMenu {    
+  
+  constructor(
+    public idMenu: number,
+    public name: string
+  ) {}
+
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -17,6 +26,7 @@ export class HomeComponent implements OnInit {
   selectedIndex: number;
   selectedMenu;
   listday: string[] = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi'];
+  contentsOfMenus: ArticleOfMenu[] = [];
 
   private addToCart = {
     title: 'Ajouté au pannier !',
@@ -33,16 +43,105 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
 
     this.foodStockService.getAllMenu().subscribe((response) => {
+      
+      if(response != null)
+        {
+          let i = 0;
+          this.menuList = response;
+          this.selectedMenu = response[0];
+          while(this.menuList.length != i)
+          {
+            this.detailsMenu(this.menuList[i].id);
+            if(this.menuList[i].picture == null)
+              {
+                this.menuList[i].picture = "res://imagenotfound"; 
+              }
+
+
+            i++;
+            if(this.menuList.length == i)
+              {
+                this.here = true;
+              }
+              
+          }
+
+        }
+        
+    });
+  }
+
+  detailsMenu(idmenu:number):void{
+
+    this.foodStockService.getMenuContent(idmenu).subscribe((response)=> {
+
+      let i = 0;
 
       if(response != null)
         {
-          this.here = true;
-          this.menuList = response;
-          this.selectedMenu = response[0];
-        }
-      
-        
+          while(response.length != i)
+            {
+              this.contentsOfMenus.push(new ArticleOfMenu(response[i].id_menu,response[i]['Article.name']));
+              i++;
+            }
+ 
+          }
+ 
     });
+
+  }
+  
+  showDetailsMenu(idmenu:number,showAll:boolean):string{
+    
+    let i = 0 ;
+    let j = 0 ;
+    let listeOfArticle = '';
+
+    while(this.contentsOfMenus.length != i){
+      if(this.contentsOfMenus[i].idMenu == idmenu)
+        {
+          listeOfArticle =listeOfArticle + '- '+ this.contentsOfMenus[i].name + '\n ';
+          j++;
+        }
+
+      i++;
+      
+      if(j == 5 && showAll == false)
+        {
+          listeOfArticle = listeOfArticle + '...';
+          i = this.contentsOfMenus.length;
+        } 
+    }
+
+    if(showAll){
+
+      Dialogs.alert({
+        title: "Contenu du menu :",
+        message: listeOfArticle,
+        okButtonText: "OK",
+        cancelable: true
+      });
+
+      return '';
+    }
+    else
+    {
+      return listeOfArticle;
+    }
+
+    
+
+  }
+
+
+  showDescription(text:string):void{
+    Dialogs.alert({
+      title: "Description",
+      message: text,
+      okButtonText: "OK",
+      cancelable: true
+    });
+
   }
 
   selected(blockSelected:number,menu:any):void{

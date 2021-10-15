@@ -80,7 +80,7 @@ export class AppComponent implements AfterViewInit,OnInit {
     const minutes  = (seconds / 60) % 100 ;
     const hours = seconds / 3600 ;
     
-    if(hours < 3 )
+    if(hours < 3 && hours > 0 )
       {
         const hoursString = hours.toString().slice(0, 1);
         this.msgLimit =  "Il vous reste "+ hoursString +' heure ' ;
