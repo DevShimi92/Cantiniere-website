@@ -1,30 +1,29 @@
-import { Component, OnInit} from '@angular/core';
+import { Component } from '@angular/core';
 import { Dialogs } from "@nativescript/core";
 
 import { ReportService } from '../service/report.service'
+import { LoaderService } from "../service/loader.service"
 
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.css'],
 })
-export class ReportComponent implements OnInit {
+export class ReportComponent {
   
   reportSubject = '';
   reportMessage: string
 
-  constructor(private reportService: ReportService) {
+  constructor(private reportService: ReportService, public loaderService: LoaderService) {
    // do nothing.
-  }
-
-
-  ngOnInit(): void {
-    // do nothing
   }
 
   submit():void {
 
     this.reportService.sendReport(this.reportSubject,this.reportMessage).then(() => {
+      
+      this.reportSubject = '';
+      this.reportMessage = '';
 
       Dialogs.alert({
         title: "Information",
@@ -48,6 +47,6 @@ export class ReportComponent implements OnInit {
       });
 
     });
-  }
+   }
 
 }

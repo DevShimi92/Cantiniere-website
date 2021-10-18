@@ -7,3 +7,10 @@ export class User {
     money:number;
     cooker: boolean;
   }
+
+  export interface UserList {
+    id : number;
+    last_name: string;
+    first_name: string;
+    money:number;
+  }

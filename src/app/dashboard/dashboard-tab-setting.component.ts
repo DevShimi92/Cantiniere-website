@@ -12,14 +12,14 @@ import { SettingService } from '../service/setting.service';
   export class DashboardSettingComponent {
 
     settingForm: FormGroup;
-    totalOrderLimitAccountDay: any ;
+    totalOrderLimitAccountDay: number ;
     dataReponse:any;
 
     constructor( private formBuilder: FormBuilder, private _snackBar: MatSnackBar, private settingService: SettingService ) { } 
 
     ngOnInit(): void {
       this.settingService.getAllSetting().subscribe((response) => {
-
+        console.log(response)
         this.dataReponse = response;
         
         this.settingForm = this.formBuilder.group({

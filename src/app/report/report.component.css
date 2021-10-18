@@ -11,3 +11,10 @@ div{
   font-size: 20; 
   font-weight: 100;
 }
+
+
+.reportInput {
+  width: 100%;
+  font-size: 150%;
+
+}

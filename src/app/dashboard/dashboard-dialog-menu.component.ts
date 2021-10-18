@@ -1,5 +1,5 @@
   
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, ViewChild, Inject } from '@angular/core';
 import { MatDialog , MatDialogRef,  MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource} from '@angular/material/table';
@@ -33,7 +33,7 @@ export class ArticleCheckBox {
     templateUrl: 'dashboard-dialog-menu.component.html',
     styleUrls: ['./dashboard.component.css']
   })
-  export class DashboardComponentDialogMenu {
+  export class DashboardDialogMenuComponent {
     
     displayedColumnsDialog: string[] = ['id','name','checkbox'];
     displayedColumnsDialogShow: string[] = ['id','name','price','delete'];
@@ -45,7 +45,7 @@ export class ArticleCheckBox {
   
     @ViewChild('listDialogPaginatpr') listDialogPaginatpr: MatPaginator;
   
-    constructor( public dialogRef: MatDialogRef<DashboardComponentDialogMenu>,
+    constructor( public dialogRef: MatDialogRef<DashboardDialogMenuComponent>,
       @Inject(MAT_DIALOG_DATA) public data: DialogData, public dialog: MatDialog, private foodStockService:FoodStockService) {}
       
   
@@ -77,14 +77,14 @@ export class ArticleCheckBox {
 
       }
   
-      ngAfterViewInit(){
+      ngAfterViewInit():void{
         if(this.data.data)
             {
             this.dataSource.paginator = this.listDialogPaginatpr;
             }
       }
   
-      applyFilter(event: Event) {
+      applyFilter(event: Event):void {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
         if (this.dataSource.paginator) {
@@ -94,7 +94,7 @@ export class ArticleCheckBox {
   
       deleteArticleOfMenu($event):void{
   
-        const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+        const dialogRef = this.dialog.open(DashboardDialogMenuComponent,{
           data: { FormDialogMenu : 11, name : $event.name}
         });
   
@@ -103,14 +103,14 @@ export class ArticleCheckBox {
           {
             this.foodStockService.deleteMenuContent(this.data.data[0].id_menu,$event.id).then(() => {
               
-                this.dialog.open(DashboardComponentDialogMenu,{
+                this.dialog.open(DashboardDialogMenuComponent,{
                   data: { FormDialogMenu : 9  }
                 });
               },
             
               (error) => 
                 {
-                      this.dialog.open(DashboardComponentDialogMenu,{
+                      this.dialog.open(DashboardDialogMenuComponent,{
                         data: { FormDialogMenu : 4 , name : error.status }
                       });
               
@@ -123,7 +123,7 @@ export class ArticleCheckBox {
   
         this.foodStockService.getAllArticle().subscribe((response) =>
             {
-              const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+              const dialogRef = this.dialog.open(DashboardDialogMenuComponent,{
                 data: { FormDialogMenu : 1, name : this.data.name, data : response}
               });
   
@@ -147,13 +147,13 @@ export class ArticleCheckBox {
                             }
                         if(errorCreate)
                             {
-                              this.dialog.open(DashboardComponentDialogMenu,{
+                              this.dialog.open(DashboardDialogMenuComponent,{
                                 data: { FormDialogMenu : 5, name : this.data.name }
                               });
                             }
                             else
                             {
-                              this.dialog.open(DashboardComponentDialogMenu,{
+                              this.dialog.open(DashboardDialogMenuComponent,{
                                 data: { FormDialogMenu : 9 }
                               });
                             }
@@ -179,7 +179,7 @@ export class ArticleCheckBox {
         return false;
       }
 
-      uploadFile($event) {
+      uploadFile($event):void {
         this.nameFile = $event.target.files[0].name;
         this.data.picture = $event.target.files[0];
     }

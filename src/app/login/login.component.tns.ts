@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component } from '@angular/core';
 import { Dialogs } from "@nativescript/core";
 import { RouterExtensions } from "@nativescript/angular";
 
@@ -12,7 +12,7 @@ import { UserService } from '../service/user.service';
   templateUrl: './login.component.tns.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   public isLoggingIn = true;
   public isforgotPassword = true;
@@ -33,11 +33,6 @@ export class LoginComponent implements OnInit {
     this.user.first_name = '';
     this.user.email = '';
     this.user.password = '';
-  }
-
-
-  ngOnInit(): void {
-    // do nothing
   }
 
   toggleForm():void {

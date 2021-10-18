@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef} from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ChangeDetectorRef} from '@angular/core';
 import { RadSideDrawerComponent } from "nativescript-ui-sidedrawer/angular";
 import { RadSideDrawer } from 'nativescript-ui-sidedrawer';
 import { RouterExtensions } from "@nativescript/angular";
@@ -12,7 +12,7 @@ import { FoodStockService } from './service/foodStock.service';
   templateUrl: './app.component.tns.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements AfterViewInit,OnInit {
+export class AppComponent implements AfterViewInit {
   public userOnline : boolean;
   public  showLimitTime = false;
   private  hourLimitRequest  = false;
@@ -30,10 +30,6 @@ export class AppComponent implements AfterViewInit,OnInit {
   ngAfterViewInit(): void {
       this.drawer = this.drawerComponent.sideDrawer;
       this._changeDetectionRef.detectChanges();
-  }
-
-  ngOnInit(): void {
-      // do nothing
   }
 
   public openDrawer(): void {

@@ -4,6 +4,14 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
+export class Setting {
+    hourlimit: string;
+    totalOrderLimitAccountDay: number;
+    totalOrderLimitDay: number;
+    canPreOrder: string;
+  }
+
+
 @Injectable({
     providedIn: 'root'
   })
@@ -14,8 +22,8 @@ import { environment } from '../../environments/environment';
 
     constructor(private http: HttpClient) { }
 
-    getAllSetting():Observable<any>{
-        return this.http.get(this.API_URL+'setting') ;
+    getAllSetting():Observable<Setting>{
+        return this.http.get<Setting>(this.API_URL+'setting') ;
     }
 
     putHourLimit( hour_limit : string) : Promise<boolean>{
@@ -24,7 +32,7 @@ import { environment } from '../../environments/environment';
 
       return new Promise<boolean>((resolve, reject) => {
 
-          this.http.put<any>(this.API_URL+'setting/hour_limit',data).toPromise().then( () => {
+          this.http.put<void>(this.API_URL+'setting/hour_limit',data).toPromise().then( () => {
               return resolve(true);
           }).catch((error) => {
               return reject(error);
@@ -39,7 +47,7 @@ import { environment } from '../../environments/environment';
 
       return new Promise<boolean>((resolve, reject) => {
 
-          this.http.put<any>(this.API_URL+'setting/order_total_limit',data).toPromise().then( () => {
+          this.http.put<void>(this.API_URL+'setting/order_total_limit',data).toPromise().then( () => {
               return resolve(true);
           }).catch((error) => {
               return reject(error);
@@ -54,7 +62,7 @@ import { environment } from '../../environments/environment';
 
       return new Promise<boolean>((resolve, reject) => {
 
-          this.http.put<any>(this.API_URL+'setting/order_total_limit_account',data).toPromise().then( () => {
+          this.http.put<void>(this.API_URL+'setting/order_total_limit_account',data).toPromise().then( () => {
               return resolve(true);
           }).catch((error) => {
               return reject(error);
@@ -70,7 +78,7 @@ import { environment } from '../../environments/environment';
 
         return new Promise<boolean>((resolve, reject) => {
 
-            this.http.put<any>(this.API_URL+'setting/pre_order',data).toPromise().then( () => {
+            this.http.put<void>(this.API_URL+'setting/pre_order',data).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                 return reject(error);

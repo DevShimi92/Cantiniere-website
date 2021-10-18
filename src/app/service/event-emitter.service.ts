@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';    
 import { Subscription } from 'rxjs/internal/Subscription';    
-import { Observable, Subject  } from 'rxjs';
+import { Subject  } from 'rxjs';
 
 @Injectable({    
   providedIn: 'root'    

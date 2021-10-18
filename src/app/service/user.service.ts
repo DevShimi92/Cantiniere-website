@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
-import { User } from '../shared/models/user.model';
+import { User, UserList } from '../shared/models/user.model';
+import { Token } from '../shared/models/token.model';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -19,7 +20,7 @@ export class UserService {
     
         return new Promise<boolean>((resolve, reject) => {
 
-            this.http.post<any>(this.API_URL+'user',user).toPromise().then( response => {
+            this.http.post<Token>(this.API_URL+'user',user).toPromise().then( response => {
 
                 this.authService.updateDataSesion(response.token, response.refresh_token);
                 return resolve(true);
@@ -31,16 +32,16 @@ export class UserService {
         });
     } 
 
-    getAllUser(): Observable<any>{
+    getAllUser(): Observable<UserList[]>{
     
-        return this.http.get(this.API_URL+'user') ;
+        return this.http.get<UserList[]>(this.API_URL+'user') ;
     }
     
     updateUser(user:User):Promise<boolean>{
     
         return new Promise<boolean>((resolve, reject) => {
 
-            this.http.put<any>(this.API_URL+'user',user).toPromise().then( () => {
+            this.http.put<void>(this.API_URL+'user',user).toPromise().then( () => {
 
                 this.authService.refreshToken().then(() => {
                     return resolve(true);

@@ -116,8 +116,7 @@ export class MenuComponent implements OnInit {
 
   }
 
-  onClear(args) {
-    const searchBar = args.object as SearchBar;
+  onClear() {
     this.listArticle = this.listArticleDefault;
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component } from '@angular/core';
 import { clear } from "@nativescript/core/application-settings";
 import { RouterExtensions } from "@nativescript/angular";
 
@@ -7,16 +7,11 @@ import { RouterExtensions } from "@nativescript/angular";
   templateUrl: './setting.component.html',
   styleUrls: ['./setting.component.css'],
 })
-export class SettingComponent implements OnInit {
+export class SettingComponent  {
   title = 'Cantiniere-website';
 
   constructor( private routerExtensions: RouterExtensions) {
    // do nothing.
-  }
-
-
-  ngOnInit(): void {
-    // do nothing
   }
 
   logout(): void {

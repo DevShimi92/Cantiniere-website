@@ -25,18 +25,18 @@ import { AppRoutingModule } from '@src/app/app-routing.module';
 import { AppComponent } from '@src/app/app.component';
 import { HomeComponent } from '@src/app/home/home.component';
 import { LoginComponent } from '@src/app/login/login.component';
-import { MenuComponent, MenuComponentDialog } from '@src/app/menu/menu.component';
-import { ProfileComponent, ProfileComponentDialog } from '@src/app/profile/profile.component';
+import { MenuComponent, MenuDialogComponent } from '@src/app/menu/menu.component';
+import { ProfileComponent, ProfileDialogComponent } from '@src/app/profile/profile.component';
 import { SettingComponent } from '@src/app/setting/setting.component';
 import { ReportComponent } from '@src/app/report/report.component';
 import { CartComponent } from '@src/app/cart/cart.component';
 import { RegistrationComponent } from '@src/app/registration/registration.component';
 import { DashboardComponent } from '@src/app/dashboard/dashboard.component';
-import { DashboardTabUserComponent, DashboardComponentDialogEditSolde } from '@src/app/dashboard/dashboard-tab-user.component';
-import { DashboardTabEditFoodComponent, DashboardComponentDialogTypeArticle, DashboardComponentDialogArticle } from '@src/app/dashboard/dashboard-tab-edit-food.component';
+import { DashboardTabUserComponent, DashboardDialogEditSoldeComponent } from '@src/app/dashboard/dashboard-tab-user.component';
+import { DashboardTabEditFoodComponent, DashboardDialogTypeArticleComponent, DashboardDialogArticleComponent } from '@src/app/dashboard/dashboard-tab-edit-food.component';
 import { DashboardSettingComponent} from '@src/app/dashboard/dashboard-tab-setting.component';
 import { DashboardRecapOrderComponent} from '@src/app/dashboard/dashboard-tab-recap-order.component';
-import { DashboardComponentDialogMenu } from '@src/app/dashboard/dashboard-dialog-menu.component';
+import { DashboardDialogMenuComponent } from '@src/app/dashboard/dashboard-dialog-menu.component';
 import { RestPasswordComponent } from '@src/app/restPassword/restPassword.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
@@ -55,16 +55,16 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     RegistrationComponent,
     DashboardComponent,
     DashboardTabUserComponent,
-    DashboardComponentDialogEditSolde,
+    DashboardDialogEditSoldeComponent,
     DashboardTabEditFoodComponent,
     DashboardSettingComponent,
     DashboardRecapOrderComponent,
-    DashboardComponentDialogTypeArticle,
-    DashboardComponentDialogArticle,
-    DashboardComponentDialogMenu,
+    DashboardDialogTypeArticleComponent,
+    DashboardDialogArticleComponent,
+    DashboardDialogMenuComponent,
     RestPasswordComponent,
-    MenuComponentDialog,
-    ProfileComponentDialog,
+    MenuDialogComponent,
+    ProfileDialogComponent,
   ],
   imports: [
     BrowserModule,

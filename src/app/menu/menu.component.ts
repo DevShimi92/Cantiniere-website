@@ -147,14 +147,14 @@ export class MenuComponent implements OnInit {
       sessionStorage.setItem('cart', JSON.stringify(cart));
     }
     
-    this.dialog.open(MenuComponentDialog,{ data: { FormDialog : 0 } });
+    this.dialog.open(MenuDialogComponent,{ data: { FormDialog : 0 } });
     
   }
 
   showDescription(event: Article): void
   {
     console.log(event.description) 
-    this.dialog.open(MenuComponentDialog,{
+    this.dialog.open(MenuDialogComponent,{
       data: { FormDialog : 1 , description : event.description }
   });
     
@@ -169,9 +169,9 @@ export class MenuComponent implements OnInit {
   templateUrl: 'menu.component-dialog.html'
 })
 
-export class MenuComponentDialog {
+export class MenuDialogComponent {
 
-  constructor( public dialogRef: MatDialogRef<MenuComponentDialog>,
+  constructor( public dialogRef: MatDialogRef<MenuDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
 }

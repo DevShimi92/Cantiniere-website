@@ -70,7 +70,7 @@ export interface DialogData {
     }
 
     editSolde($event):void{
-        const dialogRefEditSolde = this.dialog.open(DashboardComponentDialogEditSolde,{
+        const dialogRefEditSolde = this.dialog.open(DashboardDialogEditSoldeComponent,{
           data: { SetNewSolde : true, name : $event.last_name, money : $event.money, }
         });
     
@@ -82,7 +82,7 @@ export interface DialogData {
     
               this.userService.updateUser(this.user).then(() => {
     
-                this.dialog.open(DashboardComponentDialogEditSolde,{
+                this.dialog.open(DashboardDialogEditSoldeComponent,{
                   data: { SetNewSolde : false , erreur :false }
                 });
     
@@ -90,7 +90,7 @@ export interface DialogData {
     
                 if(error.status == 409)
                   {
-                    this.dialog.open(DashboardComponentDialogEditSolde,{
+                    this.dialog.open(DashboardDialogEditSoldeComponent,{
                         data: { SetNewSolde : false , erreur :true }
                       });
                   }
@@ -112,9 +112,9 @@ export interface DialogData {
     templateUrl: 'dashboard-dialog-edit-solde.component.html',
     styleUrls: ['./dashboard.component.css']
   })
-  export class DashboardComponentDialogEditSolde {
+  export class DashboardDialogEditSoldeComponent {
     
-    constructor( public dialogRef: MatDialogRef<DashboardComponentDialogEditSolde>,
+    constructor( public dialogRef: MatDialogRef<DashboardDialogEditSoldeComponent>,
       @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
   
   }

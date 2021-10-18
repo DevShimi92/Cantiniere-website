@@ -1,6 +1,9 @@
   
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+
 import { ReportService } from '../service/report.service'
 
 @Component({
@@ -11,11 +14,8 @@ import { ReportService } from '../service/report.service'
 export class ReportComponent implements OnInit {
   
   reportForm: FormGroup;
-  errorReport = false;
-  sendReport = false;
-  errorReportMsg = '';
 
-  constructor(private formBuilder: FormBuilder, private reportService: ReportService) {
+  constructor(private formBuilder: FormBuilder, private _snackBar: MatSnackBar, private router: Router, private reportService: ReportService) {
    // do nothing.
  }
 
@@ -29,24 +29,53 @@ export class ReportComponent implements OnInit {
   onSubmit(): void{
     if(this.reportForm.value.message)
     {
-      this.errorReport = false;
       this.reportService.sendReport(this.reportForm.value.sujet, this.reportForm.value.message).then(() => {
-          
-        this.sendReport = true;
+
+        const snackBarRef = this._snackBar.openFromComponent(ReportSnackComponent, {
+          duration: 10 * 1000,
+        });
+
+        snackBarRef.afterDismissed().subscribe(() => {
+          this.router.navigate([""]);
+        });
+
 
       }).catch((error) => {
 
-      this.errorReport = true;
-      this.errorReportMsg = 'Une erreur est survenue ! (code : '+error.status+' )';
+      this._snackBar.openFromComponent(ReportSnackErrorComponent, {
+        data: error.status,
+        duration: 10 * 1000,
+      });
 
       });
       
     }
     else
     {
-      this.errorReport = true;
-      this.errorReportMsg = 'Votre message est vide !';
+      this._snackBar.openFromComponent(ReportSnackEmptyComponent, {
+        duration: 10 * 1000,
+      });
     }
     
   }
+}
+
+@Component({
+  selector: 'snack-bar-app-report',
+  template: '<span> Votre message a bien été envoyé ! </span>',
+})
+export class ReportSnackComponent {}
+
+@Component({
+  selector: 'snack-bar-empty-app-report',
+  template: '<span> Votre message est vide !</span>',
+})
+export class ReportSnackEmptyComponent {}
+
+@Component({
+  selector: 'snack-error-bar-app-report',
+  template: '<span> Une erreur est survenue ! (code : {{ data }}) </span>',
+})
+export class ReportSnackErrorComponent {
+  constructor(@Inject(MAT_SNACK_BAR_DATA) public data: string) { }
 }

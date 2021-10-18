@@ -36,7 +36,7 @@ export class ReportService {
 
         return new Promise<boolean>((resolve, reject) => {
 
-            this.http.post<any>(this.API_URL+'mail',data).toPromise().then( () => {
+            this.http.post<void>(this.API_URL+'mail',data).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                 return reject(error);

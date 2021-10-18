@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, interval, pipe } from 'rxjs';
-import { tap, catchError, map, switchMap } from "rxjs/operators";
+import { interval } from 'rxjs';
+import { switchMap } from "rxjs/operators";
 import { JwtHelperService } from "@auth0/angular-jwt";
 
 import { User } from '../shared/models/user.model';

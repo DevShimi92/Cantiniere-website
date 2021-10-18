@@ -5,7 +5,7 @@ import { MatTableDataSource} from '@angular/material/table';
 
 import { EventEmitterService } from '../service/event-emitter.service';
 import { FoodStockService } from '../service/foodStock.service';
-import { DashboardComponentDialogMenu } from './dashboard-dialog-menu.component';
+import { DashboardDialogMenuComponent } from './dashboard-dialog-menu.component';
 
 export interface DialogData {
     FormDialogTypeArticle: number;
@@ -55,7 +55,7 @@ export class ArticleCheckBox {
           }   
     }
     
-    applyFilter(event: Event) {
+    applyFilter(event: Event):void {
       const filterValue = (event.target as HTMLInputElement).value;
       this.dataSource.filter = filterValue.trim().toLowerCase();
   
@@ -161,7 +161,7 @@ export class ArticleCheckBox {
     }
 
     createTypeArticle():void{
-        const dialogRef = this.dialog.open(DashboardComponentDialogTypeArticle,{
+        const dialogRef = this.dialog.open(DashboardDialogTypeArticleComponent,{
           data: { FormDialogTypeArticle : 0 }
         });
     
@@ -170,13 +170,13 @@ export class ArticleCheckBox {
     
               this.foodStockService.postTypeOfArticle(result).then(() => 
                 {
-                    this.dialog.open(DashboardComponentDialogTypeArticle,{
+                    this.dialog.open(DashboardDialogTypeArticleComponent,{
                         data: { FormDialogTypeArticle : 3, name : result }
                     });
                 },
                 (error) => 
                   {
-                    this.dialog.open(DashboardComponentDialogTypeArticle,{
+                    this.dialog.open(DashboardDialogTypeArticleComponent,{
                         data: { FormDialogTypeArticle : 4, name : error.status }
                     });
                   });
@@ -186,7 +186,7 @@ export class ArticleCheckBox {
     }
 
     editTypeArticle($event):void{
-        const dialogRef = this.dialog.open(DashboardComponentDialogTypeArticle,{
+        const dialogRef = this.dialog.open(DashboardDialogTypeArticleComponent,{
           data: { FormDialogTypeArticle : 1, name : $event.name }
         });
     
@@ -194,13 +194,13 @@ export class ArticleCheckBox {
             if(result !== $event.name && ( result !== undefined &&  result !== '') ) {
               this.foodStockService.putTypeOfArticle( $event.code_type,result).then(() => 
                 {
-                    this.dialog.open(DashboardComponentDialogTypeArticle,{
+                    this.dialog.open(DashboardDialogTypeArticleComponent,{
                         data: { FormDialogTypeArticle : 5, name : result }
                     });
                 },
                 (error) => 
                   {
-                        this.dialog.open(DashboardComponentDialogTypeArticle,{
+                        this.dialog.open(DashboardDialogTypeArticleComponent,{
                             data: { FormDialogTypeArticle : 4, name : error.status }
                         });
                   });
@@ -210,21 +210,21 @@ export class ArticleCheckBox {
     }
 
     deleteTypeArticle($event):void{
-        const dialogRef = this.dialog.open(DashboardComponentDialogTypeArticle,{
+        const dialogRef = this.dialog.open(DashboardDialogTypeArticleComponent,{
           data: { FormDialogTypeArticle : 2, name : $event.name }
         });
     
         dialogRef.afterClosed().subscribe(result => {
             if(result == true && ( result !== undefined &&  result !== '') ) {
-              this.foodStockService.deleteTypeOfArticle( $event.code_type).then((response) => 
+              this.foodStockService.deleteTypeOfArticle( $event.code_type).then(() => 
                 {
-                    this.dialog.open(DashboardComponentDialogTypeArticle,{
+                    this.dialog.open(DashboardDialogTypeArticleComponent,{
                         data: { FormDialogTypeArticle : 6 }
                     });
                 },
                 (error) => 
                   {
-                        this.dialog.open(DashboardComponentDialogTypeArticle,{
+                        this.dialog.open(DashboardDialogTypeArticleComponent,{
                         data: { FormDialogTypeArticle : 4, name : error.status }
                         });
                   });
@@ -246,7 +246,7 @@ export class ArticleCheckBox {
                 this.listTypeArticle.push(key.name);
               }
     
-              const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
+              const dialogRef = this.dialog.open(DashboardDialogArticleComponent,{
                   data: { FormDialogArticle : 0, listTypeArticle : this.listTypeArticle }
                 });
     
@@ -254,13 +254,13 @@ export class ArticleCheckBox {
                         if(result) {
                           this.foodStockService.postArticle(result.name,result.price,this.tabTypeArticle.get(result.value),result.description,result.picture).then(()=>
                           {
-                                this.dialog.open(DashboardComponentDialogArticle,{
+                                this.dialog.open(DashboardDialogArticleComponent,{
                                     data: { FormDialogArticle : 3 , name : result.name }
                                 });
                           },
                           (error) => 
                             {
-                                this.dialog.open(DashboardComponentDialogArticle,{
+                                this.dialog.open(DashboardDialogArticleComponent,{
                                     data: { FormDialogArticle : 4 , name : error.status }
                                 });
                             });
@@ -270,14 +270,14 @@ export class ArticleCheckBox {
               }
             else
                 {
-                    this.dialog.open(DashboardComponentDialogArticle,{
+                    this.dialog.open(DashboardDialogArticleComponent,{
                         data: { FormDialogArticle : 7 }
                         });
                 }
           },
           (error) => 
             {
-                this.dialog.open(DashboardComponentDialogArticle,{
+                this.dialog.open(DashboardDialogArticleComponent,{
                         data: { FormDialogArticle : 4, name : error.status }
                 });
             });
@@ -285,7 +285,7 @@ export class ArticleCheckBox {
     }
 
     editArticle($event):void{
-        const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
+        const dialogRef = this.dialog.open(DashboardDialogArticleComponent,{
           data: { FormDialogArticle : 1, name : $event.name, price : $event.price, picture : '', description : $event.description }
         });
     
@@ -294,13 +294,13 @@ export class ArticleCheckBox {
               console.log(result);
               this.foodStockService.putArticle( $event.id,result.name, result.price, result.description).then(() => 
                 {
-                    this.dialog.open(DashboardComponentDialogArticle,{
+                    this.dialog.open(DashboardDialogArticleComponent,{
                         data: { FormDialogArticle : 5, name : result.name }
                     });
                 },
                 (error) => 
                   {
-                        this.dialog.open(DashboardComponentDialogArticle,{
+                        this.dialog.open(DashboardDialogArticleComponent,{
                             data: { FormDialogArticle : 4, name : error.status }
                         });
                   });
@@ -308,13 +308,13 @@ export class ArticleCheckBox {
             if( result !== undefined && result.picture !== '')
             {
                 this.foodStockService.putImageArticle($event.id,result.picture).then(()=>{
-                  this.dialog.open(DashboardComponentDialogArticle,{
+                  this.dialog.open(DashboardDialogArticleComponent,{
                     data: { FormDialogArticle : 8, name : result.name }
                 });
               },
               (error)=>
               {
-                      this.dialog.open(DashboardComponentDialogArticle,{
+                      this.dialog.open(DashboardDialogArticleComponent,{
                         data: { FormDialogArticle : 4, name : error.status }
                       });
               });
@@ -325,7 +325,7 @@ export class ArticleCheckBox {
     }
 
     deleteArticle($event):void{
-        const dialogRef = this.dialog.open(DashboardComponentDialogArticle,{
+        const dialogRef = this.dialog.open(DashboardDialogArticleComponent,{
           data: { FormDialogArticle : 2, name : $event.name }
         });
     
@@ -333,13 +333,13 @@ export class ArticleCheckBox {
             if(result == true && ( result !== undefined &&  result !== '') ) {
               this.foodStockService.deleteArticle( $event.id).then(() => 
                 {
-                    this.dialog.open(DashboardComponentDialogArticle,{
+                    this.dialog.open(DashboardDialogArticleComponent,{
                         data: { FormDialogArticle : 6 }
                     });
                 },
                 (error) => 
                   {
-                    this.dialog.open(DashboardComponentDialogArticle,{
+                    this.dialog.open(DashboardDialogArticleComponent,{
                       data: { FormDialogArticle : 4, name : error.status }
                     });
                   });
@@ -356,7 +356,7 @@ export class ArticleCheckBox {
               {
               if(response)
                 {
-                  const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+                  const dialogRef = this.dialog.open(DashboardDialogMenuComponent,{
                     data: { FormDialogMenu : 0 }
                   });
     
@@ -365,7 +365,7 @@ export class ArticleCheckBox {
                       {
                           menuName = result ;
 
-                          const dialogRefForm1 = this.dialog.open(DashboardComponentDialogMenu,{
+                          const dialogRefForm1 = this.dialog.open(DashboardDialogMenuComponent,{
                             data: { FormDialogMenu : 1, name : result, data : response }
                           });
     
@@ -374,7 +374,7 @@ export class ArticleCheckBox {
                               {
                                 if(this.checkIfMenuHaveContent(listArticleCheckBox) == false)
                                   {
-                                    const dialogRefForm2 = this.dialog.open(DashboardComponentDialogMenu,{
+                                    const dialogRefForm2 = this.dialog.open(DashboardDialogMenuComponent,{
                                       data: { FormDialogMenu : 2 }
                                     });
     
@@ -383,13 +383,13 @@ export class ArticleCheckBox {
                                         {
                                           this.foodStockService.postMenu(menuName).then(() =>
                                           {
-                                                this.dialog.open(DashboardComponentDialogMenu,{
+                                                this.dialog.open(DashboardDialogMenuComponent,{
                                                     data: { FormDialogMenu : 3, name : menuName }
                                                 });
                                           },
                                           (error) => 
                                             {
-                                                this.dialog.open(DashboardComponentDialogMenu,{
+                                                this.dialog.open(DashboardDialogMenuComponent,{
                                                     data: { FormDialogMenu : 4, name : error.status }
                                                 });
                                             });
@@ -400,7 +400,7 @@ export class ArticleCheckBox {
                                 {
                                   const total_price = this.TotalMenuContent(listArticleCheckBox);
 
-                                  const dialogRefForm12 = this.dialog.open(DashboardComponentDialogMenu,{
+                                  const dialogRefForm12 = this.dialog.open(DashboardDialogMenuComponent,{
                                     data: { FormDialogMenu : 12, total : total_price}
                                   });
                                   
@@ -426,13 +426,13 @@ export class ArticleCheckBox {
                                             
                                           if(errorCreate)
                                             {
-                                              this.dialog.open(DashboardComponentDialogMenu,{
+                                              this.dialog.open(DashboardDialogMenuComponent,{
                                                 data: { FormDialogMenu : 5, name : menuName }
                                               });
                                             }
                                           else
                                             {
-                                              this.dialog.open(DashboardComponentDialogMenu,{
+                                              this.dialog.open(DashboardDialogMenuComponent,{
                                                 data: { FormDialogMenu : 3, name : menuName }
                                               });
                                             }
@@ -440,7 +440,7 @@ export class ArticleCheckBox {
                                         },
                                         (error) => 
                                           {
-                                              this.dialog.open(DashboardComponentDialogMenu,{
+                                              this.dialog.open(DashboardDialogMenuComponent,{
                                                   data: { FormDialogMenu : 4, name : error.status }
                                               });
                                           });
@@ -459,7 +459,7 @@ export class ArticleCheckBox {
                 }
               else
                 {
-                  this.dialog.open(DashboardComponentDialogMenu,{
+                  this.dialog.open(DashboardDialogMenuComponent,{
                     data: { FormDialogMenu : 10 }
                   });
                 }
@@ -505,7 +505,7 @@ export class ArticleCheckBox {
         console.log(reponse);
         if(reponse)
         {
-         const dialogRefForm8 = this.dialog.open(DashboardComponentDialogMenu,{
+         const dialogRefForm8 = this.dialog.open(DashboardDialogMenuComponent,{
             data: { FormDialogMenu : 8, name : $event.name, total : $event.price_final, description : $event.description, data : reponse }
           });
 
@@ -524,7 +524,7 @@ export class ArticleCheckBox {
         }
         else
           {
-            const dialogRefForm8 = this.dialog.open(DashboardComponentDialogMenu,{
+            const dialogRefForm8 = this.dialog.open(DashboardDialogMenuComponent,{
               data: { FormDialogMenu : 8, name : $event.name }
             });
 
@@ -548,12 +548,12 @@ export class ArticleCheckBox {
 
       this.foodStockService.putMenu(id, name, price_final, description).then(() => {
         
-        this.dialog.open(DashboardComponentDialogMenu,{
+        this.dialog.open(DashboardDialogMenuComponent,{
           data: { FormDialogMenu : 9 }
         });
 
       }).catch((error)=>{
-          this.dialog.open(DashboardComponentDialogMenu,{
+          this.dialog.open(DashboardDialogMenuComponent,{
             data: { FormDialogMenu : 4, name : error.status }
           });
       });
@@ -564,12 +564,12 @@ export class ArticleCheckBox {
 
       this.foodStockService.putImageMenu(id, picture).then(() => {
         
-        this.dialog.open(DashboardComponentDialogMenu,{
+        this.dialog.open(DashboardDialogMenuComponent,{
           data: { FormDialogMenu : 13 }
         });
 
       }).catch((error)=>{
-          this.dialog.open(DashboardComponentDialogMenu,{
+          this.dialog.open(DashboardDialogMenuComponent,{
             data: { FormDialogMenu : 4, name : error.status }
           });
       });
@@ -577,7 +577,7 @@ export class ArticleCheckBox {
     }
 
     deleteMenu($event):void{
-      const dialogRef = this.dialog.open(DashboardComponentDialogMenu,{
+      const dialogRef = this.dialog.open(DashboardDialogMenuComponent,{
         data: { FormDialogMenu : 7, name : $event.name }
       });
   
@@ -585,13 +585,13 @@ export class ArticleCheckBox {
           if(result == true && ( result !== undefined &&  result !== '') ) {
             this.foodStockService.deleteMenu( $event.id).then(() => 
               {
-                this.dialog.open(DashboardComponentDialogMenu,{
+                this.dialog.open(DashboardDialogMenuComponent,{
                   data: { FormDialogMenu : 6 }               
                 });
               },
               (error) => 
                 {
-                  this.dialog.open(DashboardComponentDialogMenu,{
+                  this.dialog.open(DashboardDialogMenuComponent,{
                     data: { FormDialogMenu : 4, name : error.status }
                   });
                 });
@@ -606,9 +606,9 @@ export class ArticleCheckBox {
     templateUrl: 'dashboard-dialog-type-article.component.html',
     styleUrls: ['./dashboard.component.css']
   })
-  export class DashboardComponentDialogTypeArticle {
+  export class DashboardDialogTypeArticleComponent {
     
-    constructor( public dialogRef: MatDialogRef<DashboardComponentDialogTypeArticle>,
+    constructor( public dialogRef: MatDialogRef<DashboardDialogTypeArticleComponent>,
       @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
   
   }
@@ -618,14 +618,14 @@ export class ArticleCheckBox {
     templateUrl: 'dashboard-dialog-article.component.html',
     styleUrls: ['./dashboard.component.css']
   })
-  export class DashboardComponentDialogArticle {
+  export class DashboardDialogArticleComponent {
     
     nameFile = "Aucun fichier sélectioné";
 
-    constructor( public dialogRef: MatDialogRef<DashboardComponentDialogArticle>,
+    constructor( public dialogRef: MatDialogRef<DashboardDialogArticleComponent>,
       @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
   
-      uploadFile($event) {
+      uploadFile($event):void {
         this.nameFile = $event.target.files[0].name;
         this.data.picture = $event.target.files[0];
     }

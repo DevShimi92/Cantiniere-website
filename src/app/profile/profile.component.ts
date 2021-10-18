@@ -153,7 +153,7 @@ export class ProfileComponent implements OnInit {
     console.log('eeeee');
     this.orderService.getOrderContent(idOrder).subscribe((response) => {
 
-      const dialogRef = this.dialog.open(ProfileComponentDialog,{
+      const dialogRef = this.dialog.open(ProfileDialogComponent,{
         data: { idOrder : idOrder, total: priceTotal, data : response }
       });
 
@@ -178,12 +178,12 @@ export class ProfileComponent implements OnInit {
   templateUrl: 'profile.component-dialog.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponentDialog {
+export class ProfileDialogComponent {
   
   displayedColumnsDialog: string[] = ['Article.name','Article.price'];
   dataSource;
 
-  constructor( public dialogRef: MatDialogRef<ProfileComponentDialog>,
+  constructor( public dialogRef: MatDialogRef<ProfileDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
     ngOnInit(): void {

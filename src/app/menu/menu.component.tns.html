@@ -1,6 +1,6 @@
 <GridLayout columns="*" rows="auto,*" visibility="{{ menuHaveSomething ? 'visible' : 'hidden' }}"> 
 	<StackLayout row="0" col="0" >
-		<SearchBar hint="Nom de plats/consommations" (loaded)="onSearchBarLoaded($event)" (textChange)="applyFilter($event)"   (clear)="onClear($event)"></SearchBar>
+		<SearchBar hint="Nom de plats/consommations" (loaded)="onSearchBarLoaded($event)" (textChange)="applyFilter($event)"   (clear)="onClear()"></SearchBar>
 	</StackLayout>
 	<ScrollView row="1" col="0">
 		<WrapLayout>

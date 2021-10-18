@@ -7,6 +7,6 @@
   },
   "extends": [
     "plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
-    "plugin:angular/johnpapa"
+    "plugin:@angular-eslint/recommended"
   ]
 }
