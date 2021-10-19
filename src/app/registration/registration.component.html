@@ -1,34 +1,62 @@
-<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" #form="ngForm">
-    <div>
+<form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="center-div">
+    
+  <div>
         <h1>Création de compte</h1>
-        <div class="form-group">
-            <label for="name">Nom </label>
-            <input formControlName="last_name" type="text " name="registrationForm.value.last_name"  placeholder="Votre nom" required> 
-            <div [hidden]="!emptyLastName" class="alert alert-danger">Nom requis</div>
-        </div>
-        <div class="form-group">
-            <label for="name">Prénom </label>
-            <input formControlName="first_name" type="text " placeholder="Votre prénom"> 
-            <div [hidden]="!emptyName" class="alert alert-danger">Prénom requis</div>
-        </div>
-        <div class="form-group">
-            <label for="name">Email </label>
-            <input formControlName="email" type="email" placeholder="votre.email@correct.com">
-            <div [hidden]="!errorEmail" class="alert alert-danger">{{errorEmailMsg}}</div>
-        </div>
-        <div class="form-group">
-            <label for="name">Votre mot de passe </label>
-            <input formControlName="password" type="password" placeholder="Votre Mot de passe">
-            <div [hidden]="!errorPassword" class="alert alert-danger">{{errorPasswordMsg}}</div>
-        </div>
-        <div class="form-group">
-            <label for="name">Confirmation de votre mot de passe </label>
-            <input formControlName="checkPassword" type="password" placeholder="Confirmer votre Mot de passe"> 
-            <div [hidden]="!errorCheckPassword" class="alert alert-danger">{{errorPasswordMsg}}</div>
-        </div>
+    
+      <div>
+            <mat-form-field appearance="fill" >
+              <mat-label>Nom</mat-label>
+              <input matInput formControlName="last_name">
+              <mat-error>
+                Nom <strong>manquant</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+           <mat-form-field appearance="fill" >
+              <mat-label>Prénom</mat-label>
+              <input matInput formControlName="first_name">
+              <mat-error>
+                Prénom <strong>manquant</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="fill" >
+              <mat-label>Email</mat-label>
+              <input  matInput formControlName="email" >
+                <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                  L'email n'est pas <strong>valide</strong>
+                </mat-error>
+                <mat-error *ngIf="emailFormControl.hasError('required')">
+                  Email <strong>manquant</strong>
+                </mat-error>
+                <mat-error *ngIf="emailFormControl.hasError('existing')">
+                  <strong>Email déja exsitante dans notre base !</strong>
+                </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="fill"  >
+                <mat-label>Mot de passe</mat-label>
+                <input matInput formControlName="password">
+                <mat-error>
+                  Mot de passe <strong>manquant</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field  appearance="fill">
+                <mat-label>Confirmer le Mot de passe</mat-label>
+                <input matInput formControlName="confirmPassword" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="registrationForm.hasError('notSame')">
+                  <strong>Les mot de passes sont différents</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
 
-                
+                <br>
         <input  type="submit" value="Créer son compte" >
         <input  type="button" routerLink="/login" value="Mot de passe oubliée ?" >
-    </div> 
+      </div> 
 </form>

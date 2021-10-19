@@ -20,7 +20,7 @@ export class FoodStockService {
 
         return new Promise<boolean>((resolve, reject) => {
 
-            this.http.post<any>(this.API_URL+'type_article',{name : name}).toPromise().then( () => {
+            this.http.post<void>(this.API_URL+'type_article',{name : name}).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                 return reject(error);
@@ -39,7 +39,7 @@ export class FoodStockService {
 
         return new Promise<boolean>((resolve, reject) => {
 
-            this.http.put<any>(this.API_URL+'type_article',data).toPromise().then( () => {
+            this.http.put<void>(this.API_URL+'type_article',data).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                 return reject(error);
@@ -54,7 +54,7 @@ export class FoodStockService {
 
         return new Promise<boolean>((resolve, reject) => {
 
-            this.http.request<any>('delete',this.API_URL+'type_article',{body :data }).toPromise().then( () => {
+            this.http.request<void>('delete',this.API_URL+'type_article',{body :data }).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                 return reject(error);
@@ -78,7 +78,7 @@ export class FoodStockService {
 
         return new Promise<boolean>((resolve, reject) => {
 
-            this.http.post<any>(this.API_URL+'article',formData).toPromise().then( () => {
+            this.http.post<void>(this.API_URL+'article',formData).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                 return reject(error);
@@ -106,7 +106,7 @@ export class FoodStockService {
 
         return new Promise<boolean>((resolve, reject) => {
     
-            this.http.put<any>(this.API_URL+'article',data).toPromise().then( () => {
+            this.http.put<void>(this.API_URL+'article',data).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                     return reject(error);
@@ -123,7 +123,7 @@ export class FoodStockService {
 
         return new Promise<boolean>((resolve, reject) => {
     
-            this.http.put<any>(this.API_URL+'image',formData).toPromise().then( () => {
+            this.http.put<void>(this.API_URL+'image',formData).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                     return reject(error);
@@ -138,7 +138,7 @@ export class FoodStockService {
 
         return new Promise<boolean>((resolve, reject) => {
         
-            this.http.request<any>('delete',this.API_URL+'article',{ body :data }).toPromise().then( () => {
+            this.http.request<void>('delete',this.API_URL+'article',{ body :data }).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                     return reject(error);
@@ -185,7 +185,7 @@ export class FoodStockService {
 
         return new Promise<boolean>((resolve, reject) => {
 
-            this.http.put<any>(this.API_URL+'menu',data).toPromise().then( () => {
+            this.http.put<void>(this.API_URL+'menu',data).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                 return reject(error);
@@ -202,7 +202,7 @@ export class FoodStockService {
 
         return new Promise<boolean>((resolve, reject) => {
     
-            this.http.put<any>(this.API_URL+'image',formData).toPromise().then( () => {
+            this.http.put<void>(this.API_URL+'image',formData).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                     return reject(error);
@@ -217,7 +217,7 @@ export class FoodStockService {
 
         return new Promise<boolean>((resolve, reject) => {
 
-            this.http.request<any>('delete',this.API_URL+'menu',{ body :data }).toPromise().then( () => {
+            this.http.request<void>('delete',this.API_URL+'menu',{ body :data }).toPromise().then( () => {
                     return resolve(true);
                 }).catch((error) => {
                     return reject(error);
@@ -234,7 +234,7 @@ export class FoodStockService {
 
         return new Promise<boolean>((resolve, reject) => {
 
-            this.http.post<any>(this.API_URL+'menu/content',data).toPromise().then( () => {
+            this.http.post<void>(this.API_URL+'menu/content',data).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                 return reject(error);
@@ -258,7 +258,7 @@ export class FoodStockService {
 
         return new Promise<boolean>((resolve, reject) => {
         
-            this.http.request<any>('delete',this.API_URL+'menu/content/',{ body :data }).toPromise().then( () => {
+            this.http.request<void>('delete',this.API_URL+'menu/content/',{ body :data }).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                 return reject(error);

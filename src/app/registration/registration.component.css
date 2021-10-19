@@ -1,1 +1,9 @@
-/* Nothing */
+.center-div {
+  display: flex;
+  justify-content: center
+}
+
+  mat-form-field{
+    width: 88%;
+}
+  

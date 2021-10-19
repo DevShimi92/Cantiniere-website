@@ -48,7 +48,7 @@ export class OrderService {
             if((idArticle == null) && (idMenu == null))
                 return reject('Need Id Article or Id Menu !');
 
-            this.http.post<any>(this.API_URL+'order/content',data).toPromise().then( () => {
+            this.http.post<void>(this.API_URL+'order/content',data).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                 return reject(error);
@@ -87,7 +87,7 @@ export class OrderService {
         console.log(idOrder);
         return new Promise<boolean>((resolve, reject) => {
         
-            this.http.put<any>(this.API_URL+'order/valid',data ).toPromise().then( () => {
+            this.http.put<void>(this.API_URL+'order/valid',data ).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                     return reject(error);
@@ -102,7 +102,7 @@ export class OrderService {
 
         return new Promise<boolean>((resolve, reject) => {
         
-            this.http.request<any>('delete',this.API_URL+'order',{ body :data }).toPromise().then( () => {
+            this.http.request<void>('delete',this.API_URL+'order',{ body :data }).toPromise().then( () => {
                 return resolve(true);
             }).catch((error) => {
                     return reject(error);

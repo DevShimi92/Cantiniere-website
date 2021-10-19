@@ -20,14 +20,14 @@
     
 
 
-    <mat-grid-list cols="4" rowHeight="365px">
+    <mat-grid-list cols="4" [rowHeight]="rowHeight">
         <mat-grid-tile *ngFor="let item of listArticle">
             <mat-card class="card">
                 <div *ngIf="item.picture">
                     <img mat-card-image src="{{item.picture}}" alt="" width="500" height="250" > 
                 </div>
                 <div *ngIf="!item.picture">
-                    <img mat-card-image src="assets/img/image-not-found.jpg" alt="Not Found" width="500" height="250" > 
+                    <img mat-card-image src="assets/img/image-not-found.jpg" alt="Not Found" > 
                 </div>
                <mat-card-header>
                     <mat-card-title>{{item.name}} {{item.price}}€</mat-card-title>   

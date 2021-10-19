@@ -29,12 +29,22 @@ export class MenuComponent implements OnInit {
   listArticle: Article[] = [];
   listArticleSearch: Article[] = [];
   listFilteredArticle: Article[] = [];
+  innerWidth: number;
+  rowHeight:number;
+
 
   constructor( public dialog: MatDialog, private foodStockService: FoodStockService) {
    // do nothing.
  }
 
   ngOnInit(): void {
+
+    this.innerWidth = window.innerWidth;
+    if(innerWidth > 1920)
+        this.rowHeight = 365;
+    else
+      this.rowHeight = 250; 
+
     this.foodStockService.getAllTypeOfArticle().subscribe((response) => 
     {
       if (response)
@@ -50,19 +60,20 @@ export class MenuComponent implements OnInit {
 
         this.selectedTypeArticle = this.listTypeArticle[0];
         
-        this.menuHaveSomething = true; 
-        
         this.foodStockService.getAllArticle().subscribe((response) => 
         {
+          if(response != null)
+          {
+            this.menuHaveSomething = true; 
 
-          for (const key of response) {           
-            this.listArticleDefault.push(key);
-          }
+            for (const key of response) {           
+              this.listArticleDefault.push(key);
+            }
 
-          this.length = response.length;
-          this.listArticle = this.listArticleDefault.slice(0, this.pageSize);
-          this.listFilteredArticle = this.listArticleDefault;
-
+            this.length = response.length;
+            this.listArticle = this.listArticleDefault.slice(0, this.pageSize);
+            this.listFilteredArticle = this.listArticleDefault;
+        }
         });
       }
     });

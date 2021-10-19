@@ -2,10 +2,32 @@
     float:left;
     margin-right:5px;
   }
-mat-grid-tile {
-  background: lightblue;
-}
 
-.card {
-    max-width: 400px;
+@media screen and (max-width: 2560px) { 
+    mat-grid-tile {
+      background: lightblue;
+      Height: 365px;
+    }  
+  
+    .card {
+      max-width: 400px;
+    }
+
+    img {
+      width: 400px;
+      height: 250px;
+    }
+  
   }
+  
+@media screen and (max-width: 1920px) {
+    .card {
+      max-width: 300px;
+    }
+
+    img {
+      width: 300px;
+      height: 125px;
+    }
+  
+   }

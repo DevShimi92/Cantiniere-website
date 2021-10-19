@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { User } from '../shared/models/user.model';
 import { UserService } from '../service/user.service'
+
+type ValidationErrors = {
+  [key: string]: boolean;
+};
+
 
 @Component({
   selector: 'app-registration',
@@ -17,96 +23,34 @@ export class RegistrationComponent implements OnInit {
   
   registrationForm: FormGroup;
 
-  emptyLastName = false;
-  emptyName = false;
-  errorEmail = false;
-  errorEmailMsg ='';
-  errorPassword = false;
-  errorCheckPassword = false;
-  errorPasswordMsg ='';
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+    Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+  ]);
 
-  constructor( private formBuilder: FormBuilder, private router: Router, private userService: UserService ) { 
+  constructor( private formBuilder: FormBuilder, private router: Router, private _snackBar: MatSnackBar, private userService: UserService ) { 
     this.user = new User();
   }
 
   ngOnInit(): void {
     
     this.registrationForm = this.formBuilder.group({
-      last_name:'',
-      first_name:'',
-      email: '',
-      password: '',
-      checkPassword: ''
-    });
+      last_name: ['',Validators.required],
+      first_name: ['',Validators.required],
+      email: this.emailFormControl,
+      password: ['',Validators.required],
+      confirmPassword: ['']
+    }, { validator: this.checkIfSamePassword });
 
   }
-
+  
   onSubmit():void {
 
-    if(!this.registrationForm.value.last_name)
-      {
-        this.emptyLastName = true;
-      }
-    else
-      { 
-        this.emptyLastName = false;
-      }
-
-    if(!this.registrationForm.value.first_name)
-      {
-        this.emptyName = true;
-      }
-    else
-      { 
-        this.emptyName = false;
-      }
-      
-    if(!this.registrationForm.value.email)
-      {
-        this.errorEmail = true;
-        this.errorEmailMsg = 'Email requis'
-      }
-    else if (!this.validateEmail(this.registrationForm.value.email))
-      {
-        this.errorEmail = true;
-        this.errorEmailMsg = 'Email invalide'
-      }
-    else
-      { 
-        this.errorEmail = false;
-      }
-     
-    if(!this.registrationForm.value.password )
-      {
-        this.errorPassword = true;
-        this.errorPasswordMsg = 'Mot de passe requis';
-      }
-    else
-      { 
-        this.errorPassword = false;
-      }
-
-   if (!this.registrationForm.value.checkPassword && this.errorPassword == false)
-      {
-        this.errorCheckPassword = true;
-        this.errorPasswordMsg = 'Mot de passe de confirmation requis';
-      }
-    else if(this.registrationForm.value.password != this.registrationForm.value.checkPassword && this.registrationForm.value.checkPassword != '')
-      {
-        this.errorCheckPassword = true;
-        this.errorPasswordMsg = ' Les Mot de passe entrée sont différents';
-      }
-    else
-      { 
-        this.errorCheckPassword = false;
-      }
-  
-    
-    if(!this.emptyLastName && !this.emptyName && !this.errorEmail && ! this.errorPassword  && ! this.errorCheckPassword)
+    if(this.registrationForm.valid)
       {
 
         this.user = this.registrationForm.value;
-        console.log(this.user);
 
         this.userService.createUser(this.user).then(() => {
 
@@ -117,23 +61,44 @@ export class RegistrationComponent implements OnInit {
         .catch((error) => {
           if(error.status == 409)
             {
-              this.errorEmail = true;
-              this.errorEmailMsg = 'Cet email est déja présente dans notre base de donnée.'
+              this.emailFormControl.setErrors({existing: true});
             }
           else
             {
+              this._snackBar.openFromComponent(SettingSnackRegistrationComponent, {
+                duration: 20 * 1000,
+              });
               console.log(error); 
             }
         });
 
       }
-    
+
   }
 
+  checkIfSamePassword(c: AbstractControl):  ValidationErrors | null{   
+    if (c) {
+      const password = c.get('password')?.value;
+      const confirmPassword = c.get('confirmPassword')?.value;
 
-  validateEmail(email:string):boolean {
-    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
+      if(password === confirmPassword)
+        {
+          c.get('confirmPassword')?.setErrors(null);
+        }
+      else
+        {
+          c.get('confirmPassword')?.setErrors({notSame: true});
+          return ({notSame: true});
+        }
+
+    }
+      return null;
   }
 
 }
+
+@Component({
+  selector: 'snack-error-app-registration',
+  template: '<span> Une erreur est survenue, veuillez réessayer ultérieurement. </span>',
+})
+export class SettingSnackRegistrationComponent {}
