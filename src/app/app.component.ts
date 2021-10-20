@@ -4,7 +4,7 @@ import { trigger, transition, state, animate, style, useAnimation } from '@angul
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-
+import { DataUser } from './shared/models/dataUser.model';
 import { errorFormAnimation } from '././animation/animation';
 import { AuthService } from './service/auth.service';
 import { FoodStockService } from './service/foodStock.service';
@@ -67,10 +67,10 @@ export class AppComponent implements OnInit{
   loginForm: FormGroup;
   routerLinkOnButton = '/registration';
 
-  dataUser : any;
+  dataUser : DataUser;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService, private FoodStockService: FoodStockService, private _snackBar: MatSnackBar, private eventEmitterService: EventEmitterService) { 
-    this.eventEmitterService.changeEmitted$.subscribe(any => {
+    this.eventEmitterService.changeEmitted$.subscribe(() => {
       this.toggle();
     });
   }

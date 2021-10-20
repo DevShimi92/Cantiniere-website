@@ -8,6 +8,8 @@ import { MatSnackBar}  from '@angular/material/snack-bar';
 import { OrderService } from '../service/order.service';
 import { AuthService } from '../service/auth.service';
 import { EventEmitterService } from '../service/event-emitter.service';
+import { DataUser } from '../shared/models/dataUser.model';
+
 
 @Component({
   selector: 'app-cart',
@@ -21,7 +23,7 @@ export class CartComponent implements OnInit {
   error = false ;
   OrderOK = false;
   OrderError = false;
-  dataUser : any;
+  dataUser : DataUser;
   finalPrice = 0;
   cartLength = 0;
   dataSource;
@@ -93,6 +95,7 @@ export class CartComponent implements OnInit {
                 (error) => 
                   {
                     errorCreate = true;
+                    console.log(error);
                   });
               }
 

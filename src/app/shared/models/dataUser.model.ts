@@ -5,7 +5,6 @@ export class DataUser {
     email: string;
     money:number;
     cooker: boolean;
-    hour_limit: string; // bientôt supprimer 
     iat: number;
     exp: number;
   }

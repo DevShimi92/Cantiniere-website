@@ -6,7 +6,7 @@ import { RouterExtensions } from "@nativescript/angular";
 import { OrderService } from '../service/order.service';
 import { AuthService } from '../service/auth.service';
 
-
+import { DataUser } from '../shared/models/dataUser.model';
 import { Cart } from '../shared/models/cart.model';
 
 @Component({
@@ -20,7 +20,7 @@ export class CartComponent implements OnInit {
   cartHaveSomething  = false;
   accountLogIn = false;
   helper = new JwtHelperService();
-  dataUser : any;
+  dataUser : DataUser;
   finalPrice = 0;
   errorCreate = false;
 
