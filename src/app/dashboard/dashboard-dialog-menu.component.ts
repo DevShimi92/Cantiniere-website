@@ -1,5 +1,4 @@
-  
-import { Component, ViewChild, Inject } from '@angular/core';
+import { Component, ViewChild, Inject, OnInit, AfterViewInit } from '@angular/core';
 import { MatDialog , MatDialogRef,  MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource} from '@angular/material/table';
@@ -33,7 +32,7 @@ export class ArticleCheckBox {
     templateUrl: 'dashboard-dialog-menu.component.html',
     styleUrls: ['./dashboard.component.css']
   })
-  export class DashboardDialogMenuComponent {
+  export class DashboardDialogMenuComponent implements OnInit,AfterViewInit {
     
     displayedColumnsDialog: string[] = ['id','name','checkbox'];
     displayedColumnsDialogShow: string[] = ['id','name','price','delete'];

@@ -61,10 +61,11 @@ export class ProfileComponent implements OnInit {
     this.dataUser = JSON.parse(sessionStorage.getItem('userData'));
 
     this.orderService.getAllOrderOneAccount(this.dataUser.id).subscribe((response) => {
-      console.log(response);
-      this.ListOrderLength = response.length;
-      this.dataSource = new MatTableDataSource(response);
-      this.dataSource.paginator = this.paginator;
+        if(response){
+            this.ListOrderLength = response.length;
+            this.dataSource = new MatTableDataSource(response);
+            this.dataSource.paginator = this.paginator;
+          }
     });
 
     this.updateForm = this.formBuilder.group({
@@ -147,13 +148,11 @@ export class ProfileComponent implements OnInit {
     return dateOrder.toLocaleString();
   }
 
-  orderContent(idOrder:number,priceTotal:number,any:any):void{
+  orderContent(idOrder:number,priceTotal:number):void{
 
-    console.log(any);
-    console.log('eeeee');
     this.orderService.getOrderContent(idOrder).subscribe((response) => {
 
-      const dialogRef = this.dialog.open(ProfileDialogComponent,{
+      this.dialog.open(ProfileDialogComponent,{
         data: { idOrder : idOrder, total: priceTotal, data : response }
       });
 
@@ -178,7 +177,7 @@ export class ProfileComponent implements OnInit {
   templateUrl: 'profile.component-dialog.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileDialogComponent {
+export class ProfileDialogComponent implements OnInit{
   
   displayedColumnsDialog: string[] = ['Article.name','Article.price'];
   dataSource;
@@ -188,13 +187,8 @@ export class ProfileDialogComponent {
 
     ngOnInit(): void {
 
-      //this.resultsLength = this.data.data.length;
-     
       this.dataSource = new MatTableDataSource(this.data.data); 
-      console.log(this.data.data);
-      
+
     }
 
 }
-
-//row[i]["Article.name"]

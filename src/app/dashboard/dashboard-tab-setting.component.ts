@@ -1,25 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { SettingService } from '../service/setting.service';
+
+class SettingModel {
+  hourlimit: string;
+  totalOrderLimitDay: number;
+  totalOrderLimitAccountDay: number;
+  canPreOrder: string;
+}
 
 @Component({
     selector: 'app-dashboard-tab-setting',
     templateUrl: './dashboard-tab-setting.component.html',
     styleUrls: ['./dashboard.component.css']
   })
-  export class DashboardSettingComponent {
+  export class DashboardSettingComponent implements OnInit{
 
     settingForm: FormGroup;
     totalOrderLimitAccountDay: number ;
-    dataReponse:any;
+    dataReponse:SettingModel;
 
     constructor( private formBuilder: FormBuilder, private _snackBar: MatSnackBar, private settingService: SettingService ) { } 
 
     ngOnInit(): void {
       this.settingService.getAllSetting().subscribe((response) => {
-        console.log(response)
         this.dataReponse = response;
         
         this.settingForm = this.formBuilder.group({
@@ -33,7 +39,6 @@ import { SettingService } from '../service/setting.service';
     }
 
     onSubmit():void {
-      let error = false;
       let updateOk = false;
 
       if (!(JSON.stringify(this.dataReponse.hourlimit) === JSON.stringify(this.settingForm.value.hourlimit)))
@@ -53,7 +58,6 @@ import { SettingService } from '../service/setting.service';
               this._snackBar.openFromComponent(SettingSnackErrorComponent, {
                 duration: 5 * 1000,
               });
-              error = true;
 
           });
         }
@@ -75,7 +79,6 @@ import { SettingService } from '../service/setting.service';
               this._snackBar.openFromComponent(SettingSnackErrorComponent, {
                 duration: 5 * 1000,
               });
-              error = true;
 
 
           });
@@ -98,7 +101,6 @@ import { SettingService } from '../service/setting.service';
             this._snackBar.openFromComponent(SettingSnackErrorComponent, {
               duration: 5 * 1000,
             });
-            error = true;
 
 
           });
@@ -121,7 +123,6 @@ import { SettingService } from '../service/setting.service';
             this._snackBar.openFromComponent(SettingSnackErrorComponent, {
               duration: 5 * 1000,
             });
-            error = true;
 
 
           });
