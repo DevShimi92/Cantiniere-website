@@ -7,7 +7,7 @@
 
         <mat-form-field appearance="fill">
             <mat-label>Catégorie</mat-label>
-            <mat-select>
+            <mat-select [(value)]="selectedCategorie" >
             <mat-option value="option1" (click)="checkTypeArticle()" >Type d'article</mat-option>
             <mat-option value="option2" (click)="checkArticle()" >Article</mat-option>
             <mat-option value="option3" (click)="checkMenu()" >Menu</mat-option>

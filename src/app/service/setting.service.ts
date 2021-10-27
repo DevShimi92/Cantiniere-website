@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
-export class Setting {
+class Setting {
     hourlimit: string;
     totalOrderLimitAccountDay: number;
     totalOrderLimitDay: number;

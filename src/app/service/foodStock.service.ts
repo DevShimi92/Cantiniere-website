@@ -5,6 +5,10 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
+class Hourlimit {
+    hourlimit: string;
+  }
+
 @Injectable({
     providedIn: 'root'
   })
@@ -267,9 +271,9 @@ export class FoodStockService {
         });
     }
     
-    getHourLimit(): Observable<any>{
+    getHourLimit(): Observable<Hourlimit>{
     
-        return this.http.get<any>(this.API_URL+'setting/hour_limit/') ;
+        return this.http.get<Hourlimit>(this.API_URL+'setting/hour_limit/') ;
       
     }
 }

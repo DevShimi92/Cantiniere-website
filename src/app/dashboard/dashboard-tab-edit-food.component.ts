@@ -7,7 +7,7 @@ import { EventEmitterService } from '../service/event-emitter.service';
 import { FoodStockService } from '../service/foodStock.service';
 import { DashboardDialogMenuComponent } from './dashboard-dialog-menu.component';
 
-export interface DialogData {
+interface DialogData {
     FormDialogTypeArticle: number;
     FormDialogArticle: number;
     FormDialogMenu: number;
@@ -18,7 +18,7 @@ export interface DialogData {
   }
 
 
-export class ArticleCheckBox {
+class ArticleCheckBox {
   
     constructor(
       public id: number,
@@ -42,6 +42,7 @@ export class ArticleCheckBox {
     dataSource;
     listTypeArticle: string[] = [];
     tabTypeArticle = new Map();
+    selectedCategorie = '';
 
     @ViewChild('listCustomPaginatpr') listCustomPaginatpr: MatPaginator;
 
@@ -72,7 +73,9 @@ export class ArticleCheckBox {
     }
 
     checkTypeArticle():void{
+        this.dataSource='';
         this.displayCategory = 1 ;
+        this.selectedCategorie = 'option1';
         this.foodStockService.getAllTypeOfArticle().subscribe((response) =>
               {
                 if(response != null)
@@ -91,6 +94,7 @@ export class ArticleCheckBox {
     checkArticle():void{
     this.dataSource='';
     this.displayCategory = 2 ;
+    this.selectedCategorie = 'option2';
     this.foodStockService.getAllArticle().subscribe((response) =>
           {
            if(response != null)
@@ -110,6 +114,7 @@ export class ArticleCheckBox {
     checkMenu():void{
         this.dataSource='';
         this.displayCategory = 3 ;
+        this.selectedCategorie = 'option3';
         this.foodStockService.getAllMenu().subscribe((response) =>
               {
                 if(response != null)
@@ -173,6 +178,7 @@ export class ArticleCheckBox {
                     this.dialog.open(DashboardDialogTypeArticleComponent,{
                         data: { FormDialogTypeArticle : 3, name : result }
                     });
+                    this.checkTypeArticle();
                 },
                 (error) => 
                   {
@@ -197,6 +203,7 @@ export class ArticleCheckBox {
                     this.dialog.open(DashboardDialogTypeArticleComponent,{
                         data: { FormDialogTypeArticle : 5, name : result }
                     });
+                    this.checkTypeArticle();
                 },
                 (error) => 
                   {
@@ -221,6 +228,7 @@ export class ArticleCheckBox {
                     this.dialog.open(DashboardDialogTypeArticleComponent,{
                         data: { FormDialogTypeArticle : 6 }
                     });
+                    this.checkTypeArticle();
                 },
                 (error) => 
                   {
@@ -257,6 +265,7 @@ export class ArticleCheckBox {
                                 this.dialog.open(DashboardDialogArticleComponent,{
                                     data: { FormDialogArticle : 3 , name : result.name }
                                 });
+                                this.checkArticle();
                           },
                           (error) => 
                             {
@@ -297,6 +306,7 @@ export class ArticleCheckBox {
                     this.dialog.open(DashboardDialogArticleComponent,{
                         data: { FormDialogArticle : 5, name : result.name }
                     });
+                    this.checkArticle();
                 },
                 (error) => 
                   {
@@ -336,6 +346,7 @@ export class ArticleCheckBox {
                     this.dialog.open(DashboardDialogArticleComponent,{
                         data: { FormDialogArticle : 6 }
                     });
+                    this.checkArticle();
                 },
                 (error) => 
                   {
