@@ -14,3 +14,8 @@ export class Menu {
     picture: string;
     description: string;
   }
+
+export class TypeArticle  {
+    name: string;
+    code_type: number;
+  }

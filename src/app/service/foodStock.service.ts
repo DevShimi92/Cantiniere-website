@@ -4,9 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
+import { TypeArticle } from '../shared/models/foodStock.model';
+import { Article } from '../shared/models/foodStock.model';
 
 class Hourlimit {
-    hourlimit: string;
+    hour_limit: string;
   }
 
 @Injectable({
@@ -32,9 +34,9 @@ export class FoodStockService {
         });
     }
 
-    getAllTypeOfArticle(): Observable<any>{
+    getAllTypeOfArticle(): Observable<TypeArticle[]>{
 
-        return this.http.get(this.API_URL+'type_article') ;
+        return this.http.get<TypeArticle[]>(this.API_URL+'type_article') ;
     }
 
     putTypeOfArticle(code_type:number, name:string):Promise<boolean>{
@@ -93,9 +95,9 @@ export class FoodStockService {
     
     }
 
-    getAllArticle(): Observable<any>{
+    getAllArticle(): Observable<Article[]>{
 
-         return this.http.get(this.API_URL+'article') ;
+         return this.http.get<Article[]>(this.API_URL+'article') ;
       
     }
 

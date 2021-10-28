@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog, MatDialogRef,  MAT_DIALOG_DATA  } from '@angular/material/dialog';
 import { FoodStockService } from '../service/foodStock.service';
-import { Article } from '../shared/models/article.model';
+import { Article } from '../shared/models/foodStock.model';
 import { Cart } from '../shared/models/cart.model';
 
 export interface DialogData {

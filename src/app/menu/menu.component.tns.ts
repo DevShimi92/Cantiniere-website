@@ -4,7 +4,7 @@ import { registerElement } from '@nativescript/angular';
 import { Dialogs, SearchBar } from '@nativescript/core';
 import { setString, getString } from '@nativescript/core/application-settings';
 import { FoodStockService } from '../service/foodStock.service';
-import { Article } from '../shared/models/article.model';
+import { Article } from '../shared/models/foodStock.model';
 import { Cart } from '../shared/models/cart.model';
 
 registerElement('CardView', () => CardView);
@@ -97,7 +97,7 @@ export class MenuComponent implements OnInit {
   
   }
 
-  applyFilter(args) {
+  applyFilter(args):void{
     const searchBar = args.object as SearchBar ;
     this.notFound = false ;
 
@@ -116,7 +116,7 @@ export class MenuComponent implements OnInit {
 
   }
 
-  onClear() {
+  onClear():void{
     this.listArticle = this.listArticleDefault;
   }
 

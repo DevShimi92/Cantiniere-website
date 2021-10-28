@@ -92,22 +92,22 @@ class ArticleCheckBox {
     }
       
     checkArticle():void{
-    this.dataSource='';
-    this.displayCategory = 2 ;
-    this.selectedCategorie = 'option2';
-    this.foodStockService.getAllArticle().subscribe((response) =>
-          {
-           if(response != null)
-            {
-              this.displayedColumnsCustom = ['id','name','price','edit'];
-              this.resultsLength = response.length;
-              this.dataSource = new MatTableDataSource(response);
-              this.dataSource.paginator = this.listCustomPaginatpr;
-              this.dataSource.filterPredicate = function(data, filter: string): boolean {
-                return data.name.toLowerCase().includes(filter) || data.id.toString() === filter;
-              };
-            }
-          });
+        this.dataSource='';
+        this.displayCategory = 2 ;
+        this.selectedCategorie = 'option2';
+        this.foodStockService.getAllArticle().subscribe((response) =>
+              {
+              if(response != null)
+                {
+                  this.displayedColumnsCustom = ['id','name','price','edit'];
+                  this.resultsLength = response.length;
+                  this.dataSource = new MatTableDataSource(response);
+                  this.dataSource.paginator = this.listCustomPaginatpr;
+                  this.dataSource.filterPredicate = function(data, filter: string): boolean {
+                    return data.name.toLowerCase().includes(filter) || data.id.toString() === filter;
+                  };
+                }
+              });
           
     }
 
