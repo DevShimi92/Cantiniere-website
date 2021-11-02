@@ -4,11 +4,17 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { TypeArticle } from '../shared/models/foodStock.model';
-import { Article } from '../shared/models/foodStock.model';
+import { TypeArticle } from '../shared/models/typeArticle.model';
+import { Article } from '../shared/models/article.model';
+import { Menu } from '../shared/models/menu.model';
+import { MenuContent } from '../shared/models/menuContent.model';
 
 class Hourlimit {
     hour_limit: string;
+  }
+
+class IdMenu {
+    id: number;
   }
 
 @Injectable({
@@ -162,10 +168,10 @@ export class FoodStockService {
         formData.append('description',description);
         if(picture)
             formData.append('img', picture, picture.name);
-
+        
         return new Promise<number>((resolve, reject) => {
 
-            this.http.post<any>(this.API_URL+'menu',formData).toPromise().then((response) => {
+            this.http.post<IdMenu>(this.API_URL+'menu',formData).toPromise().then((response) => {
                 return resolve(response.id);
             }).catch((error) => {
                 return reject(error);
@@ -174,9 +180,9 @@ export class FoodStockService {
     
     }
 
-    getAllMenu(): Observable<any>{
+    getAllMenu(): Observable<Menu[]>{
 
-        return this.http.get<any>(this.API_URL+'menu') ;
+        return this.http.get<Menu[]>(this.API_URL+'menu') ;
     
     }
 
@@ -249,9 +255,9 @@ export class FoodStockService {
         
     }
 
-    getMenuContent(idMenu:number): Observable<any>{
+    getMenuContent(idMenu:number): Observable<MenuContent[]>{
     
-        return this.http.get<any>(this.API_URL+'menu/content/'+idMenu) ;
+        return this.http.get<MenuContent[]>(this.API_URL+'menu/content/'+idMenu) ;
       
     }
 

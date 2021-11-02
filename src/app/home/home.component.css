@@ -1,10 +1,36 @@
-.Unselected {
-    background-color: rgb(5, 68, 68)
-}
 .Selected {
-    background-color: rgb(63, 100, 201)
+    background-color: #6f9278
 }
 
 .contentMenuText {
     text-align: center;
 }
+
+.bar-title1 {
+    background: white;
+}
+
+.background-menu {
+    background: #a0cfac;
+}
+
+.test2 {
+    background: lightgreen;
+}
+
+.test4 {
+    background: #DDBDF1;
+}
+
+.menu-card {
+    width: 400px;
+    Height: 635px;
+  }
+
+  .mat-paginator {
+   
+    display: flex;
+    justify-content: center;
+    width: 60%;
+  }
+

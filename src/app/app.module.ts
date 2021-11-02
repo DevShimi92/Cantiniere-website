@@ -23,7 +23,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppRoutingModule } from '@src/app/app-routing.module';
 import { AppComponent } from '@src/app/app.component';
-import { HomeComponent } from '@src/app/home/home.component';
+import { HomeComponent, HomeDialogComponent } from '@src/app/home/home.component';
 import { LoginComponent } from '@src/app/login/login.component';
 import { MenuComponent, MenuDialogComponent } from '@src/app/menu/menu.component';
 import { ProfileComponent, ProfileDialogComponent } from '@src/app/profile/profile.component';
@@ -65,6 +65,7 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     RestPasswordComponent,
     MenuDialogComponent,
     ProfileDialogComponent,
+    HomeDialogComponent,
   ],
   imports: [
     BrowserModule,

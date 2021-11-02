@@ -91,12 +91,25 @@ export class CartComponent implements OnInit {
         
           for(let  i = 0; i < Object.keys(this.cart).length; i++)
               {
-                this.orderService.postOrderContent(idOrder,this.cart[i].id).then(
-                (error) => 
+                if(this.cart[i].code_type_src != null )
                   {
-                    errorCreate = true;
-                    console.log(error);
-                  });
+                    this.orderService.postOrderContent(idOrder,this.cart[i].id).then(
+                      (error) => 
+                        {
+                          errorCreate = true;
+                          console.log(error);
+                        });
+                  }
+                else
+                  {
+                    this.orderService.postOrderContent(idOrder,null,this.cart[i].id).then(
+                      (error) => 
+                        {
+                          errorCreate = true;
+                          console.log(error);
+                        });
+                  }
+                
               }
 
         if (errorCreate)
