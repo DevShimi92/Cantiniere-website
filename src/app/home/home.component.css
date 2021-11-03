@@ -14,12 +14,8 @@
     background: #a0cfac;
 }
 
-.test2 {
-    background: lightgreen;
-}
-
-.test4 {
-    background: #DDBDF1;
+.bar-title2 {
+    background: white;
 }
 
 .menu-card {
@@ -32,5 +28,8 @@
     display: flex;
     justify-content: center;
     width: 60%;
+  }
+  .row{
+    justify-content: center;
   }
 

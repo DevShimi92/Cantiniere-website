@@ -66,7 +66,7 @@ fakeMenu():void{
 
 showPictureOfMenu(menuIndexSelected:number, menuObjetSelected:Menu):void
   {
- //   this.showMenuContent = true;
+    this.showMenuContent = true;
     if(this.takeMenuRightNow === true)
       {
         this.selectedIndex=null;
@@ -76,11 +76,16 @@ showPictureOfMenu(menuIndexSelected:number, menuObjetSelected:Menu):void
         this.selectedIndex=menuIndexSelected;
       }
     
- /*   console.log(menuObjetSelected.id)
     this.foodStockService.getMenuContent(menuObjetSelected.id).subscribe((response)=>{
-      console.log(response);
+    
       this.listPictureOfMenu = response ;
-    });*/
+
+      for (const key of this.listPictureOfMenu) {
+        if(key['Article.picture']){
+          key['Article.picture'] = key['Article.picture'].substring(0, key['Article.picture'].search("upload/")+7) + "w_300,h_225,c_scale/" + key['Article.picture'].substring(key['Article.picture'].search("upload/")+7, key['Article.picture'].length) ;
+        }
+      }
+    });
   }
 
   pickMenu(menuSelected:Menu):void{

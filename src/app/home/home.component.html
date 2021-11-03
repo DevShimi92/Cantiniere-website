@@ -6,6 +6,9 @@
         <mat-grid-tile [colspan]="3" [rowspan]="1" class="bar-title1">
                 <h2>Sélection du jour :</h2>
         </mat-grid-tile>
+       <mat-grid-tile [colspan]="2" [rowspan]="1" class="bar-title2">
+           <h2>Menu en image :</h2>
+        </mat-grid-tile>
     </mat-grid-list> 
     <mat-grid-list cols="5" rowHeight="655px" >
     
@@ -37,7 +40,24 @@
         </mat-grid-tile>
     
        
-   
+        <mat-grid-tile [colspan]="2" [rowspan]="1" class="background-menu">
+            <div class="row">
+                <div *ngFor="let item of listPictureOfMenu; let i = index;" [hidden]="!showMenuContent" >
+                    <div *ngIf="item['Article.picture'] && 4 > i" >
+                        <img mat-card-image src="{{item['Article.picture']}}" alt="Image" >
+                    </div>
+                    <div *ngIf="!item['Article.picture'] && 4 > i">
+                        <img mat-card-image src="assets/img/image-not-found.jpg" alt="Not Found">
+                    </div>
+                </div> 
+            </div>
+            <div *ngIf="!listPictureOfMenu" [hidden]="!showMenuContent" >
+                <h5>Le menu ne posséde pas d'article </h5>
+            </div>
+            <div [hidden]="showMenuContent" >
+                <h5>Aucun menu de sélectionné </h5>
+            </div>
+        </mat-grid-tile> 
     </mat-grid-list>
     <mat-paginator [length]="length" [pageSize]="3" (page)="OnPageChange($event)"></mat-paginator>
 </div>
