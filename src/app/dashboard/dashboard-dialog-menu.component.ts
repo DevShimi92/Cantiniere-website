@@ -9,6 +9,7 @@ export class ArticleCheckBox {
   
     constructor(
       public id: number,
+      public idMenuContent: number,
       public name: string,
       public price: number,
       public checked: boolean,
@@ -24,6 +25,7 @@ export class ArticleCheckBox {
     description: string;
     total: number;
     FormDialogMenu: number;
+    idMenu: number;
     data;
   }
 
@@ -32,7 +34,7 @@ export class ArticleCheckBox {
     templateUrl: 'dashboard-dialog-menu.component.html',
     styleUrls: ['./dashboard.component.css']
   })
-  export class DashboardDialogMenuComponent implements OnInit,AfterViewInit {
+  export class DashboardDialogMenuComponent implements OnInit {
     
     displayedColumnsDialog: string[] = ['id','name','checkbox'];
     displayedColumnsDialogShow: string[] = ['id','name','price','delete'];
@@ -49,38 +51,11 @@ export class ArticleCheckBox {
       
   
       ngOnInit(): void {
-
-        if(this.data.data)
-        {
-          if( this.data.FormDialogMenu == 8)
-            {
-              for(let  i = 0; i < Object.keys(this.data.data).length; i++)
-                {
-                  this.listArticle.push(new ArticleCheckBox(this.data.data[i].id_article,this.data.data[i]["Article.name"],this.data.data[i]["Article.price"], false));
-                }
-            }
-          else
-            {
-              for (const key of this.data.data) { 
-                this.listArticle.push(new ArticleCheckBox(key.id,key.name, key.price, false));
-              }
-            }
-          
-          this.resultsLength = this.data.data.length;
-          this.dataSource = new MatTableDataSource(this.listArticle); 
-          this.dataSource.filterPredicate = function(data, filter: string): boolean {
-            return data.name.toLowerCase().includes(filter) || data.id.toString() === filter;
-          };
-  
-        }
-
-      }
-  
-      ngAfterViewInit():void{
-        if(this.data.data)
-            {
-            this.dataSource.paginator = this.listDialogPaginatpr;
-            }
+        if((this.data.FormDialogMenu === 1) || ( this.data.FormDialogMenu === 8 ))  
+          {
+            this.refreshList();
+          }
+        
       }
   
       applyFilter(event: Event):void {
@@ -92,7 +67,7 @@ export class ArticleCheckBox {
       }
   
       deleteArticleOfMenu($event):void{
-  
+ 
         const dialogRef = this.dialog.open(DashboardDialogMenuComponent,{
           data: { FormDialogMenu : 11, name : $event.name}
         });
@@ -100,8 +75,9 @@ export class ArticleCheckBox {
         dialogRef.afterClosed().subscribe(result => {
           if (result == true)
           {
-            this.foodStockService.deleteMenuContent(this.data.data[0].id_menu,$event.id).then(() => {
-              
+            this.foodStockService.deleteMenuContent($event.idMenuContent ,this.data.idMenu,$event.id).then(() => {
+
+              this.refreshList();
                 this.dialog.open(DashboardDialogMenuComponent,{
                   data: { FormDialogMenu : 9  }
                 });
@@ -120,10 +96,9 @@ export class ArticleCheckBox {
   
       addArticleOnMenu():void{
   
-        this.foodStockService.getAllArticle().subscribe((response) =>
-            {
+    
               const dialogRef = this.dialog.open(DashboardDialogMenuComponent,{
-                data: { FormDialogMenu : 1, name : this.data.name, data : response}
+                data: { FormDialogMenu : 1, name : this.data.name }
               });
   
               dialogRef.afterClosed().subscribe(result => {
@@ -136,11 +111,12 @@ export class ArticleCheckBox {
                             {
                               if(result[i].checked == true)
                               {
-                                  this.foodStockService.postMenuContent(this.data.data[0].id_menu,result[i].id).then(() =>
+                                  this.foodStockService.postMenuContent(this.data.idMenu,result[i].id).then(() =>
+                                    {},
                                   (error) => 
                                     {
                                           errorCreate = true;
-                                          console.log(error)
+                                          console.log(error);
                                     });
                               }
                             }
@@ -156,12 +132,10 @@ export class ArticleCheckBox {
                                 data: { FormDialogMenu : 9 }
                               });
                             }
-  
-                    
-  
+                        this.refreshList();
                     }
                   }});
-            })
+           
   
       }
   
@@ -181,5 +155,60 @@ export class ArticleCheckBox {
       uploadFile($event):void {
         this.nameFile = $event.target.files[0].name;
         this.data.picture = $event.target.files[0];
-    }
+      }
+
+      refreshList():void{
+        this.listArticle=[];
+        
+        if( this.data.FormDialogMenu == 8)
+              {
+                this.foodStockService.getMenuContent(this.data.idMenu).subscribe((reponse)=>{
+                  if(reponse)
+                    {
+                      for(let  i = 0; i < Object.keys(reponse).length; i++)
+                        {
+                          this.listArticle.push(new ArticleCheckBox(reponse[i].id_article,reponse[i].id,reponse[i]["Article.name"],reponse[i]["Article.price"], false));
+                        }
+                        this.refresParamOfMatTab(reponse);
+                    }
+                  else
+                    {
+                      this.resultsLength = 0 ;
+                      this.dataSource = null;
+                    }
+                    
+                });
+              }
+            else
+              {
+                this.foodStockService.getAllArticle().subscribe((reponse) =>{
+                  if(reponse)
+                    {
+                      for (const key of reponse) { 
+                        this.listArticle.push(new ArticleCheckBox(key.id,null,key.name, key.price, false));
+                      }
+
+                        this.refresParamOfMatTab(reponse);
+                    }
+                  else
+                    {
+                      this.resultsLength = 0 ;
+                      this.dataSource = null;
+                    }
+                });
+
+              }
+
+      }
+
+      refresParamOfMatTab(dataInside:any):void{
+            this.resultsLength = dataInside.length;
+            this.dataSource = new MatTableDataSource(this.listArticle); 
+            this.dataSource.filterPredicate = function(data, filter: string): boolean {
+              return data.name.toLowerCase().includes(filter) || data.id.toString() === filter;
+            };
+            this.dataSource.paginator = this.listDialogPaginatpr;
+      }
+
+
   }

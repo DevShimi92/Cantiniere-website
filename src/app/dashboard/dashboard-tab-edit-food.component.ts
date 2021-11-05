@@ -392,18 +392,28 @@ class ArticleCheckBox {
                                     dialogRefForm2.afterClosed().subscribe(result => {
                                       if(result == true )
                                         {
-                                          this.foodStockService.postMenu(menuName).then(() =>
-                                          {
-                                                this.dialog.open(DashboardDialogMenuComponent,{
-                                                    data: { FormDialogMenu : 3, name : menuName }
-                                                });
-                                          },
-                                          (error) => 
-                                            {
-                                                this.dialog.open(DashboardDialogMenuComponent,{
-                                                    data: { FormDialogMenu : 4, name : error.status }
-                                                });
-                                            });
+
+                                          const dialogRefForm12 = this.dialog.open(DashboardDialogMenuComponent,{
+                                            data: { FormDialogMenu : 12, total : 0}
+                                          });
+                                          dialogRefForm12.afterClosed().subscribe(data => {
+                                            if(data)
+                                              {
+                                                this.foodStockService.postMenu(menuName,data.total,data.description,data.picture).then(() =>
+                                                {
+                                                      this.dialog.open(DashboardDialogMenuComponent,{
+                                                          data: { FormDialogMenu : 3, name : menuName }
+                                                      });
+                                                      this.checkMenu();
+                                                },
+                                                (error) => 
+                                                  {
+                                                      this.dialog.open(DashboardDialogMenuComponent,{
+                                                          data: { FormDialogMenu : 4, name : error.status }
+                                                      });
+                                                  });
+                                              }
+                                          });
                                         }
                                     });
                                   }
@@ -427,6 +437,9 @@ class ArticleCheckBox {
                                                 if(listArticleCheckBox[i].checked == true)
                                                 {
                                                     this.foodStockService.postMenuContent(idMenu,listArticleCheckBox[i].id).then(() =>
+                                                    {
+                                                      this.checkMenu();
+                                                    },
                                                     (error) => 
                                                       {
                                                         errorCreate = true;
@@ -513,11 +526,10 @@ class ArticleCheckBox {
 
       this.foodStockService.getMenuContent($event.id).subscribe((reponse) =>
       {
-        console.log(reponse);
         if(reponse)
         {
          const dialogRefForm8 = this.dialog.open(DashboardDialogMenuComponent,{
-            data: { FormDialogMenu : 8, name : $event.name, total : $event.price_final, description : $event.description, data : reponse }
+            data: { FormDialogMenu : 8, name : $event.name, total : $event.price_final, description : $event.description, idMenu : $event.id }
           });
 
           dialogRefForm8.afterClosed().subscribe( data => {
@@ -536,7 +548,7 @@ class ArticleCheckBox {
         else
           {
             const dialogRefForm8 = this.dialog.open(DashboardDialogMenuComponent,{
-              data: { FormDialogMenu : 8, name : $event.name }
+              data: { FormDialogMenu : 8, name : $event.name, idMenu : $event.id}
             });
 
             dialogRefForm8.afterClosed().subscribe( data => {
@@ -599,6 +611,7 @@ class ArticleCheckBox {
                 this.dialog.open(DashboardDialogMenuComponent,{
                   data: { FormDialogMenu : 6 }               
                 });
+                this.checkMenu();
               },
               (error) => 
                 {

@@ -261,9 +261,10 @@ export class FoodStockService {
       
     }
 
-    deleteMenuContent(idMenu:number, idArticle:number): Promise<boolean>{
+    deleteMenuContent(id:number, idMenu:number, idArticle:number): Promise<boolean>{
 
         const data = {
+          id : id,
           id_menu : idMenu,
           id_article: idArticle,
         }

@@ -1,4 +1,5 @@
 export class MenuContent {
+    id: number;
     id_menu: number;
     "MenuInfo.name": string;
     "MenuInfo.price_final": number;
