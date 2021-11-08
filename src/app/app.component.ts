@@ -106,8 +106,11 @@ export class AppComponent implements OnInit{
     this.isOpen = !this.isOpen;
   }
 
-  somethingInEmailField(event):void {
-      if (event.target.value == '')
+  somethingInEmailField():void {
+
+    const value =(<HTMLInputElement>document.getElementById('email')).value;
+
+      if ( value == '')
         { 
           this.valueOfButton = 'Pas de compte ?';
           this.routerLinkOnButton = '/registration';
@@ -120,8 +123,11 @@ export class AppComponent implements OnInit{
         }
   }
 
-  somethingInPasswordField(event):void {
-    if (event.target.value != '')
+  somethingInPasswordField():void {
+
+    const value =(<HTMLInputElement>document.getElementById('password')).value;
+
+    if (value != '')
           {
             this.valueOfButton = '     Connexion    ';
             this.errorInEmail = false;

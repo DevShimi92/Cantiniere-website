@@ -112,7 +112,9 @@ export class ArticleCheckBox {
                               if(result[i].checked == true)
                               {
                                   this.foodStockService.postMenuContent(this.data.idMenu,result[i].id).then(() =>
-                                    {},
+                                    {
+                                      // do nothing.
+                                    },
                                   (error) => 
                                     {
                                           errorCreate = true;
