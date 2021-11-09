@@ -1,9 +1,27 @@
-.center-div {
-  display: flex;
-  justify-content: center
-}
+@media screen and (max-width: 2560px)  {
+
+  .center-div {
+    display: flex;
+    justify-content: center;
+  }
 
   mat-form-field{
     width: 88%;
+    height: 125px;
+  }
+
 }
+
+@media screen and (max-width: 1920px) {
   
+  .center-div {
+    display: flex;
+    justify-content: center;
+  }
+
+  mat-form-field{
+    width: 88%;
+    height: 102px;
+  }
+
+}
