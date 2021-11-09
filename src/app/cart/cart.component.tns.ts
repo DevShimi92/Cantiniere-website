@@ -8,6 +8,7 @@ import { AuthService } from '../service/auth.service';
 
 import { DataUser } from '../shared/models/dataUser.model';
 import { Cart } from '../shared/models/cart.model';
+import { Article } from '../shared/models/article.model';
 
 @Component({
   selector: 'app-cart',
@@ -105,7 +106,7 @@ export class CartComponent implements OnInit {
 
   }
 
-  deleteArticle($event):void{
+  deleteArticle($event : Article):void{
     
     let index = 0;
     do { 

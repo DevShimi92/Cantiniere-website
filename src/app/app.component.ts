@@ -212,6 +212,15 @@ export class AppComponent implements OnInit{
 
     const msDiff = Date.parse(hourLimit.toString()) - Date.parse(hourNow.toString());
 
+    if(msDiff > 0)
+    {
+      sessionStorage.setItem('hourLimit', 'true');
+    }
+    else
+    {
+      sessionStorage.setItem('hourLimit', 'false');
+    }
+
     const seconds = msDiff / 1000;
     const minutes  = (seconds / 60) % 100 ;
     const hours = seconds / 3600 ;

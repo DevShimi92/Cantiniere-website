@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { Cart } from '../shared/models/cart.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource} from '@angular/material/table';
@@ -20,22 +20,44 @@ export class CartComponent implements OnInit {
   cart: Cart[] = [];
   displayedColumnsCart: string[] = ['name','price','delete'];
   accountLogIn = false;
-  error = false ;
-  OrderOK = false;
   OrderError = false;
   dataUser : DataUser;
   finalPrice = 0;
   cartLength = 0;
+  rowHeight = 375;
+  innerWidth: number;
   dataSource;
   helper = new JwtHelperService();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  @HostListener('window:resize', ['$event'])
+  onResize():void{
+    window.addEventListener('resize', (event: UIEvent) => {
+      const w = event.target as Window; 
+      if(w.innerWidth > 1920)
+        {
+          this.rowHeight = 375;
+        }
+      else
+        {
+          this.rowHeight = 250;
+        }
+    });
+  } 
 
   constructor(private eventEmitterService: EventEmitterService, private _snackBar: MatSnackBar, private orderService: OrderService, private authService: AuthService) {
    // do nothing.
  }
 
   ngOnInit(): void {
+
+    this.innerWidth = window.innerWidth;
+    if(innerWidth > 1920)
+        this.rowHeight = 375;
+    else
+      this.rowHeight = 250; 
+
     this.cart = JSON.parse(sessionStorage.getItem('cart'));
     if(this.cart)
     {
@@ -47,9 +69,9 @@ export class CartComponent implements OnInit {
     }
   }
 
-  deleteArticleOfCart($event):void{
+  deleteArticleOfCart($event :Cart):void{
     let index = 0;
-
+    
     do { 
       if(this.cart[index].id == $event.id)
       {
@@ -81,12 +103,13 @@ export class CartComponent implements OnInit {
 
   orderCart():void {
 
+    console.log(sessionStorage.getItem('hourLimit'));
+
     this.dataUser = this.helper.decodeToken(sessionStorage.getItem('token'));
 
-    if (this.dataUser.money > this.finalPrice)
+    if((this.dataUser.money > this.finalPrice) && (sessionStorage.getItem('hourLimit') == 'true'))
       {
         let errorCreate = false;
-        this.error = false;
         this.orderService.postOrderInfo(this.dataUser.id,this.dataUser.money,this.finalPrice).then((idOrder) => {
         
           for(let  i = 0; i < Object.keys(this.cart).length; i++)
@@ -122,7 +145,7 @@ export class CartComponent implements OnInit {
             sessionStorage.removeItem('cart');
             this.cart = [];
             this.updateCartOnVisually();
-            this.OrderOK = true;
+            this._snackBar.open('Votre commande a bien été enregistré !', 'OK');
           }
 
         },
@@ -158,9 +181,13 @@ export class CartComponent implements OnInit {
       );
 
       }
+    else if(sessionStorage.getItem('hourLimit') == 'false')
+      {
+        this._snackBar.open('Les commandes ne sont plus accepté pour aujourd hui !', 'OK');
+      }
     else
       {
-        this.error = true;
+        this._snackBar.open('Votre solde est insuffisant pour passer votre commande !', 'OK');
       }
 
     

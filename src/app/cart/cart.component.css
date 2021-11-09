@@ -2,32 +2,54 @@ mat-grid-tile {
   background: #c4cf43;
 }
 
-table {
-  width: 100%;
-  background: red;
+
+@media screen and (max-width: 2560px)  {
+  table {
+    width: 100%;
+  }
+
+  .cart-container {
+    height: 375px;
+    width: 100%;
+    overflow: auto;
+  }
   
+  tr.mat-footer-row {
+    font-weight: bold;
+  }
+  
+  .button-row {
+    display: table-cell;
+    text-align: center;
+  }
+  
+  .error {
+    background: red;
+  }
 }
 
-.cart-container {
-  height: 300px;
-  width: 100%;
-  overflow: auto;
-}
+@media screen and (max-width: 1920px) {
 
-tr.mat-footer-row {
-  font-weight: bold;
-}
+  table {
+    width: 100%;
+  }
+  .cart-container {
+    height: 250px;
+    width: 100%;
+    overflow: auto;
+  }
 
-.example-button-row {
-  display: table-cell;
-  width: 490px;
-}
+  .button-row {
+    display: table-cell; 
+    text-align: center;
+  }
 
+  tr.mat-footer-row {
+    font-weight: bold;
+  }
+  
+  .card {
+    max-width: 400px;
+  }
 
-.example-card {
-  max-width: 400px;
-}
-
-.error {
-  background: red;
 }

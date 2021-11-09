@@ -1,6 +1,6 @@
 <h2> Pannier :</h2>
 <h4> Votre pannier contient :</h4>
-<mat-grid-list cols="2" rowHeight="3:1">
+<mat-grid-list cols="2" rowHeight="{{ rowHeight }}">
     <mat-grid-tile [colspan]="1"  rowspan="1">
       <div class="cart-container mat-elevation-z8" *ngIf="finalPrice != 0" >
         <table  mat-table [dataSource]="dataSource" aria-describedby = "articleOnCart" > 
@@ -37,7 +37,7 @@
       </div>
     </mat-grid-tile>
     <mat-grid-tile *ngIf="accountLogIn == false" [colspan]="1"  rowspan="2">
-      <mat-card class="example-card">
+      <mat-card class="card">
         <mat-card-header>
           <mat-card-title>Vous n'êtes pas connecté</mat-card-title>
         </mat-card-header>
@@ -53,16 +53,6 @@
       </mat-card>
     </mat-grid-tile>
     <mat-grid-tile *ngIf="accountLogIn == true" [colspan]="1"  rowspan="2">
-      <div class="error" *ngIf="error == true" >
-        <p>
-          Votre solde est insuffisant pour passer votre commande !
-        </p>
-      </div>
-    <div  *ngIf="OrderOK == true" >
-      <p>
-       Votre commande a bien été enregistré !
-      </p>
-    </div>
     <div class="error"  *ngIf="OrderError == true" >
       <p>
        Une anomalie est survenu durant votre commande ! Veuillez prévenir le responsable ! 
@@ -70,7 +60,7 @@
     </div>
     </mat-grid-tile>
     <mat-grid-tile >
-      <div class="example-button-row">
+      <div class="button-row">
         <button #ref mat-raised-button [disabled]="(!accountLogIn || finalPrice == 0)" (click)="orderCart()" >Passer la commande</button>
       </div>
     </mat-grid-tile>
