@@ -3,6 +3,8 @@ import { getString } from "@nativescript/core/application-settings";
 import { Dialogs } from "@nativescript/core";
 
 import { User } from '../shared/models/user.model';
+import { DataUser } from '../shared/models/dataUser.model';
+import { OrderContent } from '../shared/models/orderContent.model';
 import { UserService } from '../service/user.service';
 import { OrderService } from '../service/order.service';
 import { FoodStockService } from '../service/foodStock.service';
@@ -17,7 +19,7 @@ export class ProfileComponent implements OnInit {
   listOrderLocal;
   contentOrderLocal;
   contentMenuLocal;
-  dataUser : any;
+  dataUser : DataUser;
   checkPassaword : string;
   fieldsUser : User;
   user : User;
@@ -95,7 +97,7 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  showMenuContent(row:any):void{
+  showMenuContent(row:OrderContent):void{
     if(row["MenuInfo.id"])
       {
         this.foodStockService.getMenuContent(row["MenuInfo.id"]).subscribe((response) => {
@@ -105,7 +107,7 @@ export class ProfileComponent implements OnInit {
       }
   }
 
-  convertName(row:any):string
+  convertName(row:OrderContent):string
     {
       if(row["MenuInfo.id"] == null)
         {
@@ -117,15 +119,15 @@ export class ProfileComponent implements OnInit {
         }
     }
 
-  convertPrice(row:any):string
+  convertPrice(row:OrderContent):string
     {
       if(row["MenuInfo.id"] == null)
         {
-          return row["Article.price"];
+          return row["Article.price"].toString();
         }
       else
         {
-          return row["MenuInfo.price_final"];
+          return row["MenuInfo.price_final"].toString();
         }
 
     }

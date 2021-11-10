@@ -1,29 +1,29 @@
 <mat-grid-list cols="2" rowHeight="1.25:1">
     <mat-grid-tile>
         <div>
-            <h3>Votre solde actuelle est de : {{dataUser.money}} €</h3>
-            <h2>----------------------------------</h2>
-            <h2> Modifier votre profile : </h2><br>
+            <h4>Votre solde actuelle est de : {{dataUser.money}} €</h4>
+            <h3>----------------------------------</h3>
+            <h3> Modifier votre profile : </h3><br>
             <div [hidden]="!errorUpdate" class="alert alert-danger">Erreur : Certains champs n'ont pas pu être mit a jour</div>
             <form [formGroup]="updateForm" (ngSubmit)="onSubmit()"  #form="ngForm">
                 <div>
-                    <h4>Nom</h4> 
+                    <h5>Nom</h5> 
                     <input type="text" id="lastName" name="lastName" formControlName="lastName">
                 </div>
                 <div>
-                    <h4>Prénom</h4> 
+                    <h5>Prénom</h5> 
                     <input type="text" id="firstName" name="firstName" formControlName="firstName">
                 </div>
                 <div>
-                    <h4>Email</h4> 
+                    <h5>Email</h5> 
                     <input type="text" id="email" name="email" formControlName="email">
                     <div [hidden]="!errorEmail" class="alert alert-danger">Email Incorrect</div>
                 </div>
                 <div>
-                    <h4>Nouveau Mot de passe</h4>
+                    <h5>Nouveau Mot de passe</h5>
                     <input type="text" id="password" name="password" formControlName="password">
                 </div>
-                <h4>Confirmez votre nouveau mot de passe</h4>
+                <h5>Confirmez votre nouveau mot de passe</h5>
                     <input type="text" id="checkPassword" name="checkPassword" formControlName="checkPassword">
                     <div [hidden]="!errorPasswordCheck" class="alert alert-danger">Le mot de passe de confirmation est différent du mot de passe entrée précédenemt</div>
                 <br>
