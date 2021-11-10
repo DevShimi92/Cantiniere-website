@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, HostListener } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog, MatDialogRef,  MAT_DIALOG_DATA  } from '@angular/material/dialog';
 import { FoodStockService } from '../service/foodStock.service';
@@ -31,6 +31,21 @@ export class MenuComponent implements OnInit {
   listFilteredArticle: Article[] = [];
   innerWidth: number;
   rowHeight:number;
+
+  @HostListener('window:resize', ['$event'])
+  onResize():void{
+    window.addEventListener('resize', (event: UIEvent) => {
+      const w = event.target as Window; 
+      if(w.innerWidth > 1920)
+        {
+          this.rowHeight = 365;
+        }
+      else
+        {
+          this.rowHeight = 250;
+        }
+    });
+  } 
 
 
   constructor( public dialog: MatDialog, private foodStockService: FoodStockService) {
@@ -86,6 +101,7 @@ export class MenuComponent implements OnInit {
     if(endIndex > this.length){
       endIndex = this.length;
     }
+
     if ( this.listArticleSearch.length == 0)
       this.listArticle = this.listFilteredArticle.slice(startIndex, endIndex);
     else
@@ -94,19 +110,19 @@ export class MenuComponent implements OnInit {
 
   selectType(): void{
     const selected = this.tabTypeArticle.get(this.selectedTypeArticle) ;
-
+    
     this.listArticle = this.listArticleDefault;
-   
+
     if( selected != 0 )
-    {
-      this.listFilteredArticle = this.listArticle.filter((article: Article) => article.code_type_src == selected);
-      this.length = this.listFilteredArticle.length;
-      this.listArticle = this.listFilteredArticle.slice(0, this.pageSize);
-    }
+      {
+        this.listFilteredArticle = this.listArticle.filter((article: Article) => article.code_type_src == selected);
+        this.length = this.listFilteredArticle.length;
+        this.listArticle = this.listFilteredArticle.slice(0, this.pageSize);
+      }
     else
-    {
-      this.listFilteredArticle = this.listArticleDefault;
-    }
+      {
+        this.listArticle = this.listArticleDefault.slice(0, this.pageSize);
+      }
 
     if (this.search != undefined)
       {
@@ -126,18 +142,18 @@ export class MenuComponent implements OnInit {
     }
 
     if(filterValue == '')
-    {
-      this.listArticleSearch = null;
-      this.listArticle = this.listFilteredArticle;
-      this.length = this.listArticle.length;
-      this.listArticle = this.listArticle.slice(0, this.pageSize);
-    }
+      {
+        this.listArticleSearch = [];
+        this.listArticle = this.listFilteredArticle;
+        this.length = this.listArticle.length;
+        this.listArticle = this.listArticle.slice(0, this.pageSize);
+      }
     else
-    {
-      this.listArticleSearch = this.listFilteredArticle.filter((article: Article) => article.name.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1);
-      this.length = this.listArticleSearch.length;
-      this.listArticle = this.listArticleSearch.slice(0, this.pageSize);
-    }
+      {
+        this.listArticleSearch = this.listFilteredArticle.filter((article: Article) => article.name.toLowerCase().indexOf(filterValue.toLowerCase()) !== -1);
+        this.length = this.listArticleSearch.length;
+        this.listArticle = this.listArticleSearch.slice(0, this.pageSize);
+      }
 
     
   }
@@ -147,16 +163,16 @@ export class MenuComponent implements OnInit {
     let cart: Cart[] = [];
     
     if (!sessionStorage.getItem('cart'))
-    {
-      cart.push(new Cart(event.id,event.name,event.price,event.code_type_src));
-      sessionStorage.setItem('cart', JSON.stringify(cart));
-    }
+      {
+        cart.push(new Cart(event.id,event.name,event.price,event.code_type_src));
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+      }
     else
-    {
-      cart = JSON.parse(sessionStorage.getItem('cart'));
-      cart.push(new Cart(event.id,event.name,event.price,event.code_type_src));
-      sessionStorage.setItem('cart', JSON.stringify(cart));
-    }
+      {
+        cart = JSON.parse(sessionStorage.getItem('cart'));
+        cart.push(new Cart(event.id,event.name,event.price,event.code_type_src));
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+      }
     
     this.dialog.open(MenuDialogComponent,{ data: { FormDialog : 0 } });
     

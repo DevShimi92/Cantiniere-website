@@ -3,11 +3,12 @@
     margin-right:5px;
   }
 
+.searchBar {
+    width: 500px;
+  }
+
+
 @media screen and (max-width: 2560px) { 
-    mat-grid-tile {
-      background: lightblue;
-      Height: 365px;
-    }  
   
     .card {
       max-width: 400px;
@@ -21,13 +22,15 @@
   }
   
 @media screen and (max-width: 1920px) {
+
     .card {
-      max-width: 300px;
+      max-width: 330px;
+      max-height: 250px;
     }
 
     img {
-      width: 300px;
-      height: 125px;
+      width: 325px;
+      height: 150px;
     }
   
    }

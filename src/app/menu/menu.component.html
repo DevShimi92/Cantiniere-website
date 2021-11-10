@@ -4,15 +4,15 @@
 <div [hidden]="!menuHaveSomething">
     <h2>Carte</h2>
     <div class="menuOptions">
-        <mat-form-field appearance="fill">
+        <mat-form-field >
             <mat-label>Catégorie</mat-label>
             <mat-select [(value)]="selectedTypeArticle" (selectionChange)="selectType()">
                 <mat-option *ngFor="let value of listTypeArticle" [value]="value" >{{ value }}</mat-option>
             </mat-select>
         </mat-form-field>
     
-    <mat-form-field >
-        <mat-label>Boisson/nouriture</mat-label>
+    <mat-form-field class='searchBar'>
+        <mat-label>Recherchez votre Boisson/nouriture</mat-label>
         <input matInput (keyup)="applyFilter($event)" [(ngModel)]='search' />
     </mat-form-field>
 </div>

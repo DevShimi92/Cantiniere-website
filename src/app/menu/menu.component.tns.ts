@@ -4,7 +4,7 @@ import { registerElement } from '@nativescript/angular';
 import { Dialogs, SearchBar } from '@nativescript/core';
 import { setString, getString } from '@nativescript/core/application-settings';
 import { FoodStockService } from '../service/foodStock.service';
-import { Article } from '../shared/models/foodStock.model';
+import { Article } from '../shared/models/article.model';
 import { Cart } from '../shared/models/cart.model';
 
 registerElement('CardView', () => CardView);
@@ -87,7 +87,7 @@ export class MenuComponent implements OnInit {
 
   }
 
-  onSearchBarLoaded(event:any):void {
+  onSearchBarLoaded(event: { object: { android: { clearFocus: () => void; }; dismissSoftInput: () => void; }; }):void {
     if (event.object.android) {
      
           event.object.dismissSoftInput();
@@ -97,7 +97,7 @@ export class MenuComponent implements OnInit {
   
   }
 
-  applyFilter(args):void{
+  applyFilter(args: { object: SearchBar; }):void{
     const searchBar = args.object as SearchBar ;
     this.notFound = false ;
 
