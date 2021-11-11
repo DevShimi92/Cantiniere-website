@@ -4,6 +4,7 @@ import { Dialogs } from '@nativescript/core';
 
 import { FoodStockService } from '../service/foodStock.service';
 import { Cart } from '../shared/models/cart.model';
+import { Menu } from '../shared/models/menu.model';
 
 export class ArticleOfMenu {    
   
@@ -144,7 +145,7 @@ export class HomeComponent implements OnInit {
 
   }
 
-  selected(blockSelected:number,menu:any):void{
+  selected(blockSelected:number,menu:Menu):void{
     this.selectedMenu=menu;
     this.selectedIndex=blockSelected;
   }

@@ -10,7 +10,7 @@
            <h2>Menu en image :</h2>
         </mat-grid-tile>
     </mat-grid-list> 
-    <mat-grid-list cols="5" rowHeight="655px" >
+    <mat-grid-list cols="5" rowHeight="{{ rowHeight }}" >
     
         <mat-grid-tile  *ngFor="let item of listMenuPage; let i = index;" [rowspan]="1" class="background-menu">
             <mat-card  class="menu-card" *ngIf="item.name" [class.Selected]="i===selectedIndex" (click)="showPictureOfMenu(i,item)">
@@ -33,6 +33,7 @@
                   </mat-card-content>
                 <mat-card-actions>
                     <div style="text-align:center;">
+                        <button mat-button (click)="showDescription(item)">Infos</button>
                         <button mat-button (click)="pickMenu(item)" >Réserver</button>
                     </div>
                   </mat-card-actions>
@@ -43,10 +44,10 @@
         <mat-grid-tile [colspan]="2" [rowspan]="1" class="background-menu">
             <div class="row">
                 <div *ngFor="let item of listPictureOfMenu; let i = index;" [hidden]="!showMenuContent" >
-                    <div *ngIf="item['Article.picture'] && 4 > i" >
+                    <div *ngIf="item['Article.picture'] && 6 > i" >
                         <img mat-card-image src="{{item['Article.picture']}}" alt="Image" >
                     </div>
-                    <div *ngIf="!item['Article.picture'] && 4 > i">
+                    <div *ngIf="!item['Article.picture'] && 6 > i">
                         <img mat-card-image src="assets/img/image-not-found.jpg" alt="Not Found">
                     </div>
                 </div> 

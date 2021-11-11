@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, HostListener  } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { FoodStockService } from '../service/foodStock.service';
@@ -24,12 +24,35 @@ export class HomeComponent implements OnInit {
   showMenuContent = false;
   takeMenuRightNow = false;
   selectedIndex: number;
+  innerWidth: number;
+  rowHeight = 655;
+
+  @HostListener('window:resize', ['$event'])
+  onResize():void{
+    window.addEventListener('resize', (event: UIEvent) => {
+      const w = event.target as Window; 
+      if(w.innerWidth > 1920)
+        {
+          this.rowHeight = 655;
+        }
+      else
+        {
+          this.rowHeight = 460;
+        }
+    });
+  } 
 
   constructor( public dialog: MatDialog, private foodStockService: FoodStockService ) {
    // do nothing.
  }
 
  ngOnInit(): void {
+
+    this.innerWidth = window.innerWidth;
+    if(innerWidth > 1920)
+        this.rowHeight = 655;
+    else
+      this.rowHeight = 460; 
    
     this.foodStockService.getAllMenu().subscribe((response) => {
       if(response)
@@ -52,7 +75,7 @@ export class HomeComponent implements OnInit {
     }
     this.listMenuPage = this.listMenu.slice(startIndex, endIndex); 
     this.fakeMenu();
-}
+ }
 
 fakeMenu():void{
 
@@ -71,21 +94,22 @@ showPictureOfMenu(menuIndexSelected:number, menuObjetSelected:Menu):void
       {
         this.selectedIndex=null;
       }
-    else
+    else if (this.selectedIndex != menuIndexSelected)
       {
         this.selectedIndex=menuIndexSelected;
-      }
-    
-    this.foodStockService.getMenuContent(menuObjetSelected.id).subscribe((response)=>{
-    
-      this.listPictureOfMenu = response ;
 
-      for (const key of this.listPictureOfMenu) {
-        if(key['Article.picture']){
-          key['Article.picture'] = key['Article.picture'].substring(0, key['Article.picture'].search("upload/")+7) + "w_300,h_225,c_scale/" + key['Article.picture'].substring(key['Article.picture'].search("upload/")+7, key['Article.picture'].length) ;
-        }
+        this.foodStockService.getMenuContent(menuObjetSelected.id).subscribe((response)=>{
+    
+          this.listPictureOfMenu = response ;
+          for (const key of this.listPictureOfMenu) {
+            if(key['Article.picture']){
+              key['Article.picture'] = key['Article.picture'].substring(0, key['Article.picture'].search("upload/")+7) + "w_300,h_225,c_scale/" + key['Article.picture'].substring(key['Article.picture'].search("upload/")+7, key['Article.picture'].length) ;
+            }
+          }
+        });
+
       }
-    });
+    
   }
 
   pickMenu(menuSelected:Menu):void{
@@ -112,6 +136,24 @@ showPictureOfMenu(menuIndexSelected:number, menuObjetSelected:Menu):void
     this.dialog.open(HomeDialogComponent,{ data: { FormDialog : 0 } });
     this.takeMenuRightNow = true;
 
+  }
+
+  showDescription(event: Menu): void
+  {
+    if((event.description == null) || (event.description == ''))
+      {
+          this.dialog.open(HomeDialogComponent,{
+            data: { FormDialog : 2 , description : event.description }
+        });
+
+      }
+    else
+      {
+          this.dialog.open(HomeDialogComponent,{
+            data: { FormDialog : 1 , description : event.description }
+        });
+
+      }
   }
 
 }
