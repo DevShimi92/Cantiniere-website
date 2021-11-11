@@ -7,7 +7,7 @@ import { Subject  } from 'rxjs';
 })    
 export class EventEmitterService { 
   
-  private emitChangeSource = new Subject<any>();
+  private emitChangeSource = new Subject<unknown>();
     
   changeEmitted$ = this.emitChangeSource.asObservable();
 

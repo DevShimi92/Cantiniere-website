@@ -179,13 +179,22 @@ export class MenuComponent implements OnInit {
   }
 
   showDescription(event: Article): void
-  {
-    console.log(event.description) 
-    this.dialog.open(MenuDialogComponent,{
-      data: { FormDialog : 1 , description : event.description }
-  });
-    
-  }
+    {
+      if((event.description == null) || (event.description == ''))
+      {
+          this.dialog.open(MenuDialogComponent,{
+            data: { FormDialog : 2 , description : event.description }
+        });
+
+      }
+    else
+      {
+          this.dialog.open(MenuDialogComponent,{
+            data: { FormDialog : 1 , description : event.description }
+        });
+
+      }
+    }
 
 
 }
