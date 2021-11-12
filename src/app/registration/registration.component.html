@@ -47,7 +47,7 @@
             <div>
               <mat-form-field  appearance="fill">
                 <mat-label>Confirmer le Mot de passe</mat-label>
-                <input matInput formControlName="confirmPassword" [errorStateMatcher]="matcher">
+                <input matInput formControlName="confirmPassword">
                 <mat-error *ngIf="registrationForm.hasError('notSame')">
                   <strong>Les mot de passes sont différents</strong>
                 </mat-error>

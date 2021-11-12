@@ -50,6 +50,7 @@ export class RestPasswordComponent implements OnInit {
   }
 
   onSubmit(): void {
+    
     if(this.restPasswordForm.value.password == this.restPasswordForm.value.checkPassword && this.restPasswordForm.value.password != '')
       {
         this.error = false;

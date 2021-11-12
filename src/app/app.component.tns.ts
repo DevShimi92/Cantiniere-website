@@ -3,8 +3,10 @@ import { RadSideDrawerComponent } from "nativescript-ui-sidedrawer/angular";
 import { RadSideDrawer } from 'nativescript-ui-sidedrawer';
 import { RouterExtensions } from "@nativescript/angular";
 import { getString } from "@nativescript/core/application-settings";
+import { Application } from "@nativescript/core";
 
 import { FoodStockService } from './service/foodStock.service';
+import { AuthService } from './service/auth.service';
 
 @Component({
   moduleId: module.id,
@@ -12,6 +14,7 @@ import { FoodStockService } from './service/foodStock.service';
   templateUrl: './app.component.tns.html',
   styleUrls: ['./app.component.css'],
 })
+
 export class AppComponent implements AfterViewInit {
   public userOnline : boolean;
   public  showLimitTime = false;
@@ -20,8 +23,10 @@ export class AppComponent implements AfterViewInit {
   msgLimit = 'Plus que 1 heure';
   msg2Limit = "avant la fin des prises de commandes !";
 
-  constructor(private _changeDetectionRef: ChangeDetectorRef, private routerExtensions: RouterExtensions, private FoodStockService: FoodStockService) {
-   // do nothing.
+  constructor(private _changeDetectionRef: ChangeDetectorRef, private routerExtensions: RouterExtensions, private FoodStockService: FoodStockService, private authService: AuthService) {
+    Application.on(Application.resumeEvent, () => {
+      this.authService.refreshToken();
+    });
   }
 
   @ViewChild(RadSideDrawerComponent, { static: false }) public drawerComponent: RadSideDrawerComponent;
@@ -34,6 +39,7 @@ export class AppComponent implements AfterViewInit {
 
   public openDrawer(): void {
       this.limitTime();
+      
       if(getString("token"))
         {
           this.userOnline = true;
@@ -82,13 +88,13 @@ export class AppComponent implements AfterViewInit {
         this.msgLimit =  "Il vous reste "+ hoursString +' heure ' ;
         this.showLimitTime = true;
       }
-    else if( hours < 1 && minutes < 10 && seconds > 0)
+    else if(  hours < 2 && minutes < 10 && seconds > 0)
       {
         const minuteString = minutes.toString().slice(0, 1);
         this.msgLimit =  'Il vous reste que '+ minuteString +' minute ' ;
         this.showLimitTime = true;
       }
-    else if( hours < 1 && minutes < 60 && seconds > 0)
+    else if(  hours < 2 && minutes < 60 && seconds > 0 )
       {
         const minuteString = minutes.toString().slice(0, 2);
         this.msgLimit  =  'Il vous reste que '+ minuteString +' minute ' ;

@@ -25,7 +25,7 @@ export class AuthService {
       }
     
     refreshToken() :Promise<boolean> {
-
+        
         if(getString('refresh_token'))
         {
             this.user = JSON.parse(getString('userData'));
