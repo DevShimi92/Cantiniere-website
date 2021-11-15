@@ -3,7 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
+import { OrderContent } from '../shared/models/orderContent.model';
+import { OrderinfoAccount } from '../shared/models/orderInfo.model';
+import { OrderInfoRecap } from '../shared/models/orderInfo.model';
+import { OrderInfoRecapClient } from '../shared/models/orderInfo.model';
 
+class IdOrder {
+    id: number;
+  }
 
 @Injectable({
     providedIn: 'root'
@@ -25,7 +32,7 @@ export class OrderService {
 
         return new Promise<number>((resolve, reject) => { 
 
-            this.http.post<any>(this.API_URL+'order',data).toPromise().then((response) => {
+            this.http.post<IdOrder>(this.API_URL+'order',data).toPromise().then((response) => {
                 return resolve(response.id);
             }).catch((error) => {
                 return reject(error);
@@ -58,25 +65,25 @@ export class OrderService {
              
     }
 
-    getAllOrderOneAccount(idClient:number): Observable<any>{
+    getAllOrderOneAccount(idClient:number): Observable<OrderinfoAccount[]>{
 
-        return this.http.get(this.API_URL+'order/'+idClient) ;
+        return this.http.get<OrderinfoAccount[]>(this.API_URL+'order/'+idClient) ;
     }
 
-    getOrderContent(idOrder:number): Observable<any>{
+    getOrderContent(idOrder:number): Observable<OrderContent[]>{
 
-        return this.http.get(this.API_URL+'order/content/'+idOrder) ;
+        return this.http.get<OrderContent[]>(this.API_URL+'order/content/'+idOrder) ;
     }
 
-    getAllOrder() : Observable<any>{
+    getAllOrderOfOneDay(date:string) : Observable<OrderInfoRecapClient[]>{
 
-        return this.http.get(this.API_URL+'orderRecap/all/') ;
+        return this.http.get<OrderInfoRecapClient[]>(this.API_URL+'orderRecap/list/'+date) ;
 
     }
 
-    getRecapOrder(): Observable<any>{
+    getRecapOrder(date:string): Observable<OrderInfoRecap[]>{
 
-        return this.http.get(this.API_URL+'orderRecap/') ;
+        return this.http.get<OrderInfoRecap[]>(this.API_URL+'orderRecap/'+date) ;
         
     }
 
