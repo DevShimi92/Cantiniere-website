@@ -5,6 +5,7 @@ import { switchMap } from "rxjs/operators";
 import { JwtHelperService } from "@auth0/angular-jwt";
 
 import { User } from '../shared/models/user.model';
+import { Token } from '../shared/models/token.model';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -30,7 +31,7 @@ export class AuthService {
 
         return new Promise<boolean>((resolve, reject) => {
 
-            this.http.post<any>(this.API_URL+'login',this.user).toPromise().then( response => {
+            this.http.post<Token>(this.API_URL+'login',this.user).toPromise().then( response => {
 
                 this.updateDataSesion(response.token, response.refresh_token);
                     
@@ -50,7 +51,7 @@ export class AuthService {
 
         return new Promise<boolean>((resolve, reject) => {
 
-            this.http.post<any>(this.API_URL+'forgot_password',data).toPromise().then( () => {
+            this.http.post<void>(this.API_URL+'forgot_password',data).toPromise().then( () => {
                 
                 return resolve(true);
 
@@ -69,7 +70,7 @@ export class AuthService {
         
         return new Promise<boolean>((resolve, reject) => {
 
-            this.http.post<any>(this.API_URL+'rest_password',data).toPromise().then( () => {
+            this.http.post<void>(this.API_URL+'rest_password',data).toPromise().then( () => {
                     sessionStorage.clear();
                     return resolve(true);
 
@@ -94,7 +95,7 @@ export class AuthService {
 
             return new Promise<boolean>((resolve, reject) => {
 
-                this.http.post<any>(this.API_URL+'refresh_token',data).toPromise().then((response)=> 
+                this.http.post<Token>(this.API_URL+'refresh_token',data).toPromise().then((response)=> 
                 {
                     this.updateDataSesion(response.token, response.refresh_token);
 

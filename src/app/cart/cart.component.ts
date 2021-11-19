@@ -103,8 +103,6 @@ export class CartComponent implements OnInit {
 
   orderCart():void {
 
-    console.log(sessionStorage.getItem('hourLimit'));
-
     this.dataUser = this.helper.decodeToken(sessionStorage.getItem('token'));
 
     if((this.dataUser.money > this.finalPrice) && (sessionStorage.getItem('hourLimit') == 'true'))
@@ -116,7 +114,9 @@ export class CartComponent implements OnInit {
               {
                 if(this.cart[i].code_type_src != null )
                   {
-                    this.orderService.postOrderContent(idOrder,this.cart[i].id).then(
+                    this.orderService.postOrderContent(idOrder,this.cart[i].id).then(()=>{
+                      // Nothing
+                    },
                       (error) => 
                         {
                           errorCreate = true;
