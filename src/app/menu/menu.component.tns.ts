@@ -22,8 +22,8 @@ export class MenuComponent implements OnInit {
   data = [];
 
   private addToCart = {
-    title: 'Ajouté au pannier !',
-    message: 'Cet article a été ajouté au pannier.',
+    title: 'Ajouté au panier !',
+    message: 'Cet article a été ajouté au panier.',
     okButtonText: 'OK',
     cancelable: true
   }

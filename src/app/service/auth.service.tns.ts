@@ -52,10 +52,10 @@ export class AuthService {
             });
 
         }
-        else
-        {
-            this.interval.unsubscribe();
-        }
+        else if(this.interval)
+            {
+                this.interval.unsubscribe();
+            }
 
     }
 

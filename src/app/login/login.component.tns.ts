@@ -20,8 +20,8 @@ export class LoginComponent {
   public user : User;
   
   private acountExistOptions = {
-    title: 'Compte exsitant',
-    message: 'Cet email existe déja dans notre base de donnée, avez vous oublié votre mot de passe ?',
+    title: 'Compte existant',
+    message: 'Cet email existe déjà dans notre base de données. Avez-vous oublié votre mot de passe ?',
     okButtonText: 'Oui',
     cancelButtonText: 'Non',
     cancelable: true
@@ -67,7 +67,7 @@ export class LoginComponent {
               {
                 Dialogs.alert({
                   title: "Erreur",
-                  message: "Il vous faut un mot de passe pour vous connectez ! ",
+                  message: "Il vous faut un mot de passe pour vous connecter ! ",
                   okButtonText: "OK",
                   cancelable: true
                 }).then(()=> {
@@ -90,11 +90,7 @@ export class LoginComponent {
                           Dialogs.confirm(this.acountExistOptions).then(result => {
                             if( result == true )
                               {
-                                  console.log('Vers la page de restoration de mdp...');
-                              }
-                            else
-                              {
-                                console.log("L'utilisateur n'a pas voulu tenté de réinitialiser son mot de passe")
+                                  this.toggleFormForgotPassword();
                               }
                           });
                         }
@@ -109,7 +105,7 @@ export class LoginComponent {
               {
                 Dialogs.alert({
                   title: "Erreur",
-                  message: "Le mot de passe et la confirmation de mot de passe entrées sont différents ",
+                  message: "Le mot de passe et la confirmation de mot de passe entrés sont différents ",
                   okButtonText: "OK",
                   cancelable: true
                 }).then(()=> {
@@ -199,11 +195,11 @@ export class LoginComponent {
 
           Dialogs.alert({
             title: "Email envoyé ",
-            message: "Un email de réinitiation de mot de passe à été envoyé à l'adresse indiqué.",
+            message: "Un email de réinitialisation de mot de passe a été envoyé à l'adresse indiquée.",
             okButtonText: "OK",
             cancelable: true
           }).then(()=> {
-              console.log("Tentative envoié pour : "+this.user.email);
+              console.log("Tentative envoyé pour : "+this.user.email);
           });
 
         }).catch((error) => {

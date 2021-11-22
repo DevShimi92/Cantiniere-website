@@ -8,25 +8,25 @@
 
     <TextField class="police" hint='Email' autocapitalizationType="none" keyboardType="email" autocorrect="false" [(ngModel)]='user.email' ></TextField>
 
-    <TextField class="police" hint="Password" secure="true" [(ngModel)]='user.password' ></TextField>
+    <TextField class="police" hint="Mot de passe" secure="true" [(ngModel)]='user.password' ></TextField>
 
-    <TextField *ngIf="!isLoggingIn" class="police" hint="Confirmer votre Mot de passe" secure="true" [(ngModel)]='confirmedPassword' ></TextField>
+    <TextField *ngIf="!isLoggingIn" class="police" hint="Confirmer votre mot de passe" secure="true" [(ngModel)]='confirmedPassword' ></TextField>
 
     <Button [text]="isLoggingIn ? 'Connexion' : 'Inscription'"  class="btn btn-primary"  (tap)="submit()"></Button>
 
     <Label (tap)="toggleForm()" class="police" >
       <FormattedString>
         <Span [text]="isLoggingIn ? 'Pas de compte ? ' : 'Retour à la page de connexion'"></Span>
-        <Span [text]="isLoggingIn ? 'Inscris toi !' : ''"></Span>
+        <Span [text]="isLoggingIn ? 'Inscris-toi !' : ''"></Span>
       </FormattedString>
     </Label>
 
   </div>
   <div *ngIf="!isforgotPassword">
 
-    <TextField class="police" hint='Votre Email utilisé sur le compte' autocapitalizationType="none" keyboardType="email" autocorrect="false" [(ngModel)]='user.email' ></TextField>
+    <TextField class="police" hint='Votre email utilisé sur le compte' autocapitalizationType="none" keyboardType="email" autocorrect="false" [(ngModel)]='user.email' ></TextField>
 
-    <Button text="Envoyé un email de réinitiation de mot de passe"  class="btn btn-primary" (tap)="submit()" ></Button>
+    <Button text="Envoyer un email de réinitialisation de mot de passe"  class="btn btn-primary" (tap)="submit()" ></Button>
 
   </div>
 

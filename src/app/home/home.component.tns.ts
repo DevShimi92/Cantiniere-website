@@ -30,8 +30,8 @@ export class HomeComponent implements OnInit {
   contentsOfMenus: ArticleOfMenu[] = [];
 
   private addToCart = {
-    title: 'Ajouté au pannier !',
-    message: 'Ce menu a été ajouté au pannier.',
+    title: 'Ajouté au panier !',
+    message: 'Ce menu a été ajouté au panier.',
     okButtonText: 'OK',
     cancelable: true
   }

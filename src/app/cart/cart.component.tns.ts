@@ -26,7 +26,7 @@ export class CartComponent implements OnInit {
   errorCreate = false;
 
   private accountNotLogin = {
-    title: 'Non connencté !',
+    title: 'Non connecté !',
     message: 'Vous devez être connecté pour valider votre panier !',
     okButtonText: 'Allez à la page de connexion',
     cancelable: true
@@ -47,8 +47,8 @@ export class CartComponent implements OnInit {
   }
 
   private orderOK = {
-    title: 'Valider !',
-    message: "Votre commande a été enregistré avec succée",
+    title: 'Validé !',
+    message: "Votre commande a été enregistrée avec succès",
     okButtonText: 'OK',
     cancelable: true
   }

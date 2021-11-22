@@ -5,9 +5,9 @@
           <Label (tap)="navigateToHome()"  text="    &#xf015;  Accueil" class="sideDrawer fa-align-justify" ></Label>
           <Label (tap)="navigateToMenu()"  text="    &#xf2e7;   Voir la carte" class="sideDrawer fa-align-justify"></Label>
           <Label (tap)="navigateToLogin()"  text="    &#xf52b;  Se connecter" class="sideDrawer fa-align-justify" *ngIf="userOnline == false" ></Label>
-          <Label (tap)="navigateToProfile()"  text="    &#xf007;    Profile" class="sideDrawer fa-align-justify" *ngIf="userOnline == true" ></Label>
-          <Label (tap)="navigateToSetting()"  text="    &#xf013;   Paramètre" class="sideDrawer fa-align-justify"></Label>
-          <Label (tap)="navigateToReport()" text="    &#xf071;   Siganler un bug" class="sideDrawer fa-align-justify"></Label>
+          <Label (tap)="navigateToProfile()"  text="    &#xf007;    Profil" class="sideDrawer fa-align-justify" *ngIf="userOnline == true" ></Label>
+          <Label (tap)="navigateToSetting()"  text="    &#xf013;   Paramètres" class="sideDrawer fa-align-justify"></Label>
+          <Label (tap)="navigateToReport()" text="    &#xf071;   Signaler un bug" class="sideDrawer fa-align-justify"></Label>
           <br>
           <Label text="{{msgLimit}}" style="text-align:center"  *ngIf="showLimitTime == true" ></Label>
           <Label text="{{msg2Limit}}" style="text-align:center" *ngIf="showLimitTime == true" ></Label>
