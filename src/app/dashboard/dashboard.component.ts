@@ -12,7 +12,7 @@ export class DashboardComponent  {
   constructor( private eventEmitterService: EventEmitterService ) {
  }
 
-  tabOn($event):void{
+  tabOn($event: { index: number; }):void{
     switch($event.index){
       case 0 :
         break;

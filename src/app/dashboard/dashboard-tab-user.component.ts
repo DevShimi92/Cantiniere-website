@@ -13,6 +13,13 @@ export interface DialogData {
     SetNewSolde: boolean;
     erreur:boolean;
   }
+
+  interface UserSolde {
+    id: number;
+    first_name: string;
+    last_name: string;
+    money:number;
+  }
   
 
 @Component({
@@ -69,13 +76,15 @@ export interface DialogData {
           });
     }
 
-    editSolde($event):void{
+    editSolde($event : UserSolde):void{
+      
         const dialogRefEditSolde = this.dialog.open(DashboardDialogEditSoldeComponent,{
           data: { SetNewSolde : true, name : $event.last_name, money : $event.money, }
         });
     
         dialogRefEditSolde.afterClosed().subscribe(result => {
-          if(result !== $event.money)
+          
+          if((result !== $event.money) && (result != null )  && (result != '' ))
             {
               this.user.id = $event.id;
               this.user.money = result;
@@ -85,6 +94,8 @@ export interface DialogData {
                 this.dialog.open(DashboardDialogEditSoldeComponent,{
                   data: { SetNewSolde : false , erreur :false }
                 });
+
+                this.checkListUser();   
     
               }).catch((error) => {
     
