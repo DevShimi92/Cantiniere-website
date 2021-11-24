@@ -57,6 +57,11 @@ export class HomeComponent implements OnInit {
               {
                 this.menuList[i].picture = "res://imagenotfound"; 
               }
+            else
+              {
+                this.menuList[i].picture = this.menuList[i].picture.substring(0, this.menuList[i].picture.search("upload/")+7) + "w_1000,h_800,c_scale/" + this.menuList[i].picture.substring(this.menuList[i].picture.search("upload/")+7, this.menuList[i].picture.length) ;
+
+              }
 
 
             i++;
@@ -136,6 +141,10 @@ export class HomeComponent implements OnInit {
 
 
   showDescription(text:string):void{
+
+    if(!text)
+      text = "Aucune description de disponible.";
+
     Dialogs.alert({
       title: "Description",
       message: text,

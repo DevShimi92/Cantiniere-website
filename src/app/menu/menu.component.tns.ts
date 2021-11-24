@@ -42,6 +42,9 @@ export class MenuComponent implements OnInit {
         { 
           for (const key of response) {           
             this.listArticleDefault.push(key);
+            if(key['picture']){
+              key['picture'] = key['picture'].substring(0, key['picture'].search("upload/")+7) + "w_250,h_250,c_scale/" + key['picture'].substring(key['picture'].search("upload/")+7, key['picture'].length) ;
+            }
           }
 
           this.listArticle = this.listArticleDefault;
@@ -78,6 +81,9 @@ export class MenuComponent implements OnInit {
 
   showDescription(item:Article):void
   {
+    if(!item.description)
+        item.description = "Aucune description de disponible.";
+        
     Dialogs.alert({
       title: "Description",
       message: item.description,
