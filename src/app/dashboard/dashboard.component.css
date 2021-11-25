@@ -14,8 +14,16 @@ table {
   width: 100%;
 }
 
+.tabRecapOrder{
+  background: #a0cfac;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 90%;
+}
+
 mat-grid-list {
-  background: lightblue;
+  background: #a0cfac;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

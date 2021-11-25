@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild} from '@angular/core';
 import { MatTableDataSource} from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 
-import { UserService } from '../service/user.service';
 import { OrderService } from '../service/order.service';
 import { OrderInfoRecap } from '../shared/models/orderInfo.model';
 
@@ -35,7 +34,7 @@ class TabOfWeek {
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    constructor( private userService: UserService, private orderService: OrderService) { } 
+    constructor( private orderService: OrderService) { } 
 
     ngOnInit():void{
       
@@ -45,13 +44,11 @@ class TabOfWeek {
     
 
     setRow(index: number, idOrder : number):void{
-        console.log('test');
+
         this.row = index;
         this.dataOrderContent = '';
-        console.log(idOrder);
 
         this.orderService.getOrderContent(idOrder).subscribe((response)=>{
-          console.log(response);
           this.resultsLength = response.length;
           this.dataOrderContent = new MatTableDataSource(response);
           this.dataOrderContent.paginator = this.paginator;
@@ -80,23 +77,18 @@ class TabOfWeek {
       this.indexDay = $event.index;
         switch($event.index){
           case 0 :
-            console.log('Case 0');
             this.refreshTabForThisDay(this.dayWeek[0].Day);
             break;
           case 1 :
-            console.log('Case 1');
             this.refreshTabForThisDay(this.dayWeek[1].Day);
             break;
           case 2 :
-              console.log('Case 2');
               this.refreshTabForThisDay(this.dayWeek[2].Day);
               break;
           case 3 :
-              console.log('Case 3');
               this.refreshTabForThisDay(this.dayWeek[3].Day);
               break;
           case 4 :
-              console.log('Case 4');
               this.refreshTabForThisDay(this.dayWeek[4].Day);
               break;
         }
@@ -105,42 +97,47 @@ class TabOfWeek {
     prepareTabOfDate():void{
       
       const date = new Date();
-      
+      const index = date.getDay();
+      let d = new Date();
+
       if ( date.getDay() != 1){
-        console.log('On est pas lundi !');
+        
+        for(let  i = 1 ; i < index; i++)
+        {
+          d.setDate(date.getDate()-index+i);
+          this.dayWeek.push(new TabOfWeek( d.getDay(),d.getFullYear() +'-'+(d.getMonth()+1)+'-'+d.getDate()));
+        }
+
       }
 
       this.dayWeek.push(new TabOfWeek( date.getDay(),date.getFullYear() +'-'+(date.getMonth()+1)+'-'+date.getDate()));
 
-      const index = date.getDay();
-      const d = new Date();
+      d = new Date();
 
       for(let  i = index; i < 5; i++)
         {
           d.setDate(d.getDate()+1);
           this.dayWeek.push(new TabOfWeek( d.getDay(),d.getFullYear() +'-'+(d.getMonth()+1)+'-'+d.getDate()));
         }
-
       
     }
 
     refreshTabForThisDay(date:string):void{
 
-      this.listOfOrder = '';
+      this.listOfOrder = [];
+      this.dataRecapOrder = [];
+
       this.orderService.getAllOrderOfOneDay(date).subscribe((response)=>{
         if(response != null)
-          this.listOfOrder = response;
-        else
-          this.listOfOrder = [];
-      });
-
-      this.dataRecapOrder = '';
-      this.orderService.getRecapOrder(date).subscribe((response)=>{
-        if(response != null)
-          this.dataRecapOrder = new MatTableDataSource<OrderInfoRecap>(response);
-        else
-          this.dataRecapOrder = [];
-
+          {
+            this.listOfOrder = response;
+            
+            this.orderService.getRecapOrder(date).subscribe((response)=>{
+              if(response != null)
+                this.dataRecapOrder = new MatTableDataSource<OrderInfoRecap>(response);
+            });
+            
+          }
       });
 
 

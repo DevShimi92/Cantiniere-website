@@ -6,7 +6,7 @@
         <mat-tab label="Vendredi"></mat-tab>
     </mat-tab-group>
 
-    <mat-grid-list cols="4" rowHeight="2:2.25">
+    <mat-grid-list cols="4" rowHeight="2:2.25" class="tabRecapOrder" [hidden]="listOfOrder.length == 0" >
         <mat-grid-tile colspan="3">
         <div>
                 <mat-accordion *ngFor="let item of listOfOrder; let i = index">
@@ -19,17 +19,26 @@
                                 Etat de la commande : {{item.done ? 'Validé' : 'En cours de préparation'}}
                             </mat-panel-description>
                         </mat-expansion-panel-header>
-                        <button mat-raised-button (click)="comfirmOrder(item.id)" >Valider la commande</button>
-                        <button mat-raised-button (click)="cancelOrder(item.id)" >Annuler la commande</button>
+                        <div [hidden]="item.done" >
+                            <button mat-raised-button (click)="comfirmOrder(item.id)" >Valider la commande</button>
+                            <button mat-raised-button (click)="cancelOrder(item.id)" >Annuler la commande</button>
+                        </div>
                         <div>
                             <br>
-                            <p>Contenu de la commande : </p> 
+                                <p>Contenu de la commande : </p> 
                             <div>
                                 <table mat-table [dataSource]="dataOrderContent" class="mat-elevation-z8" aria-describedby = "OrderContent">
 
                                     <ng-container matColumnDef="name">
                                         <th mat-header-cell *matHeaderCellDef scope = "col"> Nom </th>
-                                        <td mat-cell *matCellDef="let element"> {{element["Article.name"]}} </td>
+                                        <td mat-cell *matCellDef="let element"> 
+                                            <div *ngIf="element['Article.name']">
+                                                {{element["Article.name"]}}
+                                            </div>
+                                            <div *ngIf="element['MenuInfo.name']">
+                                                {{element["MenuInfo.name"]}}
+                                            </div>
+                                        </td>
                                     </ng-container>
 
                                     <tr mat-header-row *matHeaderRowDef="displayedColumnsOrderContent"></tr>
@@ -65,3 +74,6 @@
                 </table>
         </mat-grid-tile>
     </mat-grid-list>
+    <div [hidden]=" listOfOrder.length != 0">
+        Aucune commande enregistrée pour ce jour.
+    </div>
