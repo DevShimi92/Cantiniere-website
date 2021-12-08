@@ -1,7 +1,7 @@
 {
   "name": "cantiniere-website",
   "main": "main.tns.js",
-  "version": "0.15.16",
+  "version": "0.15.17",
   "scripts": {
     "ng": "ng",
     "start": "node server.js",

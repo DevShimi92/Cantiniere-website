@@ -145,7 +145,7 @@ export class CartComponent implements OnInit {
             sessionStorage.removeItem('cart');
             this.cart = [];
             this.updateCartOnVisually();
-            this._snackBar.open('Votre commande a bien été enregistré !', 'OK');
+            this._snackBar.open('Votre commande a bien été enregistrée !', 'OK');
           }
 
         },
@@ -157,11 +157,11 @@ export class CartComponent implements OnInit {
 
               if(error.error.error == "Order time exceeded")
                 {
-                  this._snackBar.open('Les commandes ne sont plus accepté pour aujourd hui !', 'OK');
+                  this._snackBar.open("Les commandes ne sont plus acceptées pour aujourd'hui !", 'OK');
                 }
               else if(error.error.error == "Limit Order for this account exceeded")
               {
-                this._snackBar.open('Vous ne pouvez plus passé de commande pour aujourd hui !', 'OK');
+                this._snackBar.open("Vous ne pouvez plus passé de commande pour aujourd'hui !", 'OK');
               }
               else if(error.error.error == "Limit Order exceeded")
               {

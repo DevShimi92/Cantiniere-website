@@ -1,5 +1,5 @@
-<h2> Pannier :</h2>
-<h4> Votre pannier contient :</h4>
+<h2> Panier :</h2>
+<h4> Votre panier contient :</h4>
 <mat-grid-list cols="2" rowHeight="{{ rowHeight }}">
     <mat-grid-tile [colspan]="1"  rowspan="1">
       <div class="cart-container mat-elevation-z8" *ngIf="finalPrice != 0" >
@@ -33,7 +33,7 @@
         </table>
       </div> 
       <div *ngIf="finalPrice == 0" >
-        <h4> Votre pannier est vide</h4>
+        <h4> Votre panier est vide</h4>
       </div>
     </mat-grid-tile>
     <mat-grid-tile *ngIf="accountLogIn == false" [colspan]="1"  rowspan="2">
@@ -43,7 +43,7 @@
         </mat-card-header>
         <mat-card-content>
           <p>
-            Pour passer commander sur ce site, vous avez besoin d'un compte. Connectez-vous ou inscrivez si vous ne possédez pas de compte.
+            Pour passer commande sur ce site, vous avez besoin d'un compte. Connectez-vous ou inscrivez-vous si vous ne possédez pas de compte.
           </p>
         </mat-card-content>
         <mat-card-actions> 

@@ -3,7 +3,7 @@
         <div>
             <h4>Votre solde actuelle est de : {{dataUser.money}} €</h4>
             <h3>----------------------------------</h3>
-            <h3> Modifier votre profile : </h3><br>
+            <h3> Modifier votre profil : </h3><br>
             <div [hidden]="!errorUpdate" class="alert alert-danger">Erreur : Certains champs n'ont pas pu être mit a jour</div>
             <form [formGroup]="updateForm" (ngSubmit)="onSubmit()"  #form="ngForm">
                 <div>
@@ -48,7 +48,7 @@
 
                     <ng-container matColumnDef="total">
                         <th mat-header-cell *matHeaderCellDef scope="col" > Prix de la commande : </th>
-                        <td mat-cell *matCellDef="let row"> {{ row.total }} </td>
+                        <td mat-cell *matCellDef="let row"> {{ row.total }} €</td>
                     </ng-container>
 
                     <ng-container matColumnDef="show">
