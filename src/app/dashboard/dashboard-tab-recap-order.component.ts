@@ -26,7 +26,7 @@ class TabOfWeek {
     indexDay: number;
     dataRecapOrder;
     dataOrderContent;
-    listOfOrder;
+    listOfOrder = [] ;
     displayedColumnsRecapOrder: string[] = ['name', 'nombre'];
     displayedColumnsOrderContent: string[] = ['name'];
     dayWeek: TabOfWeek[] = [];
@@ -99,18 +99,27 @@ class TabOfWeek {
       const date = new Date();
       const index = date.getDay();
       let d = new Date();
-
+      let day;
       if ( date.getDay() != 1){
         
         for(let  i = 1 ; i < index; i++)
         {
           d.setDate(date.getDate()-index+i);
-          this.dayWeek.push(new TabOfWeek( d.getDay(),d.getFullYear() +'-'+(d.getMonth()+1)+'-'+d.getDate()));
+          if ( d.getDate() < 10 )
+              day = "0"+d.getDate();
+            else
+              day = d.getDate();
+            
+          this.dayWeek.push(new TabOfWeek( d.getDay(),d.getFullYear() +'-'+(d.getMonth()+1)+'-'+day));
         }
 
       }
+      if ( date.getDate() < 10 )
+          day ="0"+date.getDate();
+        else
+          day = date.getDate();
 
-      this.dayWeek.push(new TabOfWeek( date.getDay(),date.getFullYear() +'-'+(date.getMonth()+1)+'-'+date.getDate()));
+      this.dayWeek.push(new TabOfWeek( date.getDay(),date.getFullYear() +'-'+(date.getMonth()+1)+'-'+day));
 
       d = new Date();
 
@@ -124,7 +133,6 @@ class TabOfWeek {
 
     refreshTabForThisDay(date:string):void{
 
-      this.listOfOrder = [];
       this.dataRecapOrder = [];
 
       this.orderService.getAllOrderOfOneDay(date).subscribe((response)=>{

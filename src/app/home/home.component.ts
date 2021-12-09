@@ -116,10 +116,6 @@ showPictureOfMenu(menuIndexSelected:number, menuObjetSelected:Menu):void
 
     let cart: Cart[] = [];
 
-    console.log('test');
-    console.log(menuSelected);
-    console.log(sessionStorage.getItem('cart'))
-
     if (!sessionStorage.getItem('cart'))
     {
       cart.push(new Cart(menuSelected.id,menuSelected.name,menuSelected.price_final,null));

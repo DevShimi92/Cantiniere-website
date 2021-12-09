@@ -9,6 +9,7 @@ import { MatDialog , MatDialogRef,  MAT_DIALOG_DATA } from '@angular/material/di
 
 import { UserService } from '../service/user.service';
 import { OrderService } from '../service/order.service';
+import { AuthService } from '../service/auth.service';
 import { User } from '../shared/models/user.model';
 
 export interface DialogData {
@@ -44,6 +45,7 @@ export class ProfileComponent implements OnInit {
   errorPasswordCheck = false;
   errorEmail = false;
   errorUpdate = false;
+  foundOrderForThisUser = false; 
   helper = new JwtHelperService();
   
   dataSource;
@@ -52,11 +54,13 @@ export class ProfileComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor( public dialog: MatDialog, private formBuilder: FormBuilder, private userService: UserService, private orderService: OrderService) {
+  constructor( public dialog: MatDialog, private formBuilder: FormBuilder, private userService: UserService, private orderService: OrderService, private authService: AuthService) {
     this.user = new User();
    }
 
   ngOnInit(): void {
+
+    this.authService.refreshToken();
     
     this.dataUser = JSON.parse(sessionStorage.getItem('userData'));
 
@@ -65,6 +69,7 @@ export class ProfileComponent implements OnInit {
             this.ListOrderLength = response.length;
             this.dataSource = new MatTableDataSource(response);
             this.dataSource.paginator = this.paginator;
+            this.foundOrderForThisUser = true;
           }
     });
 
@@ -179,7 +184,7 @@ export class ProfileComponent implements OnInit {
 })
 export class ProfileDialogComponent implements OnInit{
   
-  displayedColumnsDialog: string[] = ['Article.name','Article.price'];
+  displayedColumnsDialog: string[] = ['name','price'];
   dataSource;
 
   constructor( public dialogRef: MatDialogRef<ProfileDialogComponent>,

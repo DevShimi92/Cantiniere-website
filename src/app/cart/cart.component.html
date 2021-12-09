@@ -2,7 +2,7 @@
 <h4> Votre panier contient :</h4>
 <mat-grid-list cols="2" rowHeight="{{ rowHeight }}">
     <mat-grid-tile [colspan]="1"  rowspan="1">
-      <div class="cart-container mat-elevation-z8" *ngIf="finalPrice != 0" >
+      <div class="cart-container mat-elevation-z8" *ngIf="cartHaveSomething == true" >
         <table  mat-table [dataSource]="dataSource" aria-describedby = "articleOnCart" > 
 
           <ng-container matColumnDef="name">
@@ -32,7 +32,7 @@
 
         </table>
       </div> 
-      <div *ngIf="finalPrice == 0" >
+      <div *ngIf="cartHaveSomething == false" >
         <h4> Votre panier est vide</h4>
       </div>
     </mat-grid-tile>
@@ -61,7 +61,7 @@
     </mat-grid-tile>
     <mat-grid-tile >
       <div class="button-row">
-        <button #ref mat-raised-button [disabled]="(!accountLogIn || finalPrice == 0)" (click)="orderCart()" >Passer la commande</button>
+        <button #ref mat-raised-button [disabled]="(!accountLogIn || cartHaveSomething == false)" (click)="orderCart()" >Passer la commande</button>
       </div>
     </mat-grid-tile>
   </mat-grid-list>

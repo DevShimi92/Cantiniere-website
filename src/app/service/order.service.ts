@@ -5,8 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { OrderContent } from '../shared/models/orderContent.model';
 import { OrderinfoAccount } from '../shared/models/orderInfo.model';
-import { OrderInfoRecap } from '../shared/models/orderInfo.model';
-import { OrderInfoRecapClient } from '../shared/models/orderInfo.model';
+import { OrderInfoRecap, OrderInfoRecapClient } from '../shared/models/orderInfo.model';
 
 class IdOrder {
     id: number;
@@ -91,7 +90,6 @@ export class OrderService {
     putValidOrder(idOrder:number):Promise<boolean>{
 
         const data = { id_order : idOrder };
-        console.log(idOrder);
         return new Promise<boolean>((resolve, reject) => {
         
             this.http.put<void>(this.API_URL+'order/valid',data ).toPromise().then( () => {

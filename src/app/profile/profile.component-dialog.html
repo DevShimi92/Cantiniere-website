@@ -5,15 +5,23 @@
 
           <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" aria-describedby = "listDialog">
 
-            <ng-container matColumnDef="Article.name">
+            <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef scope="col" > Nom </th>
-              <td mat-cell *matCellDef="let i = index;"> {{ data.data[i]["Article.name"] }} </td>
+              <td mat-cell *matCellDef="let i = index;"> 
+                <div *ngIf="data.data[i]['Article.name'] != null ; then thenBlock else elseBlock"></div>
+                  <ng-template #thenBlock> {{ data.data[i]["Article.name"] }} </ng-template>
+                  <ng-template #elseBlock> {{ data.data[i]["MenuInfo.name"] }} </ng-template>
+                </td>
               <td mat-footer-cell *matFooterCellDef> Total : </td>
             </ng-container>
 
-            <ng-container matColumnDef="Article.price">
+            <ng-container matColumnDef="price">
               <th mat-header-cell *matHeaderCellDef scope="col" > Prix </th>
-              <td mat-cell *matCellDef="let i = index;"> {{ data.data[i]["Article.price"] }} €</td>
+              <td mat-cell *matCellDef="let i = index;">
+                <div *ngIf="data.data[i]['Article.name'] != null ; then thenBlock else elseBlock"></div>
+                <ng-template #thenBlock> {{ data.data[i]["Article.price"] }} €</ng-template>
+                <ng-template #elseBlock> {{ data.data[i]["MenuInfo.price_final"] }} €</ng-template>
+              </td>
               <td mat-footer-cell *matFooterCellDef> {{ data.total }} €</td>
             </ng-container>
 

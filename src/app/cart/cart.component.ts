@@ -21,6 +21,7 @@ export class CartComponent implements OnInit {
   displayedColumnsCart: string[] = ['name','price','delete'];
   accountLogIn = false;
   OrderError = false;
+  cartHaveSomething = false;
   dataUser : DataUser;
   finalPrice = 0;
   cartLength = 0;
@@ -62,6 +63,7 @@ export class CartComponent implements OnInit {
     if(this.cart)
     {
      this.updateCartOnVisually();
+     this.cartHaveSomething = true
     }
     if (sessionStorage.getItem('token'))
     {
@@ -83,6 +85,8 @@ export class CartComponent implements OnInit {
       index++;
    } 
    while(index != this.cart.length);
+   if(this.cart.length == 0)
+    this.cartHaveSomething = false;
   }
 
   updateCartOnVisually():void
@@ -125,7 +129,9 @@ export class CartComponent implements OnInit {
                   }
                 else
                   {
-                    this.orderService.postOrderContent(idOrder,null,this.cart[i].id).then(
+                    this.orderService.postOrderContent(idOrder,null,this.cart[i].id).then(()=>{
+                      // Nothing
+                    },
                       (error) => 
                         {
                           errorCreate = true;
@@ -144,6 +150,7 @@ export class CartComponent implements OnInit {
             this.authService.refreshToken();
             sessionStorage.removeItem('cart');
             this.cart = [];
+            this.cartHaveSomething = false;
             this.updateCartOnVisually();
             this._snackBar.open('Votre commande a bien été enregistrée !', 'OK');
           }

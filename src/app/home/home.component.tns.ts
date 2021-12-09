@@ -112,7 +112,7 @@ export class HomeComponent implements OnInit {
 
       i++;
       
-      if(j == 5 && showAll == false)
+      if(j == 5 && !showAll)
         {
           listeOfArticle = listeOfArticle + '...';
           i = this.contentsOfMenus.length;

@@ -23,7 +23,7 @@ export class AppComponent implements AfterViewInit {
   msgLimit = 'Plus que 1 heure';
   msg2Limit = "avant la fin des prises de commandes !";
 
-  constructor(private _changeDetectionRef: ChangeDetectorRef, private routerExtensions: RouterExtensions, private FoodStockService: FoodStockService, private authService: AuthService) {
+  constructor(private _changeDetectionRef: ChangeDetectorRef, private routerExtensions: RouterExtensions, private foodStockService: FoodStockService, private authService: AuthService) {
     Application.on(Application.resumeEvent, () => {
       this.authService.refreshToken();
     });
@@ -54,7 +54,7 @@ export class AppComponent implements AfterViewInit {
   public limitTime(): void {
     if(!this.hourLimitRequest)
       {
-       this.FoodStockService.getHourLimit().subscribe(( result ) =>{
+       this.foodStockService.getHourLimit().subscribe(( result ) =>{
           this.hourLimit = result.hour_limit;
           this.HourLimitForOrder(result.hour_limit);
           this.hourLimitRequest = true;
