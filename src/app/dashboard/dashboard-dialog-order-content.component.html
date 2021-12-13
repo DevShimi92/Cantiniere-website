@@ -1,14 +1,12 @@
 
   <mat-dialog-content>    
         <p>Contenu de la commande N° {{ data.idOrder }} :</p>
-          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" aria-describedby = "listOrder">
-
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" aria-describedby = "listOrderDashbord">
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef scope="col" >Nom</th>
               <td mat-cell *matCellDef="let i = index;"> 
                 <div *ngIf="data.data[i]['Article.name'] != null ; then thenBlock else elseBlock"></div>
-                  <ng-template #thenBlock> {{ data.data[i]["Article.name"] }} </ng-template>
-                  <ng-template #elseBlock> {{ data.data[i]["MenuInfo.name"] }} </ng-template>
+                  <ng-template #thenBlock> {{ data.data[i]["Article.name"] }} </ng-template><ng-template #elseBlock> {{ data.data[i]["MenuInfo.name"] }} </ng-template>
                 </td>
               <td mat-footer-cell *matFooterCellDef>Total : </td>
             </ng-container>
@@ -16,16 +14,14 @@
               <th mat-header-cell *matHeaderCellDef scope="col" > Prix </th>
               <td mat-cell *matCellDef="let i = index;">
                 <div *ngIf="data.data[i]['Article.name'] != null ; then thenBlock else elseBlock"></div>
-                <ng-template #thenBlock> {{ data.data[i]["Article.price"] }} €</ng-template>
-                <ng-template #elseBlock> {{ data.data[i]["MenuInfo.price_final"] }} €</ng-template>
+                <ng-template #thenBlock> {{ data.data[i]["Article.price"] }} €</ng-template><ng-template #elseBlock> {{ data.data[i]["MenuInfo.price_final"] }} €</ng-template>
               </td>
               <td mat-footer-cell *matFooterCellDef> {{ data.total }} €</td>
             </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumnsDialogListOrder; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumnsDialogListOrder;"></tr>
           <tr mat-footer-row *matFooterRowDef="displayedColumnsDialogListOrder; sticky: true"></tr>
-          </table>
-        
+        </table>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Fermer</button>    
