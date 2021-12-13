@@ -82,7 +82,7 @@ export interface DialogData {
     showListOrderOfUser($event : UserData):void{
 
       this.orderService.getAllOrderOneAccount($event.id).subscribe((response) => {
-        const dialogRefEditSolde = this.dialog.open(DashboardDialogListOrderComponent,{
+        this.dialog.open(DashboardDialogListOrderComponent,{
           data: { data : response }
         });
     });
@@ -196,7 +196,7 @@ export interface DialogData {
   })
   export class DashboardDialogOrderContentComponent implements OnInit{
     
-    displayedColumnsDialog: string[] = ['name','price'];
+    displayedColumnsDialogListOrder: string[] = ['name','price'];
     dataSource;
   
     constructor( public dialogRef: MatDialogRef<DashboardDialogOrderContentComponent>,
