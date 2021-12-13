@@ -153,7 +153,7 @@ export interface DialogData {
   export class DashboardDialogListOrderComponent implements OnInit {
 
     dataSource;
-    displayedColumnsListOrder: string[] = ['id','createdAt','total','done','show'];
+    displayedColumnsListOrderDashBoard: string[] = ['id','createdAt','total','done','show'];
     ListOrderLength = 0;
     
     @ViewChild(MatPaginator) paginator: MatPaginator;
