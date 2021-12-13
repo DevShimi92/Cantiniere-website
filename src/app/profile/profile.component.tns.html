@@ -44,6 +44,8 @@
                                 <span text="\nTotal de la commande : "></span>
                                 <span [text]="item.total"></span>
                                 <span text=" €"></span>
+                                <span text="\nEtat de la commande : "></span>
+                                <span [text]="convertBoolean(item.done)"></span>
                               </FormattedString>
                         </Label>
                     </StackLayout>

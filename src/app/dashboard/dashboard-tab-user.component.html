@@ -32,7 +32,7 @@
                         <button mat-button [matMenuTriggerFor]="menu">Options</button>
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item (click)="editSolde(row)">Modifier le solde</button> 
-                            <!-- <button mat-menu-item>Liste des commandees passées </button>  Add after create article/menu page work -->
+                            <button mat-menu-item (click)="showListOrderOfUser(row)" >Liste des commandees passées </button> 
                         </mat-menu>
                     </td>
             </ng-container>

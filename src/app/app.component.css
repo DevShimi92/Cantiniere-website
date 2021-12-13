@@ -98,23 +98,23 @@
 
    .navBarCssLogout {
       position: fixed;
-      left: 65%;
+      left: 69%;
       top: 5%;
-      width: 32.2%;
+      width: 26%;
    }
 
    .navBarCssLogin {
       position: fixed;
-      left: 64.5%;
+      left: 66%;
       top: 5%;
-      width: 32.5%;
+      width: 29%;
    }
 
    .navBarCssLoginCooker {
       position: fixed;
-      left: 60.2%;
+      left: 65%;
       top: 5%;
-      width: 37%;
+      width: 30%;
    }
 
    .body{
@@ -130,9 +130,9 @@
 
    .formLogin {
       position: fixed;
-      left: 61.5%;
+      left: 66%;
       top: 13%;
-      width: 35.8%;
+      width: 29%;
       background-color: #fefffe;
       padding: 0.6% 0.25%;
       border-radius: 10px;

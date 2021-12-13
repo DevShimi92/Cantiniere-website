@@ -156,6 +156,15 @@ export class ProfileComponent implements OnInit {
     return dateFormated;
   }
 
+  convertBoolean(status:boolean):string{
+    
+    if(status)
+      return 'Terminé';
+    else
+      return 'En cours';
+
+  }
+
   submit():void {
     
     if ((this.dataUser.last_name != this.fieldsUser.last_name) || (this.dataUser.first_name != this.fieldsUser.first_name) || (this.dataUser.email != this.fieldsUser.email) )

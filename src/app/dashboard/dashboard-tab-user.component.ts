@@ -5,6 +5,7 @@ import { MatTableDataSource} from '@angular/material/table';
 
 import { EventEmitterService } from '../service/event-emitter.service';
 import { UserService } from '../service/user.service';
+import { OrderService } from '../service/order.service';
 import { User } from '../shared/models/user.model';
 
 export interface DialogData {
@@ -12,9 +13,11 @@ export interface DialogData {
     money: number;
     SetNewSolde: boolean;
     erreur:boolean;
+    data: string[];
+    idOrder : number;
   }
 
-  interface UserSolde {
+  interface UserData {
     id: number;
     first_name: string;
     last_name: string;
@@ -37,7 +40,7 @@ export interface DialogData {
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    constructor( public dialog: MatDialog, private eventEmitterService: EventEmitterService, private userService: UserService) { 
+    constructor( public dialog: MatDialog, private eventEmitterService: EventEmitterService, private userService: UserService, private orderService: OrderService) { 
         this.user = new User();
      }  
 
@@ -76,7 +79,19 @@ export interface DialogData {
           });
     }
 
-    editSolde($event : UserSolde):void{
+    showListOrderOfUser($event : UserData):void{
+
+      this.orderService.getAllOrderOneAccount($event.id).subscribe((response) => {
+        const dialogRefEditSolde = this.dialog.open(DashboardDialogListOrderComponent,{
+          data: { data : response }
+        });
+    });
+
+
+  
+    }
+
+    editSolde($event : UserData):void{
       
         const dialogRefEditSolde = this.dialog.open(DashboardDialogEditSoldeComponent,{
           data: { SetNewSolde : true, name : $event.last_name, money : $event.money, }
@@ -129,3 +144,69 @@ export interface DialogData {
       @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
   
   }
+
+  @Component({
+    selector: 'app-dashboard-dialog-list-order',
+    templateUrl: 'dashboard-dialog-list-order.component.html',
+    styleUrls: ['./dashboard.component.css']
+  })
+  export class DashboardDialogListOrderComponent implements OnInit {
+
+    dataSource;
+    displayedColumnsListOrder: string[] = ['id','createdAt','total','done','show'];
+    ListOrderLength = 0;
+    
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+
+    constructor( public dialogRef: MatDialogRef<DashboardDialogListOrderComponent>, private orderService: OrderService, public dialog: MatDialog,
+      @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+  
+      ngOnInit(): void {
+        if(this.data.data)
+          {
+            this.ListOrderLength = this.data.data.length;
+            this.dataSource = new MatTableDataSource(this.data.data);
+            this.dataSource.paginator = this.paginator;
+          }
+        
+      }
+
+      convertDate(dateISOstring:string):string{
+        const dateOrder = new Date(dateISOstring);
+        return dateOrder.toLocaleString();
+      }
+
+      orderContent(idOrder:number,priceTotal:number):void{
+
+        this.orderService.getOrderContent(idOrder).subscribe((response) => {
+    
+          this.dialog.open(DashboardDialogOrderContentComponent,{
+            data: { idOrder : idOrder, total: priceTotal, data : response }
+          });
+    
+        });
+    
+      }
+  }
+
+  @Component({
+    selector: 'app-dashboard-dialog-order-content',
+    templateUrl: 'dashboard-dialog-order-content.component.html',
+    styleUrls: ['./dashboard.component.css']
+  })
+  export class DashboardDialogOrderContentComponent implements OnInit{
+    
+    displayedColumnsDialog: string[] = ['name','price'];
+    dataSource;
+  
+    constructor( public dialogRef: MatDialogRef<DashboardDialogOrderContentComponent>,
+      @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+  
+      ngOnInit(): void {
+  
+        this.dataSource = new MatTableDataSource(this.data.data); 
+  
+      }
+  
+  }
+  

@@ -50,7 +50,7 @@ export class ProfileComponent implements OnInit {
   
   dataSource;
   ListOrderLength = 0;
-  displayedColumnsListOrder: string[] = ['id','createdAt','total','show'];
+  displayedColumnsListOrder: string[] = ['id','createdAt','total','done','show'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

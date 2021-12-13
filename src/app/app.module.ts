@@ -32,7 +32,7 @@ import { ReportComponent } from '@src/app/report/report.component';
 import { CartComponent } from '@src/app/cart/cart.component';
 import { RegistrationComponent } from '@src/app/registration/registration.component';
 import { DashboardComponent } from '@src/app/dashboard/dashboard.component';
-import { DashboardTabUserComponent, DashboardDialogEditSoldeComponent } from '@src/app/dashboard/dashboard-tab-user.component';
+import { DashboardTabUserComponent, DashboardDialogEditSoldeComponent, DashboardDialogListOrderComponent, DashboardDialogOrderContentComponent } from '@src/app/dashboard/dashboard-tab-user.component';
 import { DashboardTabEditFoodComponent, DashboardDialogTypeArticleComponent, DashboardDialogArticleComponent } from '@src/app/dashboard/dashboard-tab-edit-food.component';
 import { DashboardSettingComponent} from '@src/app/dashboard/dashboard-tab-setting.component';
 import { DashboardRecapOrderComponent} from '@src/app/dashboard/dashboard-tab-recap-order.component';
@@ -56,6 +56,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     DashboardComponent,
     DashboardTabUserComponent,
     DashboardDialogEditSoldeComponent,
+    DashboardDialogListOrderComponent,
+    DashboardDialogOrderContentComponent,
     DashboardTabEditFoodComponent,
     DashboardSettingComponent,
     DashboardRecapOrderComponent,

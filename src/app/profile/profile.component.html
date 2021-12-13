@@ -51,6 +51,11 @@
                             <td mat-cell *matCellDef="let row"> {{ row.total }} €</td>
                         </ng-container>
 
+                        <ng-container matColumnDef="done">
+                            <th mat-header-cell *matHeaderCellDef scope="col" > Status de la commande : </th>
+                            <td mat-cell *matCellDef="let row"><div [hidden]="row.done">En cours</div> <div [hidden]="!row.done">Terminé</div>      </td>
+                        </ng-container>
+
                         <ng-container matColumnDef="show">
                             <th mat-header-cell *matHeaderCellDef scope = "col" > Actions </th>   
                                 <td mat-cell *matCellDef="let row"> 
