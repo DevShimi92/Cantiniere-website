@@ -39,7 +39,10 @@
             <mat-form-field appearance="fill"  >
                 <mat-label>Mot de passe</mat-label>
                 <input matInput formControlName="password" type="password">
-                <mat-error>
+                <mat-error *ngIf="registrationForm.hasError('notSecure') && !registrationForm.hasError('required')">
+                  <strong>Le mot de passe doit contenir au minimum 8 caractères dont une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial </strong>
+                </mat-error>
+                <mat-error  *ngIf="!registrationForm.hasError('notSecure') && !registrationForm.hasError('required')">
                   Mot de passe <strong>manquant</strong>
                 </mat-error>
               </mat-form-field>

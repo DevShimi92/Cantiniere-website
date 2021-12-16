@@ -1,12 +1,12 @@
 {
   "name": "cantiniere-website",
   "main": "main.tns.js",
-  "version": "0.15.19",
+  "version": "0.16.0",
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
     "heroku-postbuild": "ng build --aot --prod",
-    "local": "ng serve --host 192.168.1.2",
+    "local": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "eslint src --ext .ts",

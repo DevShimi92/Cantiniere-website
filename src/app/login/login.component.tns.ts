@@ -63,6 +63,8 @@ export class LoginComponent {
 
         if(this.validateEmail(this.user.email) && this.user.email != '')
           {
+            console.log(this.user.password)
+            console.log(this.validatePassword(this.user.password))
             if(this.user.password =='' )
               {
                 Dialogs.alert({
@@ -72,6 +74,17 @@ export class LoginComponent {
                   cancelable: true
                 }).then(()=> {
                     console.log("Mot de passe manqnaut pour l'inscription ");
+                });
+              }
+            else if(!this.validatePassword(this.user.password))
+              {
+                Dialogs.alert({
+                  title: "Erreur",
+                  message: "Votre mot de passe doit contenir au moins un chiffre, une lettre majuscule et minuscule et un caractère spéciale",
+                  okButtonText: "OK",
+                  cancelable: true
+                }).then(()=> {
+                    console.log("Mot de passe non sécurisé !");
                 });
               }
             else if(this.user.password == this.confirmedPassword)
@@ -232,6 +245,11 @@ export class LoginComponent {
   validateEmail(email:string): boolean {
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
+  }
+
+  validatePassword(password:string): boolean {
+    const re = /^(?=(.*[a-z]))(?=(.*[A-Z]))(?=(.*[0-9]))(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/;
+    return re.test(password);
   }
 }
 

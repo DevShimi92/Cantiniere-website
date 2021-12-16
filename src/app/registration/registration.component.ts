@@ -41,7 +41,7 @@ export class RegistrationComponent implements OnInit {
       email: this.emailFormControl,
       password: ['',Validators.required],
       confirmPassword: ['']
-    }, { validator: this.checkIfSamePassword });
+    }, { validators: [this.checkIfPasswordSecure, this.checkIfSamePassword]});
 
   }
   
@@ -74,6 +74,27 @@ export class RegistrationComponent implements OnInit {
 
       }
 
+  }
+
+  checkIfPasswordSecure(c: AbstractControl):  ValidationErrors | null{   
+    if (c) {
+      const password = c.get('password')?.value;
+      const exp = RegExp("^(?=(.*[a-z]))(?=(.*[A-Z]))(?=(.*[\\d]))(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$");
+      const regexp = new RegExp (exp);
+
+      if(password != ''){
+        if(regexp.test(password))
+          {
+            c.get('password')?.setErrors(null);
+          }
+        else
+          {
+            c.get('password')?.setErrors({notSecure: true});
+            return ({notSecure: true});
+          }
+        }
+    }
+      return null;
   }
 
   checkIfSamePassword(c: AbstractControl):  ValidationErrors | null{   
