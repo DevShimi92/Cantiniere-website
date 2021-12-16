@@ -146,6 +146,8 @@ class TabOfWeek {
             });
             
           }
+        else  
+          this.listOfOrder=[];
       });
 
 
