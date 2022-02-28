@@ -135,7 +135,7 @@ export class AuthService {
         this.user = this.helper.decodeToken(token);
         sessionStorage.setItem('userData', JSON.stringify(this.user));
         
-        if(this.user.cooker == true)
+        if(this.user.cooker)
             sessionStorage.setItem('cooker','true');
         else
             sessionStorage.setItem('cooker','false');

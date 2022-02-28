@@ -8,7 +8,20 @@
 <img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/DevShimi92/Cantiniere-website?style=flat-square">
 <a href="https://github.com/DevShimi92/Cantiniere-website/actions"><img alt="GitHub Workflow Status" 
 src="https://img.shields.io/github/workflow/status/DevShimi92/Cantiniere-website/Eslint?style=flat-square"></a>
+<a href="https://cantiniere-website.herokuapp.com/" target="_blank">
+<img alt="Heroku" src="https://img.shields.io/badge/%E2%86%91_Deploy_to-Heroku-7056bf.svg?style=flat-square"></a><br>
 <a href="https://sonarcloud.io/dashboard?id=DevShimi92_Cantiniere-website2">
 <img alt="Sonarcloud QGS" src="https://sonarcloud.io/api/project_badges/measure?project=DevShimi92_Cantiniere-website2&metric=alert_status"></a>
+<a href="https://sonarcloud.io/dashboard?id=DevShimi92_Cantiniere-website2">
+<img alt="Sonarcloud maintainability" src="https://sonarcloud.io/api/project_badges/measure?project=DevShimi92_Cantiniere-website2&metric=sqale_rating"></a>
 
 </p><br>
+
+## Description
+
+Cantiniere_Website is, as its name suggests, a website. Created as part of a school project, this site is hosted on [Heroku](https://cantiniere-website.herokuapp.com/). 
+This one uses the api from the same project ( See the [git](https://github.com/DevShimi92/Cantiniere-website) for more info). 
+
+
+## License
+[MIT](https://github.com/DevShimi92/Cantiniere-API/blob/main/LICENSE)

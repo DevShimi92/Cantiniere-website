@@ -4,8 +4,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { OrderContent } from '../shared/models/orderContent.model';
-import { OrderinfoAccount } from '../shared/models/orderInfo.model';
-import { OrderInfoRecap, OrderInfoRecapClient } from '../shared/models/orderInfo.model';
+import { OrderinfoAccount, OrderInfoRecap, OrderInfoRecapClient } from '../shared/models/orderInfo.model';
 
 class IdOrder {
     id: number;

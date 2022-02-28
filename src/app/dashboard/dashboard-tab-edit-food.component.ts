@@ -222,7 +222,7 @@ class ArticleCheckBox {
         });
     
         dialogRef.afterClosed().subscribe(result => {
-            if(result == true && ( result !== undefined &&  result !== '') ) {
+            if(result && ( result !== undefined &&  result !== '') ) {
               this.foodStockService.deleteTypeOfArticle( $event.code_type).then(() => 
                 {
                     this.dialog.open(DashboardDialogTypeArticleComponent,{
@@ -340,7 +340,7 @@ class ArticleCheckBox {
         });
     
         dialogRef.afterClosed().subscribe(result => {
-            if(result == true && ( result !== undefined &&  result !== '') ) {
+            if(result && ( result !== undefined &&  result !== '') ) {
               this.foodStockService.deleteArticle( $event.id).then(() => 
                 {
                     this.dialog.open(DashboardDialogArticleComponent,{
@@ -383,14 +383,14 @@ class ArticleCheckBox {
                           dialogRefForm1.afterClosed().subscribe(listArticleCheckBox => {
                             if((listArticleCheckBox != undefined ) &&  (listArticleCheckBox != '' ))
                               {
-                                if(this.checkIfMenuHaveContent(listArticleCheckBox) == false)
+                                if(!this.checkIfMenuHaveContent(listArticleCheckBox))
                                   {
                                     const dialogRefForm2 = this.dialog.open(DashboardDialogMenuComponent,{
                                       data: { FormDialogMenu : 2 }
                                     });
     
                                     dialogRefForm2.afterClosed().subscribe(result => {
-                                      if(result == true )
+                                      if(result )
                                         {
 
                                           const dialogRefForm12 = this.dialog.open(DashboardDialogMenuComponent,{
@@ -434,7 +434,7 @@ class ArticleCheckBox {
                                           let errorCreate = false;
                                           for(let  i = 0; i < Object.keys(listArticleCheckBox).length; i++)
                                               {
-                                                if(listArticleCheckBox[i].checked == true)
+                                                if(listArticleCheckBox[i].checked)
                                                 {
                                                     this.foodStockService.postMenuContent(idMenu,listArticleCheckBox[i].id).then(() =>
                                                     {
@@ -498,7 +498,7 @@ class ArticleCheckBox {
  
         for(let  i = 0; i < Object.keys(result).length; i++)
         {
-          if(result[i].checked == true)
+          if(result[i].checked)
             {
               return true;
             }
@@ -512,7 +512,7 @@ class ArticleCheckBox {
 
       for(let  i = 0; i < Object.keys(result).length; i++)
         {
-          if(result[i].checked == true)
+          if(result[i].checked)
             {
               total_price = total_price + result[i].price;
             }
@@ -605,7 +605,7 @@ class ArticleCheckBox {
       });
   
       dialogRef.afterClosed().subscribe(result => {
-          if(result == true && ( result !== undefined &&  result !== '') ) {
+          if(result && ( result !== undefined &&  result !== '') ) {
             this.foodStockService.deleteMenu( $event.id).then(() => 
               {
                 this.dialog.open(DashboardDialogMenuComponent,{
