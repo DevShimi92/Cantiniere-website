@@ -69,7 +69,7 @@ export class AppComponent implements OnInit{
 
   dataUser : DataUser;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService, private FoodStockService: FoodStockService, private _snackBar: MatSnackBar, private eventEmitterService: EventEmitterService) { 
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService, private foodStockService: FoodStockService, private _snackBar: MatSnackBar, private eventEmitterService: EventEmitterService) { 
     this.eventEmitterService.changeEmitted$.subscribe(() => {
       this.toggle();
     });
@@ -95,7 +95,7 @@ export class AppComponent implements OnInit{
       
     }
 
-    this.FoodStockService.getHourLimit().subscribe(( result ) =>{
+    this.foodStockService.getHourLimit().subscribe(( result ) =>{
       this.HourLimitForOrder(result.hour_limit);
     });
 

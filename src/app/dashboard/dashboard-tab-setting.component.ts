@@ -41,7 +41,7 @@ class SettingModel {
     onSubmit():void {
       let updateOk = false;
 
-      if (!(JSON.stringify(this.dataReponse.hourlimit) === JSON.stringify(this.settingForm.value.hourlimit)))
+      if (!(JSON.stringify(this.dataReponse.hourlimit) !== JSON.stringify(this.settingForm.value.hourlimit)))
         {
           this.settingService.putHourLimit(this.settingForm.value.hourlimit+':00').then(()=>{
 
@@ -62,7 +62,7 @@ class SettingModel {
           });
         }
 
-      if (!(JSON.stringify(this.dataReponse.totalOrderLimitDay) === JSON.stringify(this.settingForm.value.totalOrderLimitDay)))
+      if (!(JSON.stringify(this.dataReponse.totalOrderLimitDay) !== JSON.stringify(this.settingForm.value.totalOrderLimitDay)))
         {
           this.settingService.putTotalOrderLimitDay(this.settingForm.value.totalOrderLimitDay).then(()=>{
             
@@ -84,7 +84,7 @@ class SettingModel {
           });
         }
 
-      if (!(JSON.stringify(this.dataReponse.totalOrderLimitAccountDay) === JSON.stringify(this.settingForm.value.totalOrderLimitAccountDay)))
+      if (!(JSON.stringify(this.dataReponse.totalOrderLimitAccountDay) !== JSON.stringify(this.settingForm.value.totalOrderLimitAccountDay)))
         {
           this.settingService.putTotalOrderLimitAccountPerDay(this.settingForm.value.totalOrderLimitAccountDay).then(()=>{
 
@@ -106,7 +106,7 @@ class SettingModel {
           });
         }
 
-      if (!(JSON.stringify(this.dataReponse.canPreOrder) === JSON.stringify(this.settingForm.value.canPreOrder)))
+      if (!(JSON.stringify(this.dataReponse.canPreOrder) !== JSON.stringify(this.settingForm.value.canPreOrder)))
         {
           this.settingService.putCanPreOrder(this.settingForm.value.canPreOrder).then(()=>{
 

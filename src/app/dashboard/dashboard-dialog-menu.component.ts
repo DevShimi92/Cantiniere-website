@@ -1,4 +1,4 @@
-import { Component, ViewChild, Inject, OnInit, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, Inject, OnInit } from '@angular/core';
 import { MatDialog , MatDialogRef,  MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource} from '@angular/material/table';
@@ -73,7 +73,7 @@ export class ArticleCheckBox {
         });
   
         dialogRef.afterClosed().subscribe(result => {
-          if (result == true)
+          if (result)
           {
             this.foodStockService.deleteMenuContent($event.idMenuContent ,this.data.idMenu,$event.id).then(() => {
 
@@ -104,12 +104,12 @@ export class ArticleCheckBox {
               dialogRef.afterClosed().subscribe(result => {
                 if((result != undefined ) &&  (result != '' ))
                   {
-                    if(this.checkIfMenuHaveContent(result) == true)
+                    if(this.checkIfMenuHaveContent(result))
                     {
                       let errorCreate=false;
                       for(let  i = 0; i < Object.keys(result).length; i++)
                             {
-                              if(result[i].checked == true)
+                              if(result[i].checked)
                               {
                                   this.foodStockService.postMenuContent(this.data.idMenu,result[i].id).then(() =>
                                     {
@@ -146,7 +146,7 @@ export class ArticleCheckBox {
    
         for(let  i = 0; i < Object.keys(any).length; i++)
         {
-          if(any[i].checked == true)
+          if(any[i].checked)
             {
               return true;
             }
