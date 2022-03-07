@@ -101,7 +101,7 @@ export class LoginComponent {
                         {
                           console.log("L'email utilisé pour l'enregistrement est déja exsitant dans la base de donnée. Demmande de réinitialisation de mot de passe...")
                           Dialogs.confirm(this.acountExistOptions).then(result => {
-                            if( result == true )
+                            if(result)
                               {
                                   this.toggleFormForgotPassword();
                               }
@@ -243,12 +243,12 @@ export class LoginComponent {
   }
   
   validateEmail(email:string): boolean {
-    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\])|(([a-zA-Z\-\d]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
 
   validatePassword(password:string): boolean {
-    const re = /^(?=(.*[a-z]))(?=(.*[A-Z]))(?=(.*[0-9]))(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/;
+    const re = /^(?=(.*[a-z]))(?=(.*[A-Z]))(?=(.*[\d]))(?=(.*[!@#$%^&*()\-__+.]){+}).{8,}$/;
     return re.test(password);
   }
 }

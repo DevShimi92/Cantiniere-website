@@ -26,7 +26,7 @@ export class RegistrationComponent implements OnInit {
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email,
-    Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+    Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\])|(([a-zA-Z\-\d]+\.)+[a-zA-Z]{2,}))$/)
   ]);
 
   constructor( private formBuilder: FormBuilder, private router: Router, private _snackBar: MatSnackBar, private userService: UserService ) { 
@@ -79,7 +79,7 @@ export class RegistrationComponent implements OnInit {
   checkIfPasswordSecure(c: AbstractControl):  ValidationErrors | null{   
     if (c) {
       const password = c.get('password')?.value;
-      const exp = RegExp("^(?=(.*[a-z]))(?=(.*[A-Z]))(?=(.*[\\d]))(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$");
+      const exp = /^(?=(.*[a-z]))(?=(.*[A-Z]))(?=(.*[\\d]))(?=(.*[!@#$%^&*()\-__+.]){+}).{8,}$/;
       const regexp = new RegExp (exp);
 
       if(password != ''){

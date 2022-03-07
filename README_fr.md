@@ -1,6 +1,6 @@
 <p align="center">
 <h1 align="center">Cantiniere-website</h1>
-<h4 align="center">Hybrid application of the School project "Cantinière"</h4>
+<h4 align="center">Application Hybride du projet d'école "Cantinière"</h4>
 </p>
 
 <p align="center">
@@ -17,27 +17,28 @@ src="https://img.shields.io/github/workflow/status/DevShimi92/Cantiniere-website
 
 </p><br>
 
-[Version Française](https://github.com/DevShimi92/Cantiniere-website/blob/main/README_fr.md)
+[English version](https://github.com/DevShimi92/Cantiniere-website/blob/main/README.md)
+
 
 ## Description
 
-Cantiniere_Website is, as its name suggests, a website. Created as part of a school project, this site is hosted on [Heroku](https://cantiniere-website.herokuapp.com/). 
-This one uses the api from the same project ( See the [git](https://github.com/DevShimi92/Cantiniere-API) for more info ). 
+Cantiniere_Website est comme son nom l'indique, un site web. Créer dans le cadre d'un projet de formation, cette api est héberger sur [Heroku](https://cantiniere-website.herokuapp.com/). 
+Celui-ci utilise l'api du même projet ( Voir son [git](https://github.com/DevShimi92/Cantiniere-API) pour plus d'info ). 
 
-This project is creard with Angular 11 and NativeScript 7.
+Ce projet utilise Angular 11 et NativeScript 7.
 
-## Installation
+## Installation 
 
-You will need Node.js 14.
+Vous aurez besoin de Node.js 14.
 
-To install, all you need is:
+Pour l'installation, il suffit de :
 
 ```console
 npm install
 npm run build
 ```
 
-And use `npm run local` for lanuch in local
+Et d'utiliser `npm run local` pour lancer le site en local.
 
 ## License
 [MIT](https://github.com/DevShimi92/Cantiniere-website/blob/main/LICENSE)
