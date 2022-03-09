@@ -54,11 +54,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.innerWidth = window.innerWidth;
-    if(innerWidth > 1920)
-        this.rowHeight = 365;
-    else
-      this.rowHeight = 250; 
+    this.resizeFunction();
 
     this.foodStockService.getAllTypeOfArticle().subscribe((response) => 
     {
@@ -75,17 +71,17 @@ export class MenuComponent implements OnInit {
 
         this.selectedTypeArticle = this.listTypeArticle[0];
         
-        this.foodStockService.getAllArticle().subscribe((response) => 
+        this.foodStockService.getAllArticle().subscribe((responsetwo) => 
         {
-          if(response != null)
+          if(responsetwo != null)
           {
             this.menuHaveSomething = true; 
 
-            for (const key of response) {           
+            for (const key of responsetwo) {           
               this.listArticleDefault.push(key);
             }
 
-            this.length = response.length;
+            this.length = responsetwo.length;
             this.listArticle = this.listArticleDefault.slice(0, this.pageSize);
             this.listFilteredArticle = this.listArticleDefault;
         }
@@ -195,6 +191,16 @@ export class MenuComponent implements OnInit {
 
       }
     }
+
+  resizeFunction():void{
+
+    this.innerWidth = window.innerWidth;
+    if(innerWidth > 1920)
+        this.rowHeight = 365;
+    else
+      this.rowHeight = 250; 
+
+  }
 
 
 }

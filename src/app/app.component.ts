@@ -96,7 +96,7 @@ export class AppComponent implements OnInit{
     }
 
     this.foodStockService.getHourLimit().subscribe(( result ) =>{
-      this.HourLimitForOrder(result.hour_limit);
+      this.hourLimitForOrder(result.hour_limit);
     });
 
   }
@@ -161,14 +161,7 @@ export class AppComponent implements OnInit{
 
           if (logtinOK)
               {
-                  if ( sessionStorage.getItem('cooker') == 'true' )
-                    {    
-                        this.coockerLogIn= true;
-                    }
-                  else
-                    {
-                        this.accountLogIn= true;
-                    }
+                  this.checkStatusAccount();
 
                   this.isOpen = false
               }
@@ -194,11 +187,11 @@ export class AppComponent implements OnInit{
     }
 
   validateEmail(email:string):boolean {
-      const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[\d]{1,3}\.[\d]{1,3}\.[0-9]{1,3}\.[\d]{1,3}\])|(([a-zA-Z\-\d]+\.)+[a-zA-Z]{2,}))$/;
+      const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\.[\d]{1,3}\])|(([a-zA-Z\-\d]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     }
 
-  HourLimitForOrder(hourString:string):void{
+  hourLimitForOrder(hourString:string):void{
 
     let msg : string;
     const hourLimit = new Date;
@@ -256,6 +249,17 @@ export class AppComponent implements OnInit{
 
     }
 
-  }
+    }
+
+  checkStatusAccount():void{
+      if ( sessionStorage.getItem('cooker') == 'true' )
+        {    
+            this.coockerLogIn= true;
+        }
+      else
+        {
+            this.accountLogIn= true;
+        }
+     }
 
 }

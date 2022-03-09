@@ -103,10 +103,7 @@ export class ProfileComponent implements OnInit {
               {
                 console.log("Certains champs n'ont pas pu être update");  
               }
-            else
-              {
-                console.log(error); 
-              }
+              console.log(error); 
         });
 
       }
@@ -134,10 +131,7 @@ export class ProfileComponent implements OnInit {
                       this.errorUpdate = true;
                       console.log("Certains champs n'ont pas pu être update");  
                     }
-                  else
-                    {
-                      console.log(error); 
-                    }
+                    console.log(error);  
                 });
             }
         else

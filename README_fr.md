@@ -22,7 +22,7 @@ src="https://img.shields.io/github/workflow/status/DevShimi92/Cantiniere-website
 
 ## Description
 
-Cantiniere_Website est comme son nom l'indique, un site web. Créer dans le cadre d'un projet de formation, cette api est héberger sur [Heroku](https://cantiniere-website.herokuapp.com/). 
+Cantiniere_Website est comme son nom l'indique, un site web mais c'est aussi une application mobile ( une application hybride pour faire simple ).  Créer dans le cadre d'un projet de formation, cette api est héberger sur [Heroku](https://cantiniere-website.herokuapp.com/). 
 Celui-ci utilise l'api du même projet ( Voir son [git](https://github.com/DevShimi92/Cantiniere-API) pour plus d'info ). 
 
 Ce projet utilise Angular 11 et NativeScript 7.

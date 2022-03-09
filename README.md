@@ -21,7 +21,7 @@ src="https://img.shields.io/github/workflow/status/DevShimi92/Cantiniere-website
 
 ## Description
 
-Cantiniere_Website is, as its name suggests, a website. Created as part of a school project, this site is hosted on [Heroku](https://cantiniere-website.herokuapp.com/). 
+Cantiniere_Website is, as its name suggests, a website but it is also a mobile application (a hybrid application to put it simply). Created as part of a school project, this site is hosted on [Heroku](https://cantiniere-website.herokuapp.com/). 
 This one uses the api from the same project ( See the [git](https://github.com/DevShimi92/Cantiniere-API) for more info ). 
 
 This project is creard with Angular 11 and NativeScript 7.

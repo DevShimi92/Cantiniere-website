@@ -45,11 +45,7 @@ class SettingModel {
         {
           this.settingService.putHourLimit(this.settingForm.value.hourlimit+':00').then(()=>{
 
-            if (!updateOk){
-                this._snackBar.openFromComponent(SettingSnackComponent, {
-                  duration: 5 * 1000,
-                });
-            }
+            this.snackBarError(updateOk);
             updateOk = true;
 
           })
@@ -66,11 +62,7 @@ class SettingModel {
         {
           this.settingService.putTotalOrderLimitDay(this.settingForm.value.totalOrderLimitDay).then(()=>{
             
-            if (!updateOk){
-              this._snackBar.openFromComponent(SettingSnackComponent, {
-                duration: 5 * 1000,
-              });
-            }
+            this.snackBarError(updateOk);
             updateOk = true;
 
           })
@@ -88,11 +80,7 @@ class SettingModel {
         {
           this.settingService.putTotalOrderLimitAccountPerDay(this.settingForm.value.totalOrderLimitAccountDay).then(()=>{
 
-            if (!updateOk){
-                this._snackBar.openFromComponent(SettingSnackComponent, {
-                  duration: 5 * 1000,
-                });
-            }
+            this.snackBarError(updateOk);
             updateOk = true;
 
           })
@@ -110,12 +98,7 @@ class SettingModel {
         {
           this.settingService.putCanPreOrder(this.settingForm.value.canPreOrder).then(()=>{
 
-            if (!updateOk){
-                this._snackBar.openFromComponent(SettingSnackComponent, {
-                  duration: 5 * 1000,
-                });
-            }
-
+            this.snackBarError(updateOk);
             updateOk = true;
           })
           .catch(()=>{
@@ -129,6 +112,15 @@ class SettingModel {
       
         }
       
+    }
+
+    snackBarError(updateOk:boolean):void{
+
+        if (!updateOk){
+            this._snackBar.openFromComponent(SettingSnackComponent, {
+              duration: 5 * 1000,
+            });
+        }
     }
 
   }
